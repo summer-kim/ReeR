@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
+//middleware
+const Auth = require('../middleware/auth');
+const User = require('../model/userModel');
 
-// GET '/auth'
+// POST '/auth'
 // Test
 // Public
-router.get('', (req, res) => {
-  res.send('auth router');
+router.post('/', async (req, res) => {
+  try {
+    await User.find();
+  } catch (err) {}
 });
 
 module.exports = router;
