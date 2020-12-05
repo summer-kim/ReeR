@@ -3,67 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welcome to ReRe♡</title>
+    <title>Welcome to ReeR:</title>
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
       integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
   </head>
   <body>
-    <nav>
-      <div class="nav-element">
+    <nav id="nav" class="flex-container">
+      <div id="nav-a">
         <a href="#"><i class="fas fa-heart"></i>Chart</a>
       </div>
-      <div class="nav-element">
-        <span class="logo">Re~Re</span>
+      <div id="nav-b">
+        <span class="logo">ReeR:</span>
       </div>
-      <div class="nav-element">
-        <ul>
+      <div id="nav-c">
+        <ul class="flex-container">
           <li><a href="#">About</a></li>
-          <li><a href="#">Register</a></li>
+          <li>
+            <a href="#">Register<br />/Login</a>
+          </li>
           <li>
             <a href="#"><i class="far fa-user"></i></a>
           </li>
         </ul>
       </div>
     </nav>
-    <section class="pad2 container main">
-      <div class="main-content">
-        <h1>
-          ReRe:The Best Platform for
-          <span
-            class="txt-type"
-            data-wait="3000"
-            data-words='["Contents Review", "Contents Recommandation"]'
-          ></span>
-        </h1>
-        <p class="parag">
-          You don't have to wander anymore about what to choose. Just search on
-          ReRe and you can get a quick recommandation for your personal taste.
-        </p>
-        <a href="#" class="btn-light">Register</a>
-      </div>
+    <section id="main1" class="p2 flex-container main">
+      <h1>
+        ReeR:<br />The Best Platform for Contents
+        <span
+          class="txt-type"
+          data-wait="2200"
+          data-words='["Review", "Recommandation", "communication"]'
+        ></span>
+      </h1>
+      <p class="parag">
+        You don't have to wander anymore about what to choose.<br />
+        Just search on ReRe and you can get a quick recommandation for your
+        personal taste.
+      </p>
+      <a href="#" class="btn-light"
+        ><i class="fas fa-angle-double-right"></i>Register</a
+      >
     </section>
-    <section class="pad2 container preview">
-      <h4 class="section-header">Today's Ranking</h4>
-      <div class="preview-content 3row-grid">
+    <section id="main2" class="m1 p2 flex-container">
+      <h4><i class="fas fa-heart"></i>Today's Ranking</h4>
+      <div id="main2-content" class="grid">
         <div class="item">
-          <img src="./img/sample.JPG" width="200" alt="#" />
-          <div class="item-section">
+          <div class="item-img">
+            <img src="./img/lala.JPG" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>watch more
+              </div>
+            </div>
+          </div>
+          <div>
             <span class="title">Gone with wind</span>
           </div>
-          <div class="item-section">
-            <div class="genre">
-              <span>Adventure/SF</span>
-            </div>
-            <div class="interest">
-              <i class="fas fa-heart"></i>
-              <span class="interest-num">98</span>
-            </div>
+          <div class="item-second">
+            <span class="genre"> Adventure/SF </span>
+            <span class="interest"><i class="fas fa-heart"></i>98</span>
           </div>
-          <div class="tags item-section">
+          <div class="item-tags">
             <span class="tag">Adventureous</span>
             <span class="tag">Good to watch at night</span>
             <span class="tag">Teach me the lessons of life</span>
@@ -72,42 +83,50 @@
           </div>
         </div>
         <div class="item">
-          <img src="./img/sample.JPG" width="200" alt="#" />
-          <div class="item-section">
+          <div class="item-img">
+            <img src="./img/sample.JPG" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>watch more
+              </div>
+            </div>
+          </div>
+
+          <div>
             <span class="title">Gone with wind</span>
           </div>
-          <div class="item-section">
-            <div class="genre">
-              <span>Adventure/SF</span>
-            </div>
-            <div class="interest">
-              <i class="fas fa-heart"></i>
-              <span class="interest-num">98</span>
-            </div>
+          <div class="item-second">
+            <span class="genre"> Adventure/SF </span>
+            <span class="interest"><i class="fas fa-heart"></i>98</span>
           </div>
-          <div class="tags item-section">
+          <div class="item-tags">
             <span class="tag">Adventureous</span>
             <span class="tag">Good to watch at night</span>
             <span class="tag">Teach me the lessons of life</span>
-            <span class="tag">Suspicous</span>
+            <span class="tag"
+              >Kind of Horror, but not as much as make screaming
+            </span>
             <span class="tag">My lend Movie top 20</span>
           </div>
         </div>
         <div class="item">
-          <img src="./img/sample.JPG" width="200" alt="#" />
-          <div class="item-section">
+          <div class="item-img">
+            <img src="./img/cinema.jpg" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>watch more
+              </div>
+            </div>
+          </div>
+
+          <div>
             <span class="title">Gone with wind</span>
           </div>
-          <div class="item-section">
-            <div class="genre">
-              <span>Adventure/SF</span>
-            </div>
-            <div class="interest">
-              <i class="fas fa-heart"></i>
-              <span class="interest-num">98</span>
-            </div>
+          <div class="item-second">
+            <span class="genre"> Adventure/SF </span>
+            <span class="interest"><i class="fas fa-heart"></i>98</span>
           </div>
-          <div class="tags item-section">
+          <div class="item-tags">
             <span class="tag">Adventureous</span>
             <span class="tag">Good to watch at night</span>
             <span class="tag">Teach me the lessons of life</span>
@@ -117,45 +136,69 @@
         </div>
       </div>
     </section>
-    <section class="people pad2 container">
-      <h4 class="section-header">The person who have to use ReRe:</h4>
-      <div class="people-content 3row-grid">
+    <section id="main3" class="m1 p2 flex-container">
+      <h4>The person who should use ReeR:</h4>
+      <div id="main3-content" class="grid">
         <div class="item txt-center">
-          <img src="./img/sample.JPG" width="200" alt="#" />
+          <div class="item-img">
+            <img src="./img/sample.JPG" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>Go Register!
+              </div>
+            </div>
+          </div>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
             quibusdam itaque deserunt facere nulla commodi delectus adipisci
-            eaque animi eos?
           </p>
         </div>
         <div class="item txt-center">
-          <img src="./img/sample.JPG" width="200" alt="#" />
+          <div class="item-img">
+            <img src="./img/sample.JPG" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>Go Register!
+              </div>
+            </div>
+          </div>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
             quibusdam itaque deserunt facere nulla commodi delectus adipisci
-            eaque animi eos?
           </p>
         </div>
         <div class="item txt-center">
-          <img src="./img/sample.JPG" width="200" alt="#" />
+          <div class="item-img">
+            <img src="./img/sample.JPG" alt="#" />
+            <div class="item-text">
+              <div class="more">
+                <i class="fas fa-angle-double-right"></i>Go Register!
+              </div>
+            </div>
+          </div>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
             quibusdam itaque deserunt facere nulla commodi delectus adipisci
-            eaque animi eos?
           </p>
         </div>
       </div>
     </section>
-    <footer class="pad2">
-      <div class="footer-para">
+    <footer id="footer" class="p2 flex-container">
+      <div id="footer-content">
+        <span class="logo">ReeR:</span>
         <p>Copyright &copy; 2019. All Rights Reserved</p>
-        <p>Contacts of Developer : dasomi6835@gmail.com</p>
+        <p>
+          Contacts of Developer :
+          <span class="develop-name">Dasom Kim</span> dasomi6835@gmail.com
+        </p>
       </div>
-      <div class="social">
+      <div id="footer-social">
         <i class="fab fa-facebook"></i>
         <i class="fab fa-instagram"></i>
         <i class="fab fa-linkedin"></i>
       </div>
     </footer>
+
+    <script src="js/typewriter.js"></script>
   </body>
 </html>

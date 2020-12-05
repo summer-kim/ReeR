@@ -1,0 +1,111 @@
+.btn-light, .grid .item-text .more {
+  display: flex;
+  align-items: center; }
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.m1 {
+  margin: 1rem; }
+
+.m2 {
+  margin: 1rem; }
+
+.m3 {
+  margin: 1rem; }
+
+.p1 {
+  padding: 1rem; }
+
+.p2 {
+  padding: 1rem; }
+
+.p3 {
+  padding: 1rem; }
+
+.parag {
+  margin: 1rem auto;
+  width: 35vw;
+  text-align: center;
+  line-height: 1.45;
+  font-weight: 300; }
+
+.btn-light {
+  background: #c4c4c4;
+  color: #3d3d3d;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  transition: all 0.3s; }
+  .btn-light:hover {
+    background: #cf7177;
+    color: #fff; }
+
+.grid {
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.5rem; }
+  .grid .item {
+    position: relative;
+    cursor: pointer;
+    background: #cf7177;
+    overflow: hidden;
+    transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item::after {
+      content: '';
+      position: absolute;
+      display: block;
+      background: #7082bd;
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: scale(2) translateX(-75%) translateY(-75%) rotate(-28deg);
+      transition: transform 2s cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item:hover:after {
+      transform: scale(2) translateX(0) translateY(0) rotate(-28deg); }
+    .grid .item-img {
+      width: 100%;
+      height: 35vh;
+      transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1);
+      overflow: hidden; }
+      .grid .item-img img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item:hover img {
+      transform: scale(1.2); }
+    .grid .item-text {
+      height: inherit;
+      position: absolute;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      z-index: 1;
+      transform: translateY(-20%);
+      transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1), transform 500ms cubic-bezier(0.2, 1, 0.3, 1);
+      transition-delay: 300ms;
+      overflow-y: hidden; }
+      .grid .item-text .more {
+        text-transform: uppercase;
+        margin: 0 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        background: #cf7177;
+        border: 1px solid #cf7177;
+        border-radius: 8px;
+        justify-content: center; }
+    .grid .item:hover .item-text {
+      opacity: 1;
+      transform: translateY(0); }
+
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.7rem; }
