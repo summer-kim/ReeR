@@ -1,5 +1,8 @@
 @import './variables.scss';
 
+i {
+  padding-right: 5px;
+}
 .flex-container {
   display: flex;
   justify-content: center;
@@ -41,7 +44,6 @@
   &-light {
     background: $line-color;
     color: $font-color;
-    padding: 1rem 1.5rem;
     border-radius: 5px;
     @extend %vertical-center;
     transition: all 0.3s;
@@ -51,8 +53,18 @@
       color: $font-color-reverse;
     }
   }
-}
+  &-main {
+    background: $main-color;
+    color: $font-color-reverse;
+    border-radius: 5px;
+    transition: all 0.3s;
 
+    &:hover {
+      background: $line-color;
+      color: $font-color;
+    }
+  }
+}
 .grid {
   margin: 1.5rem 0;
   display: grid;
@@ -137,4 +149,41 @@
 .logo {
   font-family: 'Pacifico', cursive;
   font-size: 1.7rem;
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
+  &:hover {
+    color: $main-color;
+    font-size: 1.85rem;
+  }
+}
+
+.bottom-line {
+  margin: auto;
+  width: 70px;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.25px solid $main-color;
+}
+
+.title {
+  i {
+    animation: heartBlinker 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+  }
+  // padding-bottom: 0.5rem;
+  // border-bottom: 1px solid $main-color;
+  margin-top: 0.5rem;
+  font-weight: 300;
+  text-align: center;
+}
+@keyframes heartBlinker {
+  0% {
+    color: $font-color;
+  }
+  25% {
+    color: $main-color;
+  }
+  50% {
+    color: $font-color;
+  }
+  75% {
+    color: $main-color;
+  }
 }

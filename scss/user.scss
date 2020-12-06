@@ -1,0 +1,156 @@
+@import './variables.scss';
+@import './utilities.scss';
+
+//Register, Mypage css
+#login {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-box {
+    text-align: center;
+    padding: 1.5rem;
+    margin: auto;
+    background: $font-color-reverse;
+    width: 450px;
+    height: auto;
+    flex-direction: column;
+    h2 {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+    }
+    .bottom-line {
+      border-bottom: 2px solid $main-color;
+    }
+    .parag {
+      width: 250px;
+      line-height: 1.2;
+
+      font-size: 14px;
+    }
+    .form {
+      margin: 1rem 0;
+      width: 100%;
+      .eachForm {
+        margin-bottom: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        label {
+          text-align: left;
+        }
+        input {
+          margin-top: 3px;
+          height: 22px;
+        }
+      }
+    }
+    .condition {
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 300;
+      a {
+        color: $main-color;
+      }
+    }
+    button {
+      margin: 0.5rem 0;
+      width: 100%;
+      height: 40px;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 1rem;
+      font-family: 'Raleway', sans-serif;
+    }
+  }
+  .loginLink {
+    margin-top: 1rem;
+    @extend %vertical-center;
+    flex-direction: column;
+    font-size: 14px;
+    a {
+      margin-top: 0.5rem;
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      transition: all 0.3s;
+    }
+  }
+}
+#register {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-box {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    margin: auto;
+    background: $font-color-reverse;
+    width: 350px;
+    height: auto;
+    flex-direction: column;
+    h2 {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+    }
+    .bottom-line {
+      border-bottom: 2px solid $main-color;
+    }
+    .parag {
+      width: 250px;
+      line-height: 1.2;
+
+      font-size: 14px;
+    }
+    .form {
+      width: 100%;
+      .eachForm {
+        margin-bottom: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        label {
+          text-align: left;
+        }
+        input {
+          margin-top: 3px;
+          height: 22px;
+        }
+      }
+    }
+    .condition {
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 300;
+      a {
+        color: $main-color;
+      }
+    }
+    button {
+      margin: 0.5rem 0;
+      width: 100%;
+      height: 40px;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 1rem;
+      font-family: 'Raleway', sans-serif;
+    }
+  }
+  .loginLink {
+    @extend %vertical-center;
+    position: relative;
+    top: -70px;
+    font-size: 14px;
+    a {
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      transition: all 0.3s;
+    }
+  }
+}

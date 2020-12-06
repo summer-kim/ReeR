@@ -1,0 +1,275 @@
+.btn-light, .grid .item-text .more, #login .loginLink, #register .loginLink {
+  display: flex;
+  align-items: center; }
+
+.btn-light, .grid .item-text .more, #login .loginLink, #register .loginLink {
+  display: flex;
+  align-items: center; }
+
+i {
+  padding-right: 5px; }
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.m1 {
+  margin: 1rem; }
+
+.m2 {
+  margin: 1rem; }
+
+.m3 {
+  margin: 1rem; }
+
+.p1 {
+  padding: 1rem; }
+
+.p2 {
+  padding: 1rem; }
+
+.p3 {
+  padding: 1rem; }
+
+.parag {
+  margin: 1rem auto;
+  width: 35vw;
+  text-align: center;
+  line-height: 1.45;
+  font-weight: 300; }
+
+.btn-light {
+  background: #c4c4c4;
+  color: #3d3d3d;
+  border-radius: 5px;
+  transition: all 0.3s; }
+  .btn-light:hover {
+    background: #cf7177;
+    color: #fff; }
+
+.btn-main {
+  background: #cf7177;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.3s; }
+  .btn-main:hover {
+    background: #c4c4c4;
+    color: #3d3d3d; }
+
+.grid {
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1.5rem; }
+  .grid .item {
+    position: relative;
+    cursor: pointer;
+    background: #cf7177;
+    overflow: hidden;
+    transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item::after {
+      content: '';
+      position: absolute;
+      display: block;
+      background: #7082bd;
+      opacity: 0.5;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: scale(2) translateX(-75%) translateY(-75%) rotate(-28deg);
+      transition: transform 2s cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item:hover:after {
+      transform: scale(2) translateX(0) translateY(0) rotate(-28deg); }
+    .grid .item-img {
+      width: 100%;
+      height: 35vh;
+      transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1);
+      overflow: hidden; }
+      .grid .item-img img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: transform 750ms cubic-bezier(0.2, 1, 0.3, 1); }
+    .grid .item:hover img {
+      transform: scale(1.2); }
+    .grid .item-text {
+      height: inherit;
+      position: absolute;
+      top: 1.5rem;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      z-index: 1;
+      transform: translateY(-20%);
+      transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1), transform 500ms cubic-bezier(0.2, 1, 0.3, 1);
+      transition-delay: 300ms;
+      overflow-y: hidden; }
+      .grid .item-text .more {
+        text-transform: uppercase;
+        margin: 0 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        background: #cf7177;
+        border: 1px solid #cf7177;
+        border-radius: 8px;
+        justify-content: center; }
+    .grid .item:hover .item-text {
+      opacity: 1;
+      transform: translateY(0); }
+
+.logo {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.7rem;
+  transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1); }
+  .logo:hover {
+    color: #cf7177;
+    font-size: 1.85rem; }
+
+.bottom-line {
+  margin: auto;
+  width: 70px;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.25px solid #cf7177; }
+
+.title {
+  margin-top: 0.5rem;
+  font-weight: 300;
+  text-align: center; }
+  .title i {
+    animation: heartBlinker 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite; }
+
+@keyframes heartBlinker {
+  0% {
+    color: #3d3d3d; }
+  25% {
+    color: #cf7177; }
+  50% {
+    color: #3d3d3d; }
+  75% {
+    color: #cf7177; } }
+
+#login {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  #login-box {
+    text-align: center;
+    padding: 1.5rem;
+    margin: auto;
+    background: #fff;
+    width: 450px;
+    height: auto;
+    flex-direction: column; }
+    #login-box h2 {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 1.5rem; }
+    #login-box .bottom-line {
+      border-bottom: 2px solid #cf7177; }
+    #login-box .parag {
+      width: 250px;
+      line-height: 1.2;
+      font-size: 14px; }
+    #login-box .form {
+      margin: 1rem 0;
+      width: 100%; }
+      #login-box .form .eachForm {
+        margin-bottom: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: column; }
+        #login-box .form .eachForm label {
+          text-align: left; }
+        #login-box .form .eachForm input {
+          margin-top: 3px;
+          height: 22px; }
+    #login-box .condition {
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 300; }
+      #login-box .condition a {
+        color: #cf7177; }
+    #login-box button {
+      margin: 0.5rem 0;
+      width: 100%;
+      height: 40px;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 1rem;
+      font-family: 'Raleway', sans-serif; }
+  #login .loginLink {
+    margin-top: 1rem;
+    flex-direction: column;
+    font-size: 14px; }
+    #login .loginLink a {
+      margin-top: 0.5rem;
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.5rem 1.5rem;
+      transition: all 0.3s; }
+
+#register {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  #register-box {
+    text-align: center;
+    padding: 0.5rem 1rem;
+    margin: auto;
+    background: #fff;
+    width: 350px;
+    height: auto;
+    flex-direction: column; }
+    #register-box h2 {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 1.5rem; }
+    #register-box .bottom-line {
+      border-bottom: 2px solid #cf7177; }
+    #register-box .parag {
+      width: 250px;
+      line-height: 1.2;
+      font-size: 14px; }
+    #register-box .form {
+      width: 100%; }
+      #register-box .form .eachForm {
+        margin-bottom: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: column; }
+        #register-box .form .eachForm label {
+          text-align: left; }
+        #register-box .form .eachForm input {
+          margin-top: 3px;
+          height: 22px; }
+    #register-box .condition {
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 300; }
+      #register-box .condition a {
+        color: #cf7177; }
+    #register-box button {
+      margin: 0.5rem 0;
+      width: 100%;
+      height: 40px;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-size: 1rem;
+      font-family: 'Raleway', sans-serif; }
+  #register .loginLink {
+    position: relative;
+    top: -70px;
+    font-size: 14px; }
+    #register .loginLink a {
+      display: inline-block;
+      margin-left: 0.5rem;
+      padding: 0.25rem 0.75rem;
+      transition: all 0.3s; }

@@ -1,5 +1,7 @@
 @import './utilities.scss';
 @import './variables.scss';
+@import './about.scss';
+@import './user.scss';
 
 * {
   margin: 0;
@@ -20,9 +22,7 @@ a {
 ul {
   list-style: none;
 }
-i {
-  padding-right: 5px;
-}
+
 //nav-bar
 #nav {
   background: $bg-color;
@@ -31,7 +31,7 @@ i {
 
   position: fixed;
   width: 100vw;
-  height: 12vh;
+  height: 65px;
   justify-content: space-between;
   border-bottom: 1px solid $line-color;
 
@@ -47,6 +47,12 @@ i {
       font-size: 14px;
     }
     &:hover {
+      a {
+        color: $font-color-reverse;
+      }
+      background: $main-color;
+    }
+    &.current {
       a {
         color: $font-color-reverse;
       }
@@ -90,6 +96,12 @@ i {
           }
           background: $main-color;
         }
+        &.current {
+          a {
+            color: $font-color-reverse;
+          }
+          background: $main-color;
+        }
       }
       li:nth-child(3) {
         padding: 1rem;
@@ -123,23 +135,16 @@ i {
     font-size: 2rem;
     text-align: center;
   }
+  a {
+    padding: 1rem 1.5rem;
+  }
 }
 
 #main2 {
   width: 100vw;
   flex-direction: column;
   padding-right: 3.5rem;
-  h4 {
-    i {
-      animation: heartBlinker 5s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-        infinite;
-    }
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid $line-color;
-    margin: 0.5rem;
-    font-weight: 300;
-    @extend %vertical-center;
-  }
+
   &-content {
     .item {
       background: $font-color-reverse;
@@ -194,12 +199,7 @@ i {
   padding-right: 3.5rem;
 
   h4 {
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid $line-color;
-
-    margin: 0.5rem;
-    font-weight: 300;
-    @extend %vertical-center;
+    margin-top: 0.5rem;
   }
   &-content {
     .item {
@@ -241,20 +241,5 @@ i {
         background: $bg-color;
       }
     }
-  }
-}
-
-@keyframes heartBlinker {
-  0% {
-    color: $font-color;
-  }
-  25% {
-    color: $main-color;
-  }
-  50% {
-    color: $font-color;
-  }
-  75% {
-    color: $main-color;
   }
 }
