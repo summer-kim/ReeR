@@ -2,12 +2,14 @@
 @import './variables.scss';
 @import './about.scss';
 @import './user.scss';
+@import './tags.scss';
 
 * {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+  outline: none;
 }
 body {
   font-family: 'Raleway', sans-serif;
@@ -16,19 +18,18 @@ body {
 }
 a {
   text-decoration: none;
-  color: $font-color;
+  color: inherit;
   transition: all 0.3s;
 }
-ul {
-  list-style: none;
+i {
+  margin-right: 3px;
 }
 
 //nav-bar
 #nav {
   background: $bg-color;
-  opacity: 0.75;
-  z-index: 1;
-
+  z-index: 2;
+  opacity: 0.9;
   position: fixed;
   width: 100vw;
   height: 65px;
@@ -44,18 +45,18 @@ ul {
 
     @extend %vertical-center;
     i {
-      font-size: 14px;
+      //float: right;
+      padding: 1px 1.5px;
+      //border: 1.5px solid rgb(139, 139, 139);
+      //border-radius: 2px;
+      font-size: 1rem;
     }
     &:hover {
-      a {
-        color: $font-color-reverse;
-      }
+      color: $font-color-reverse;
       background: $main-color;
     }
     &.current {
-      a {
-        color: $font-color-reverse;
-      }
+      color: $font-color-reverse;
       background: $main-color;
     }
   }
@@ -65,47 +66,39 @@ ul {
     text-align: center;
   }
   &-c {
-    //max-width: 20%;
     margin-right: 1rem;
     height: 100%;
     border-left: 1px solid $line-color;
     @extend %vertical-center;
-    ul {
+
+    a {
+      padding: 0 1.5rem;
       height: 100%;
-      width: 100%;
+      @extend %vertical-center;
 
-      li {
-        padding: 0 1.5rem;
-        height: 100%;
-        cursor: pointer;
-        transition: all 0.3s;
+      i {
+        padding: 0.3rem;
+        border: 1.8px solid rgb(129, 129, 129);
         @extend %vertical-center;
-
+        border-radius: 50%;
+      }
+      &:hover {
+        color: $font-color-reverse;
+        background: $main-color;
         i {
-          padding: 0.3rem;
-          border: 1.5px solid $font-color;
-          @extend %vertical-center;
-          border-radius: 50%;
-        }
-        &:hover {
-          a {
-            color: $font-color-reverse;
-          }
-          i {
-            border: 1.5px solid $font-color-reverse;
-          }
-          background: $main-color;
-        }
-        &.current {
-          a {
-            color: $font-color-reverse;
-          }
-          background: $main-color;
+          border-color: $font-color-reverse;
         }
       }
-      li:nth-child(3) {
-        padding: 1rem;
+      &.current {
+        color: $font-color-reverse;
+        background: $main-color;
+        i {
+          border-color: $font-color-reverse;
+        }
       }
+    }
+    a:nth-child(3) {
+      padding: 1rem;
     }
   }
 }
@@ -141,62 +134,61 @@ ul {
 }
 
 #main2 {
-  width: 100vw;
+  // width: 100vw;
   flex-direction: column;
-  padding-right: 3.5rem;
-
+  padding: 2rem 3rem;
+  // min-height: fit-content;
   &-content {
     .item {
       background: $font-color-reverse;
       padding: 1rem;
       box-shadow: 0px 3px 5px -2px rgba(0, 0, 0, 0.2),
         0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-      .title {
+      .movieTitle {
         font-weight: 500;
         font-size: 18px;
         display: inline-block;
         padding-top: 0.5rem;
       }
-      &-second {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .genre {
-        font-weight: 300;
-        font-size: 12px;
-      }
-      .interest {
-        @extend %vertical-center;
-        font-family: 'Arial';
-        i {
-          color: $main-color;
-        }
-      }
-      &-tags {
-        margin: 1rem;
-        line-height: 1.25;
-        text-align: center;
-        position: relative;
-        top: 6%;
-        .tag {
-          display: inline-block;
-          padding: 0.1rem 0.3rem;
-          background: $main-color;
-          color: $font-color-reverse;
-          border: 1px solid $main-color;
-          border-radius: 8px;
-          font-size: 12px;
-        }
-      }
     }
+  }
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .genre {
+    font-weight: 300;
+    font-size: 13px;
+  }
+}
+.interest {
+  @extend %vertical-center;
+  font-family: 'Arial';
+  i {
+    color: $main-color;
+  }
+}
+.tags {
+  margin-top: 1rem;
+  line-height: 1.25;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  .tag {
+    margin: 3px 0;
+    padding: 0.1rem 0.3rem;
+    background: $main-color;
+    color: $font-color-reverse;
+    border: 1px solid $main-color;
+    border-radius: 8px;
+    font-size: 12px;
   }
 }
 
 #main3 {
-  width: 100vw;
   flex-direction: column;
-  padding-right: 3.5rem;
+  padding: 2rem 3rem;
 
   h4 {
     margin-top: 0.5rem;
@@ -205,15 +197,21 @@ ul {
     .item {
       background: $font-color-reverse;
       padding: 1rem;
-      p {
-        padding: 1rem;
-        text-align: center;
+      box-shadow: 0px 3px 5px -2px rgba(0, 0, 0, 0.2),
+        0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+      .title {
+        p {
+          padding: 1rem;
+          text-align: center;
+        }
       }
     }
   }
 }
 
 #footer {
+  position: relative;
+  bottom: 0;
   background: rgb(121, 121, 121);
   color: $font-color-reverse;
   height: 20vh;

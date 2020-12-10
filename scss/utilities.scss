@@ -1,8 +1,5 @@
 @import './variables.scss';
 
-i {
-  padding-right: 5px;
-}
 .flex-container {
   display: flex;
   justify-content: center;
@@ -112,30 +109,49 @@ i {
     }
     &-text {
       height: inherit;
-      position: absolute;
-      top: 1.5rem;
-      left: 0;
-      right: 0;
+      position: relative;
+      top: -100%;
       opacity: 0;
       z-index: 1;
       transform: translateY(-20%);
-      transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1),
-        transform 500ms cubic-bezier(0.2, 1, 0.3, 1);
+      transition: all 300ms cubic-bezier(0.2, 1, 0.3, 1);
       transition-delay: 300ms;
       overflow-y: hidden;
 
-      .more {
-        text-transform: uppercase;
-        margin: 0 1.5rem;
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: $font-color-reverse;
-        padding: 0.5rem 1rem;
-        background: $main-color;
-        border: 1px solid $main-color;
-        border-radius: 8px;
+      .emoji {
+        position: absolute;
+        opacity: 0.8;
+        //margin: 0 1.5rem;
         @extend %vertical-center;
-        justify-content: center;
+        width: 25px;
+        height: 25px;
+        font-size: 13px;
+        color: $font-color-reverse;
+        //padding: 3px;
+        background: $main-color;
+        border: 2px solid $font-color-reverse;
+        border-radius: 50%;
+        transition: all 0.3s;
+        &-heart {
+          top: 3.5%;
+          left: 3.5%;
+        }
+        &-broken {
+          top: 3.5%;
+          left: 13.5%;
+        }
+        &-plus {
+          bottom: 5%;
+          right: 2.5%;
+        }
+        i {
+          margin: auto;
+        }
+        &:hover {
+          color: $main-color;
+          background: $bg-color;
+          border-color: $main-color;
+        }
       }
     }
 
@@ -165,6 +181,7 @@ i {
 
 .title {
   i {
+    height: 20px;
     animation: heartBlinker 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
   }
   // padding-bottom: 0.5rem;

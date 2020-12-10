@@ -20,7 +20,9 @@
   </head>
   <body>
     <nav id="nav" class="flex-container">
-      <a id="nav-a" href="./tags.html"><i class="fas fa-tags"></i>Tags</a>
+      <a id="nav-a" class="current" href="./tags.html"
+        ><i class="fas fa-tags"></i>Tags
+      </a>
       <div id="nav-b">
         <a href="./index.html"><span class="logo">ReeR:</span></a>
       </div>
@@ -30,28 +32,44 @@
         <a href="./mypage.html"><i class="far fa-user"></i></a>
       </div>
     </nav>
-    <section id="main1" class="p2 flex-container">
-      <h1>
-        ReeR:<br />The Best Platform for Contents
-        <span
-          class="txt-type"
-          data-wait="2200"
-          data-words='["Review", "Recommandation", "communication"]'
-        ></span>
-      </h1>
-      <p class="parag">
-        You don't have to wander anymore about what to choose.<br />
-        Just search on ReRe and you can get a quick recommandation for your
-        personal taste.
-      </p>
-      <a href="#" class="btn-light"
-        ><i class="fas fa-angle-double-right"></i>Register</a
-      >
+    <section id="main-filter">
+      <div class="filter flex-container">
+        <div class="flex-container">
+          <div class="sort">
+            <label for="sort">Sort </label>
+            <select name="sort">
+              <option value="Lastest">Newest</option>
+              <option value="Lastest">Like Number</option>
+              <option value="Lastest">Most Popular</option>
+            </select>         
+          </div>
+          <div>
+            <div class="sort-part">
+              Category<i class="fas fa-sort-down arrow"></i>
+              <input type="checkbox" class="toggler">
+              <div class="hidden">
+                <div>
+                  <span>Sth</span>
+                  <span>Milk Tea</span>
+                  <span>Decaffein coffee</span>
+                </div>
+                <div>
+                  <i class="far fa-times-circle"></i>
+                </div>
+              </div>
+            </div>
+          </div>        
+        </div>
+        <div class="bag btn-main">
+          <i class="fas fa-shopping-bag flex-container"></i></span>
+        </div>
+      </div>
     </section>
-    <section id="main2" class="m1 p2 flex-container">
-      <h4 class="title flex-container">
-        <i class="fas fa-heart"></i>Today's Ranking
-      </h4>
+
+    <div id="space110"></div>
+
+    <section id="main2" class="chart-down m1 p2 flex-container">
+      <h4 class="title"><i class="fas fa-heart"></i>Today's Ranking</h4>
       <div class="bottom-line"></div>
       <div id="main2-content" class="grid">
         <a href="./content.html">
@@ -244,54 +262,6 @@
         </a>
       </div>
     </section>
-    <section id="main3" class="m1 p2 flex-container">
-      <h4 class="title">The person who should use ReeR:</h4>
-      <div class="bottom-line"></div>
-      <div id="main3-content" class="grid">
-        <div class="item txt-center">
-          <div class="item-img">
-            <img src="./img/sample.JPG" alt="#" />
-            <div class="item-text">
-              <div class="more">
-                <i class="fas fa-angle-double-right"></i>Go Register!
-              </div>
-            </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-            quibusdam itaque deserunt facere nulla commodi delectus adipisci
-          </p>
-        </div>
-        <div class="item txt-center">
-          <div class="item-img">
-            <img src="./img/sample.JPG" alt="#" />
-            <div class="item-text">
-              <div class="more">
-                <i class="fas fa-angle-double-right"></i>Go Register!
-              </div>
-            </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-            quibusdam itaque deserunt facere nulla commodi delectus adipisci
-          </p>
-        </div>
-        <div class="item txt-center">
-          <div class="item-img">
-            <img src="./img/sample.JPG" alt="#" />
-            <div class="item-text">
-              <div class="more">
-                <i class="fas fa-angle-double-right"></i>Go Register!
-              </div>
-            </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-            quibusdam itaque deserunt facere nulla commodi delectus adipisci
-          </p>
-        </div>
-      </div>
-    </section>
     <footer id="footer" class="p2 flex-container">
       <div id="footer-content">
         <span class="logo">ReeR:</span>
@@ -307,7 +277,6 @@
         <i class="fab fa-linkedin"></i>
       </div>
     </footer>
-
     <script src="js/typewriter.js"></script>
   </body>
 </html>

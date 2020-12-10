@@ -165,6 +165,7 @@ i {
     background: #fff;
     width: 450px;
     height: auto;
+    box-shadow: 2px 2px 1px 0 rgba(95, 95, 95, 0.5);
     flex-direction: column; }
     #login-box h2 {
       font-weight: 500;
@@ -227,7 +228,8 @@ i {
     background: #fff;
     width: 350px;
     height: auto;
-    flex-direction: column; }
+    flex-direction: column;
+    box-shadow: 2px 2px 1px 0 rgba(95, 95, 95, 0.5); }
     #register-box h2 {
       font-weight: 500;
       text-transform: uppercase;
