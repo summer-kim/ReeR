@@ -5,23 +5,31 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  img: {
+  summary: {
     type: String,
     required: true,
   },
-  types: [
+  img: {
+    type: String,
+  },
+  genre: {
+    type: [String],
+    required: true,
+  },
+  likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
       },
-      movieType: {
-        type: [String],
-        required: true,
-      },
     },
+  ],
+  unlikes: [
     {
-      date: { type: Date, default: Date.now },
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
     },
   ],
   rating: [
@@ -35,27 +43,33 @@ const PostSchema = new mongoose.Schema({
         required: true,
       },
     },
-    {
-      date: { type: Date, default: Date.now },
-    },
   ],
-  comments: [
+  tags: [
     {
+      tagName: {
+        type: String,
+        required: true,
+      },
       user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
       },
-      text: {
-        type: String,
-        required: true,
-      },
-      name: {
-        type: String,
-      },
-      date: {
-        type: Date,
-        default: Date.now,
-      },
+      likes: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+          },
+        },
+      ],
+      unlikes: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+          },
+        },
+      ],
     },
   ],
   date: {

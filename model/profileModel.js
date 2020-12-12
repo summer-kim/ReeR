@@ -7,17 +7,16 @@ const ProfileSchema = new mongoose.Schema({
   },
   job: {
     type: String,
-    required: true,
   },
   sex: {
     type: String,
-    required: true,
   },
   favContent: {
     type: [String],
     required: true,
   },
   intContent: {
+    //interesting contents
     type: [String],
   },
   types: {
@@ -25,6 +24,7 @@ const ProfileSchema = new mongoose.Schema({
     required: true,
   },
   frequency: {
+    //how often watching movie or series?
     type: String,
     required: true,
   },
