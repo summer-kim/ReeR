@@ -22,7 +22,7 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty) {
+    if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
@@ -65,19 +65,5 @@ router.post(
     }
   }
 );
-
-// GET '/user'
-// Test
-// Public
-router.get('', (req, res) => {
-  res.json('user router');
-});
-
-// GET '/user'
-// Test
-// Public
-router.get('', (req, res) => {
-  res.json('user router');
-});
 
 module.exports = router;
