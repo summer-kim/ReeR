@@ -1,4 +1,4 @@
-const mongoose = require('mongooose');
+const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
   movieName: {
