@@ -82,6 +82,12 @@
         text-align: center;
       }
     }
+    .not-hover {
+      &:hover {
+        background: $line-color;
+        color: $font-color;
+      }
+    }
   }
   .hidden {
     position: fixed;
