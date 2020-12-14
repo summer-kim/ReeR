@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const PostSchema = new mongoose.Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
   movieName: {
     type: String,
     required: true,
@@ -49,6 +54,7 @@ const PostSchema = new mongoose.Schema({
       tagName: {
         type: String,
         required: true,
+        unique: true,
       },
       user: {
         type: Schema.Types.ObjectId,
