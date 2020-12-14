@@ -7,6 +7,10 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../model/userModel');
+const Post = require('../model/postModel');
+
+const checkObjectId = require('../middleware/checkObjectId');
+const auth = require('../middleware/auth');
 
 // POST '/user/register'
 // register
@@ -37,6 +41,7 @@ router.post(
         name,
         email,
         password,
+        myBag: [],
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -65,5 +70,60 @@ router.post(
     }
   }
 );
+// PUT '/user/myBag/:postid'
+// add post to myBag
+// Private
+router.put(
+  '/myBag/:postid',
+  [auth, checkObjectId('postid')],
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      const post = await Post.findById(req.params.postid);
 
+      if (!post) {
+        return res.status(404).json({ msg: 'Post not found' });
+      }
+      if (user.myBag.some((bag) => bag.post.toString() === req.params.postid)) {
+        return res.status(404).json({ msg: 'Post already been liked' });
+      }
+      user.myBag.unshift({ post: req.params.postid });
+      await user.save();
+      res.json(user.myBag);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+// PUT '/user/myBag/undo/:postid'
+// remove post from myBag
+// Private
+router.put(
+  '/myBag/undo/:postid',
+  [auth, checkObjectId('postid')],
+  async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id);
+      const post = await Post.findById(req.params.postid);
+
+      if (!post) {
+        return res.status(404).json({ msg: 'Post not found' });
+      }
+      if (
+        !user.myBag.some((bag) => bag.post.toString() === req.params.postid)
+      ) {
+        return res.status(404).json({ msg: 'Post not been liked' });
+      }
+      user.myBag = user.myBag.filter(
+        (bag) => bag.post.toString() !== req.params.postid
+      );
+      await user.save();
+      res.json(user.myBag);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
 module.exports = router;
