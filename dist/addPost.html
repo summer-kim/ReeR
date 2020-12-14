@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ReeR: We got your back:)</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" href="./img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <nav id="nav" class="flex-container">
+      <a id="nav-a" href="./tags.html"><i class="fas fa-tags"></i>Tags</a>
+      <div id="nav-b">
+        <a href="./index.html"><span class="logo">ReeR:</span></a>
+      </div>
+      <div id="nav-c" class="flex-container">
+        <a href="./about.html">About</a>
+        <a href="./register.html">Register<br />/Login</a>
+        <a href="mypage.html"><i class="far fa-user"></i></a>
+      </div>
+    </nav>
+
+    <section class="addPost" id="register">
+      <div id="register-box" class="flex-container">
+        <div class="intro">
+          <h2>Upload Post</h2>
+          <div class="bottom-line"></div>
+          <p class="parag">
+            *image is not necessary<br />
+            *You can attach a tag later
+          </p>
+        </div>
+        <div class="form">
+          <form>
+            <div class="eachForm">
+              <label for="movieName">Movie/Series Title</label>
+              <input type="text" name="movieName" id="movieName" />
+            </div>
+            <div class="eachForm">
+              <label for="genre">Genre </label>
+              <span class="guide">separate them with comma(,)</span>
+              <input type="text" name="genre" id="genre" />
+            </div>
+            <div class="eachForm">
+              <label for="summary">Summary</label>
+              <textarea
+                cols="30"
+                rows="5"
+                placeholder="write summary of content simply!"
+                name="summary"
+                id="summary"
+              ></textarea>
+            </div>
+            <div class="eachForm">
+              <label for="img">Image</label>
+              <input type="file" name="img" id="img" />
+            </div>
+
+            <button class="btn-main" type="submit">Post</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <footer id="footer" class="p2 flex-container">
+      <div id="footer-content">
+        <span class="logo">ReeR:</span>
+        <p>Copyright &copy; 2019. All Rights Reserved</p>
+        <p>
+          Contacts of Developer :
+          <span class="develop-name">Dasom Kim</span> dasomi6835@gmail.com
+        </p>
+      </div>
+      <div id="footer-social">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+    </footer>
+  </body>
+</html>
