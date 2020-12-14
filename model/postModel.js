@@ -9,6 +9,7 @@ const PostSchema = new mongoose.Schema({
   movieName: {
     type: String,
     required: true,
+    unique: true,
   },
   summary: {
     type: String,
@@ -54,7 +55,6 @@ const PostSchema = new mongoose.Schema({
       tagName: {
         type: String,
         required: true,
-        unique: true,
       },
       user: {
         type: Schema.Types.ObjectId,
