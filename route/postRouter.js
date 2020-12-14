@@ -24,8 +24,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const user = await User.findById(req.user.id).select('-password');
-
       const { movieName, summary, img = '', genre } = req.body;
       const post = new Post({
         movieName,
@@ -47,8 +45,8 @@ router.post(
 );
 // @route    GET /post
 // @desc     Get all posts
-// @access   Private
-router.get('/', auth, async (req, res) => {
+// @access   Public
+router.get('/', async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
     res.json(posts);
@@ -77,6 +75,8 @@ router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @access   Private
 router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
   try {
+    //Todo
+    //erase post from myBag
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
