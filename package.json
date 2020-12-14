@@ -4,8 +4,10 @@
   "description": "Movie Series Review platform",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js",
-    "start": "node server.js"
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive",
+    "start": "node server.js",
+    "server": "nodemon server",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "express-validator": "^6.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.7",
+    "node-sass": "^5.0.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
