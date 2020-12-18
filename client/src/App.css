@@ -459,12 +459,12 @@
 #register-box {
   text-align: center;
   padding: 0.5rem 1rem;
-  margin: auto;
   background: #fff;
   width: 350px;
   height: auto;
   flex-direction: column;
   box-shadow: 2px 2px 1px 0 rgba(95, 95, 95, 0.5);
+  margin-bottom: 1rem;
 }
 #register-box h2 {
   font-weight: 500;
