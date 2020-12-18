@@ -7,7 +7,7 @@
     "sass": "node-sass -w scss/ -o dist/css/ --recursive",
     "start": "node server.js",
     "server": "nodemon server",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run start --prefix client\""
   },
   "repository": {
     "type": "git",
