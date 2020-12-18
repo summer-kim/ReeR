@@ -157,6 +157,9 @@
 }
 .grid .item-text .emoji i {
   margin: auto;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 .grid .item-text .emoji:hover {
   color: #cf7177;
