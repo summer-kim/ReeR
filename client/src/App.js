@@ -14,6 +14,7 @@ import Login from './component/auth/Login';
 import Register from './component/auth/Register';
 import Header from './component/layout/Header';
 import Mypage from './component/auth/Mypage';
+import About from './component/layout/About';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -33,6 +34,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/mypage' component={Mypage} />
+            <Route exact path='/about' component={About} />
           </Switch>
           <Footer />
         </Fragment>
