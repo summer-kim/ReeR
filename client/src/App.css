@@ -514,8 +514,6 @@
   border: 1px solid rgba(61, 61, 61, 0.85);
 }
 #register .loginLink {
-  position: relative;
-  top: -70px;
   font-size: 14px;
 }
 #register .loginLink a {
