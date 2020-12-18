@@ -1,10 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import Spinner from '../layout/spinner';
+//img
 import sample from '../../img/sample.JPG';
-import lala from '../../img/lala.jpg';
 
-const Home = () => {
+import { getContents } from '../../action/postAction';
+import ContentSitem from '../content/ContentSitem';
+
+const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
+  useEffect(() => {
+    getContents();
+  }, [getContents]);
   return (
     <Fragment>
       <section id='main1' className='p2 flex-container'>
@@ -35,206 +42,15 @@ const Home = () => {
         </h4>
         <div className='bottom-line'></div>
         <div id='main2-content' className='grid'>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src={lala} alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <span className='tag'>Adventureous</span>
-                <span className='tag'>Good to watch at night</span>
-                <span className='tag'>Teach me the lessons of life</span>
-              </div>
-            </div>
-          </a>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src='./img/sample.JPG' alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <span className='tag'>Teach me the lessons of life</span>
-                <span className='tag'>
-                  Kind of Horror, but not as much as make screaming
-                </span>
-                <span className='tag'>My lend Movie top 20</span>
-              </div>
-            </div>
-          </a>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src='./img/cinema.jpg' alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <div className='tag'>Adventureous</div>
-                <div className='tag'>Good to watch at night</div>
-                <div className='tag'>My lend Movie top 20</div>
-              </div>
-            </div>
-          </a>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src='./img/lala.JPG' alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <span className='tag'>Adventureous</span>
-                <span className='tag'>Good to watch at night</span>
-                <span className='tag'>Teach me the lessons of life</span>
-              </div>
-            </div>
-          </a>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src='./img/sample.JPG' alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <span className='tag'>Teach me the lessons of life</span>
-                <span className='tag'>
-                  Kind of Horror, but not as much as make screaming
-                </span>
-                <span className='tag'>My lend Movie top 20</span>
-              </div>
-            </div>
-          </a>
-          <a href='./content.html'>
-            <div className='item'>
-              <div className='item-img'>
-                <img src='./img/cinema.jpg' alt='#' />
-                <div className='item-text'>
-                  <div className='emoji emoji-heart'>
-                    <i className='fas fa-heart'></i>
-                  </div>
-                  <div className='emoji emoji-broken'>
-                    <i className='fas fa-heart-broken'></i>
-                  </div>
-                  <div className='emoji emoji-plus'>
-                    <i className='fas fa-plus'></i>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <span className='movieTitle'>Gone with wind</span>
-              </div>
-              <div className='info'>
-                <span className='genre'> Adventure/SF </span>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-              </div>
-              <div className='tags'>
-                <div className='tag'>Adventureous</div>
-                <div className='tag'>Good to watch at night</div>
-                <div className='tag'>My lend Movie top 20</div>
-              </div>
-            </div>
-          </a>
+          {loading ? (
+            <Spinner />
+          ) : contents.length > 0 ? (
+            contents.map((content) => (
+              <ContentSitem key={content._id} content={content} />
+            ))
+          ) : (
+            <h4>No Content found...</h4>
+          )}
         </div>
       </section>
       <section id='main3' className='m1 p2 flex-container'>
@@ -288,5 +104,11 @@ const Home = () => {
     </Fragment>
   );
 };
-
-export default Home;
+Home.propTypes = {
+  getContents: PropTypes.func.isRequired,
+  postReducer: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  postReducer: state.postReducer,
+});
+export default connect(mapStateToProps, { getContents })(Home);
