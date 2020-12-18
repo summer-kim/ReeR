@@ -1,7 +1,26 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Login = () => {
+import { loginUser } from '../../action/authAction';
+
+const Login = ({ loginUser, isAuthenticated }) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formData;
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onSubmit = (e) => {
+    e.preventDefault();
+    loginUser({ email, password });
+  };
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
+  }
   return (
     <section id='login'>
       <div id='login-box' className='flex-container'>
@@ -16,22 +35,40 @@ const Login = () => {
           </div>
         </div>
         <div className='form'>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className='eachForm'>
-              <label for='Email'>Email</label>
-              <input type='email' name='Email' id='Email' />
+              <label htmlFor='email'>Email</label>
+              <input
+                type='email'
+                name='email'
+                onChange={onChange}
+                value={email}
+              />
             </div>
             <div className='eachForm'>
-              <label for='Password'>Password</label>
-              <input type='password' name='Password' id='Password' />
+              <label htmlFor='password'>Password</label>
+              <input
+                type='password'
+                name='password'
+                onChange={onChange}
+                value={password}
+              />
             </div>
+            <button className='btn-main' type='submit'>
+              Sign in
+            </button>
           </form>
         </div>
-        <button className='btn-main' type='submit'>
-          Sign in
-        </button>
       </div>
     </section>
   );
 };
-export default Login;
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+export default connect(mapStateToProps, { loginUser })(Login);

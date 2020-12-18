@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../action/authAction';
 import PropTypes from 'prop-types';
 
-const Register = ({ registerUser }) => {
+const Register = ({ registerUser, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,6 +22,9 @@ const Register = ({ registerUser }) => {
       registerUser({ name, email, password });
     }
   };
+  if (isAuthenticated) {
+    return <Redirect to='/' />;
+  }
   return (
     <section id='register'>
       <div id='register-box' className='flex-container'>
@@ -94,4 +97,7 @@ const Register = ({ registerUser }) => {
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
 };
-export default connect(null, { registerUser })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+});
+export default connect(mapStateToProps, { registerUser })(Register);
