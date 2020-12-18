@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import alertReducer from './alertReducer';
-// import registerReducer from './registerReducer';
+import authReducer from './authReducer';
 // import profileReducer from './profileReducer';
 //import postReducer from './postReducer';
 
 export default combineReducers({
   alertReducer,
-  // registerReducer,
+  authReducer,
   // profileReducer,
   // postReducer,
 });
