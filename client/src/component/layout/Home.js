@@ -45,9 +45,12 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           {loading ? (
             <Spinner />
           ) : contents.length > 0 ? (
-            contents.map((content) => (
-              <ContentSitem key={content._id} content={content} />
-            ))
+            contents.map(
+              (content, index) =>
+                index <= 2 && (
+                  <ContentSitem key={content._id} content={content} />
+                )
+            )
           ) : (
             <h4>No Content found...</h4>
           )}
@@ -106,7 +109,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
 };
 Home.propTypes = {
   getContents: PropTypes.func.isRequired,
-  postReducer: PropTypes.func.isRequired,
+  postReducer: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
