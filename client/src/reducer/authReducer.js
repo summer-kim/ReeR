@@ -21,6 +21,7 @@ function authReducer(state = initialState, action) {
     case USER_LOADED:
       return {
         ...state,
+        token: localStorage.getItem('token'),
         isAuthenticated: true,
         loading: false,
         user: payload,
