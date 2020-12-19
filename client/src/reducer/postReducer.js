@@ -4,6 +4,9 @@ import {
   CONTENT_ERROR,
   //CLEAR_CONTENT,
   //UPDATE_CONTENT,
+  LIKE_UPDATE,
+  UNLIKE_UPDATE,
+  LIKE_ERROR,
 } from '../action/types';
 
 const initialState = {
@@ -21,6 +24,7 @@ function postReducer(state = initialState, action) {
         ...state,
         contents: payload,
         loading: false,
+        error: {},
       };
     case CONTENT_ERROR:
       return {
@@ -29,6 +33,26 @@ function postReducer(state = initialState, action) {
         loading: false,
         contents: [],
         content: null,
+      };
+    case LIKE_UPDATE:
+      return {
+        ...state,
+        contents: state.contents.map((content) =>
+          content._id === payload.postid
+            ? {
+                ...content,
+                likes: payload.likes,
+              }
+            : content
+        ),
+        loading: false,
+        error: {},
+      };
+    case LIKE_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
       };
     default:
       return state;
