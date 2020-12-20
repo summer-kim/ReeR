@@ -95,5 +95,25 @@ router.put('/myBag/:postid', auth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
+// @route    POST /auth/myBagUndo/:postid
+// @desc     remove content to myBag
+// @access   Private
+router.put('/myBagUndo/:postid', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (
+      !user.myBag.some((list) => list.post.toString() === req.params.postid)
+    ) {
+      return res.status(400).json({ msg: 'this content never been added' });
+    }
+    user.myBag = user.myBag.filter(
+      (list) => list.post.toString() !== req.params.postid
+    );
+    await user.save();
+    res.json(user.myBag);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 module.exports = router;

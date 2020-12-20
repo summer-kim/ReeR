@@ -9,7 +9,7 @@ import {
   unlikePost,
   unlikePostUndo,
 } from '../../action/postAction';
-import { addToMyBag } from '../../action/authAction';
+import { addToMyBag, addToMyBagUndo } from '../../action/authAction';
 
 const ContentSitem = ({
   content: {
@@ -28,6 +28,7 @@ const ContentSitem = ({
   unlikePostUndo,
   authReducer,
   addToMyBag,
+  addToMyBagUndo,
 }) => {
   //variables for change button color depends on User already like content or not
   let Liked = false;
@@ -68,7 +69,7 @@ const ContentSitem = ({
   };
   const onClickMyBag = (e) => {
     if (Put) {
-      unlikePostUndo(_id);
+      addToMyBagUndo(_id);
       Put = false;
     } else {
       addToMyBag(_id);
@@ -200,12 +201,13 @@ const ContentSitem = ({
 };
 ContentSitem.propTypes = {
   content: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
   likePost: PropTypes.func.isRequired,
   likePostUndo: PropTypes.func.isRequired,
-  authReducer: PropTypes.object.isRequired,
-  unlikePost: PropTypes.node.isRequired,
+  unlikePost: PropTypes.func.isRequired,
   unlikePostUndo: PropTypes.func.isRequired,
   addToMyBag: PropTypes.func.isRequired,
+  addToMyBagUndo: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
@@ -216,4 +218,5 @@ export default connect(mapStateToProps, {
   unlikePost,
   unlikePostUndo,
   addToMyBag,
+  addToMyBagUndo,
 })(ContentSitem);

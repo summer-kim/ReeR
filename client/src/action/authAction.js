@@ -100,3 +100,19 @@ export const addToMyBag = (postid) => async (dispatch) => {
     });
   }
 };
+export const addToMyBagUndo = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/auth/myBagUndo/${postid}`);
+
+    dispatch({
+      type: UPDATE_MYBAG,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: MYBAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+    console.log(err.response);
+  }
+};
