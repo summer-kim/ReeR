@@ -8,6 +8,8 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
+export const UPDATE_MYBAG = 'UPDATE_MYBAG';
+export const MYBAG_ERROR = 'MYBAG_ERROR';
 //For Post
 export const GET_CONTENT = 'GET_CONTENT';
 export const GET_CONTENTS = 'GET_CONTENTS';

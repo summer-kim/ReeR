@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  UPDATE_MYBAG,
+  MYBAG_ERROR,
 } from '../action/types';
 
 const initialState = {
@@ -46,6 +48,18 @@ function authReducer(state = initialState, action) {
         isAuthenticated: false,
         loading: false,
         user: null,
+      };
+    case UPDATE_MYBAG:
+      return {
+        ...state,
+        loading: false,
+        user: { ...state.user, myBag: payload },
+      };
+    case MYBAG_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false,
       };
     default:
       return state;

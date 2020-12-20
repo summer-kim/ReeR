@@ -9,6 +9,7 @@ import {
   unlikePost,
   unlikePostUndo,
 } from '../../action/postAction';
+import { addToMyBag } from '../../action/authAction';
 
 const ContentSitem = ({
   content: {
@@ -26,21 +27,26 @@ const ContentSitem = ({
   unlikePost,
   unlikePostUndo,
   authReducer,
+  addToMyBag,
 }) => {
+  //variables for change button color depends on User already like content or not
   let Liked = false;
   let Unliked = false;
-  if (
-    authReducer.user &&
-    likes.some((like) => like.user === authReducer.user._id)
-  ) {
-    Liked = true;
+  //variable for change button color depends on myBag already had content or not
+  let Put = false;
+  if (authReducer.user) {
+    if (likes.some((like) => like.user === authReducer.user._id)) {
+      Liked = true;
+    }
+    if (unlikes.some((unlike) => unlike.user === authReducer.user._id)) {
+      Unliked = true;
+    }
+    if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
+      Put = true;
+    }
   }
-  if (
-    authReducer.user &&
-    unlikes.some((unlike) => unlike.user === authReducer.user._id)
-  ) {
-    Unliked = true;
-  }
+
+  //when User click like heart button
   const onClickLike = (e) => {
     if (Liked) {
       likePostUndo(_id);
@@ -50,6 +56,7 @@ const ContentSitem = ({
       Liked = true;
     }
   };
+  //when User click unlike heart-broken button
   const onClickUnlike = (e) => {
     if (Unliked) {
       unlikePostUndo(_id);
@@ -57,6 +64,15 @@ const ContentSitem = ({
     } else {
       unlikePost(_id);
       Unliked = true;
+    }
+  };
+  const onClickMyBag = (e) => {
+    if (Put) {
+      unlikePostUndo(_id);
+      Put = false;
+    } else {
+      addToMyBag(_id);
+      Put = true;
     }
   };
 
@@ -136,7 +152,12 @@ const ContentSitem = ({
           >
             <i className='fas fa-heart-broken'></i>
           </div>
-          <div className='emoji emoji-plus'>
+          <div
+            onClick={onClickMyBag}
+            className={
+              Put ? 'emoji emoji-plus emoji-reverse' : 'emoji emoji-plus'
+            }
+          >
             <i className='fas fa-plus'></i>
           </div>
         </div>
@@ -184,6 +205,7 @@ ContentSitem.propTypes = {
   authReducer: PropTypes.object.isRequired,
   unlikePost: PropTypes.node.isRequired,
   unlikePostUndo: PropTypes.func.isRequired,
+  addToMyBag: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
@@ -193,4 +215,5 @@ export default connect(mapStateToProps, {
   likePostUndo,
   unlikePost,
   unlikePostUndo,
+  addToMyBag,
 })(ContentSitem);

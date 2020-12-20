@@ -76,5 +76,24 @@ router.post(
     }
   }
 );
+// @route    POST /auth/myBag/:postid
+// @desc     add content to myBag
+// @access   Private
+router.put('/myBag/:postid', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (user.myBag.some((list) => list.post.toString() === req.params.postid)) {
+      return res.status(400).json({ msg: 'Already add this content' });
+    }
+    user.myBag.unshift({
+      post: req.params.postid,
+    });
+    await user.save();
+    res.json(user.myBag);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 module.exports = router;

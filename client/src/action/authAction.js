@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  UPDATE_MYBAG,
+  MYBAG_ERROR,
   // CLEAR_PROFILE,
 } from './types';
 import axios from 'axios';
@@ -82,4 +84,19 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: LOGOUT,
   });
+};
+export const addToMyBag = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/auth/myBag/${postid}`);
+
+    dispatch({
+      type: UPDATE_MYBAG,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: MYBAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
 };
