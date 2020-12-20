@@ -15,6 +15,7 @@ const initialState = {
   isAuthenticated: null,
   loading: true,
   user: null,
+  error: {},
 };
 function authReducer(state = initialState, action) {
   const { type, payload } = action;
@@ -27,6 +28,7 @@ function authReducer(state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         user: payload,
+        error: {},
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
@@ -36,6 +38,7 @@ function authReducer(state = initialState, action) {
         ...payload,
         isAuthenticated: true,
         loading: false,
+        error: {},
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
@@ -48,12 +51,14 @@ function authReducer(state = initialState, action) {
         isAuthenticated: false,
         loading: false,
         user: null,
+        error: {},
       };
     case UPDATE_MYBAG:
       return {
         ...state,
         loading: false,
         user: { ...state.user, myBag: payload },
+        error: {},
       };
     case MYBAG_ERROR:
       return {
