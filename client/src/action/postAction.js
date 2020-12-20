@@ -25,6 +25,7 @@ export const getContents = () => async (dispatch) => {
   }
 };
 
+//like
 export const likePost = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/post/likes/${postid}`);
@@ -45,6 +46,36 @@ export const likePostUndo = (postid) => async (dispatch) => {
     dispatch({
       type: LIKE_UPDATE,
       payload: { postid, likes: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: LIKE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//unlike
+export const unlikePost = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/unlikes/${postid}`);
+    dispatch({
+      type: UNLIKE_UPDATE,
+      payload: { postid, unlikes: res.data },
+    });
+  } catch (err) {
+    dispatch({
+      type: LIKE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+export const unlikePostUndo = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/unlikesBack/${postid}`);
+    dispatch({
+      type: UNLIKE_UPDATE,
+      payload: { postid, unlikes: res.data },
     });
   } catch (err) {
     dispatch({

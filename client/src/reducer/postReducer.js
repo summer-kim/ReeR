@@ -48,6 +48,20 @@ function postReducer(state = initialState, action) {
         loading: false,
         error: {},
       };
+    case UNLIKE_UPDATE:
+      return {
+        ...state,
+        contents: state.contents.map((content) =>
+          content._id === payload.postid
+            ? {
+                ...content,
+                unlikes: payload.unlikes,
+              }
+            : content
+        ),
+        loading: false,
+        error: {},
+      };
     case LIKE_ERROR:
       return {
         ...state,

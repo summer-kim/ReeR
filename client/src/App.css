@@ -181,7 +181,9 @@
   opacity: 1;
   transform: translateY(0);
 }
-
+.grid .item .interest {
+  flex-direction: column;
+}
 .logo {
   font-family: 'Pacifico', cursive;
   font-size: 1.7rem;
@@ -720,6 +722,7 @@
   overflow-x: hidden;
   box-sizing: border-box;
   outline: none;
+  vertical-align: middle;
 }
 
 body {
@@ -849,7 +852,7 @@ i {
 }
 #main2-content .item .movieTitle {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 20px;
   display: inline-block;
   padding-top: 0.5rem;
 }

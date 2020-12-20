@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import lala from '../../img/lala.jpg';
 import PropTypes from 'prop-types';
-import { likePost, likePostUndo } from '../../action/postAction';
+import {
+  likePost,
+  likePostUndo,
+  unlikePost,
+  unlikePostUndo,
+} from '../../action/postAction';
 
 const ContentSitem = ({
   content: {
@@ -18,28 +23,92 @@ const ContentSitem = ({
   },
   likePost,
   likePostUndo,
+  unlikePost,
+  unlikePostUndo,
   authReducer,
 }) => {
-  let addClassLiked = false;
-  // const onClickLike = (e) => {
-  //   likePost(_id);
-  //   if (Object.keys(error).length === 0) {
-  //     toggle(!addClassInput);
-  //   }
-  // };
+  let Liked = false;
+  let Unliked = false;
   if (
     authReducer.user &&
     likes.some((like) => like.user === authReducer.user._id)
   ) {
-    addClassLiked = true;
+    Liked = true;
+  }
+  if (
+    authReducer.user &&
+    unlikes.some((unlike) => unlike.user === authReducer.user._id)
+  ) {
+    Unliked = true;
   }
   const onClickLike = (e) => {
-    if (addClassLiked) {
+    if (Liked) {
       likePostUndo(_id);
-      addClassLiked = false;
+      Liked = false;
     } else {
       likePost(_id);
-      addClassLiked = true;
+      Liked = true;
+    }
+  };
+  const onClickUnlike = (e) => {
+    if (Unliked) {
+      unlikePostUndo(_id);
+      Unliked = false;
+    } else {
+      unlikePost(_id);
+      Unliked = true;
+    }
+  };
+
+  //expose tagname only 3 and fill the rest
+  const sortAndLimitTag = (tags) => {
+    //sort tags by number of likes
+    if (tags) {
+      tags.sort((a, b) => {
+        if (a.likes.length < b.likes.length) {
+          return 1;
+        }
+        if (a.likes.length > b.likes.length) {
+          return -1;
+        }
+        if (a.likes.length === b.likes.length) {
+          return 0;
+        }
+      });
+    }
+    if (tags.length > 3) {
+      tags = tags.slice(0, 3);
+    }
+    switch (tags.length) {
+      case 0:
+        return (
+          <Fragment>
+            <span className='tag'>No Tag! Make your own tag</span>
+            <span className='tag'>No Tag! Make your own tag</span>
+            <span className='tag'>No Tag! Make your own tag</span>
+          </Fragment>
+        );
+      case 1:
+        return (
+          <Fragment>
+            <span className='tag'>{tags[0].tagName}</span>
+            <span className='tag'>No Tag! Make your own tag</span>
+            <span className='tag'>No Tag! Make your own tag</span>
+          </Fragment>
+        );
+      case 2:
+        return (
+          <Fragment>
+            {tags.map((tag) => (
+              <span className='tag'>{tag.tagName}</span>
+            ))}
+            <span className='tag'>No Tag! Make your own tag</span>
+          </Fragment>
+        );
+      case 3:
+        return tags.map((tag) => <span className='tag'>{tag.tagName}</span>);
+      default:
+        break;
     }
   };
   return (
@@ -52,14 +121,19 @@ const ContentSitem = ({
           <div
             onClick={onClickLike}
             className={
-              addClassLiked
-                ? 'emoji emoji-heart emoji-reverse'
-                : 'emoji emoji-heart'
+              Liked ? 'emoji emoji-heart emoji-reverse' : 'emoji emoji-heart'
             }
           >
             <i className='fas fa-heart'></i>
           </div>
-          <div className='emoji emoji-broken'>
+          <div
+            onClick={onClickUnlike}
+            className={
+              Unliked
+                ? 'emoji emoji-broken emoji-reverse'
+                : 'emoji emoji-broken'
+            }
+          >
             <i className='fas fa-heart-broken'></i>
           </div>
           <div className='emoji emoji-plus'>
@@ -89,15 +163,17 @@ const ContentSitem = ({
           })}
         </span>
         <span className='interest'>
-          <i className='fas fa-heart'></i>
-          {likes.length}
+          <span className='interest-span'>
+            <i className='fas fa-heart'></i>
+            {likes.length}
+          </span>
+          <span className='interest-span'>
+            <i className='fas fa-heart-broken'></i>
+            {unlikes.length}
+          </span>
         </span>
       </div>
-      <div className='tags'>
-        <span className='tag'>Adventureous</span>
-        <span className='tag'>Good to watch at night</span>
-        <span className='tag'>Teach me the lessons of life</span>
-      </div>
+      <div className='tags'>{sortAndLimitTag(tags)}</div>
     </div>
   );
 };
@@ -106,10 +182,15 @@ ContentSitem.propTypes = {
   likePost: PropTypes.func.isRequired,
   likePostUndo: PropTypes.func.isRequired,
   authReducer: PropTypes.object.isRequired,
+  unlikePost: PropTypes.node.isRequired,
+  unlikePostUndo: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { likePost, likePostUndo })(
-  ContentSitem
-);
+export default connect(mapStateToProps, {
+  likePost,
+  likePostUndo,
+  unlikePost,
+  unlikePostUndo,
+})(ContentSitem);
