@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
 import { getContents } from '../../action/postAction';
@@ -40,16 +41,16 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
             </div>
           </div>
           <div className='flex-container'>
-            <a href='./addPost.html'>
+            {/* <a href='./addPost.html'>
               <div className='icons btn-main'>
                 <i className='fas fa-plus flex-container'></i>
               </div>
-            </a>
-            <a href='./myBag.html'>
+            </a> */}
+            <Link to='/mybag'>
               <div className='icons btn-main'>
                 <i className='fas fa-shopping-bag flex-container'></i>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </section>
