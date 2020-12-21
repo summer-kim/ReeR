@@ -145,16 +145,16 @@
   transition: all 0.3s;
 }
 .grid .item-text .emoji-heart {
-  top: 3.5%;
-  left: 3.5%;
+  top: 5%;
+  left: 3%;
 }
 .grid .item-text .emoji-broken {
-  top: 3.5%;
-  left: 13.5%;
+  top: 5%;
+  left: 12%;
 }
 .grid .item-text .emoji-plus {
   bottom: 5%;
-  right: 2.5%;
+  right: 3%;
 }
 .grid .item-text .emoji i {
   margin: auto;
