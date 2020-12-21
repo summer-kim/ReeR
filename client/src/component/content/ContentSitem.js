@@ -36,10 +36,13 @@ const ContentSitem = ({
   //variable for change button color depends on myBag already had content or not
   let Put = false;
   if (authReducer.user) {
-    if (likes.some((like) => like.user === authReducer.user._id)) {
+    if (likes && likes.some((like) => like.user === authReducer.user._id)) {
       Liked = true;
     }
-    if (unlikes.some((unlike) => unlike.user === authReducer.user._id)) {
+    if (
+      unlikes &&
+      unlikes.some((unlike) => unlike.user === authReducer.user._id)
+    ) {
       Unliked = true;
     }
     if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
@@ -91,6 +94,7 @@ const ContentSitem = ({
         if (a.likes.length === b.likes.length) {
           return 0;
         }
+        return 0;
       });
     }
     if (tags.length > 3) {
