@@ -67,7 +67,7 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
           ) : contents.length > 0 ? (
             contents.map(
               (content, index) =>
-                index <= 2 && (
+                index <= 30 && (
                   <ContentSitem key={content._id} content={content} />
                 )
             )
