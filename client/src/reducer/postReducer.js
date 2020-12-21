@@ -1,5 +1,5 @@
 import {
-  //GET_CONTENT,
+  GET_CONTENT,
   GET_CONTENTS,
   CONTENT_ERROR,
   //CLEAR_CONTENT,
@@ -23,6 +23,13 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: payload,
+        loading: false,
+        error: {},
+      };
+    case GET_CONTENT:
+      return {
+        ...state,
+        content: payload,
         loading: false,
         error: {},
       };

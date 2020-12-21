@@ -55,6 +55,36 @@ router.get('/', async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+// @route    GET /post/posts
+// @desc     Get all post by ID
+// @access   Private
+router.get('/posts', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    let posts = [];
+    const findPost = async (id) => {
+      const post = await Post.findById(id);
+      if (!post) {
+        return res.status(404).json({ msg: 'Post not found' });
+      }
+      await posts.push(post);
+      console.log(posts);
+      console.log(1);
+    };
+
+    user.myBag.length > 0 &&
+      (await user.myBag.map(async (list) => {
+        await findPost(list.post);
+      }));
+    console.log(posts);
+    console.log(2);
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 // @route    GET /post/:id
 // @desc     Get post by ID
 // @access   Private

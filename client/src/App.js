@@ -16,6 +16,7 @@ import Header from './component/layout/Header';
 import Mypage from './component/auth/Mypage';
 import About from './component/layout/About';
 import Tags from './component/tags/Tags';
+import Mybag from './component/tags/Mybag';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -37,6 +38,7 @@ const App = () => {
             <Route exact path='/mypage' component={Mypage} />
             <Route exact path='/about' component={About} />
             <Route exact path='/tags' component={Tags} />
+            <Route exact path='/mybag' component={Mybag} />
           </Switch>
           <Footer />
         </Fragment>
