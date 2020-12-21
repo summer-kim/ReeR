@@ -1,33 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ authReducer: { isAuthenticated, loading } }) => {
+const Navbar = ({ authReducer: { isAuthenticated, loading }, inTagsPage }) => {
   const authLink = (
-    <Link to='/mypage'>
+    <NavLink to='/mypage' activeClassName='current'>
       <i className='far fa-user'></i>
-    </Link>
+    </NavLink>
   );
   const guestLink = (
-    <Link to='/login'>
-      Register
-      <br />
-      /Login
-    </Link>
+    <NavLink to='/login' activeClassName='current'>
+      Login
+    </NavLink>
   );
+
   return (
     <nav id='nav' className='flex-container'>
-      <Link id='nav-a' to='/tags'>
+      <NavLink activeClassName='current' id='nav-a' to='/tags'>
         <i className='fas fa-tags'></i>Tags
-      </Link>
+      </NavLink>
       <div id='nav-b'>
         <Link to='/'>
           <span className='logo'>ReeR:</span>
         </Link>
       </div>
       <div id='nav-c' className='flex-container'>
-        <Link to='/about'>About</Link>
+        <NavLink to='/about' activeClassName='current'>
+          About
+        </NavLink>
         {!loading && isAuthenticated ? authLink : guestLink}
       </div>
     </nav>
@@ -36,6 +37,7 @@ const Navbar = ({ authReducer: { isAuthenticated, loading } }) => {
 Navbar.propTypes = {
   //logout: PropTypes.func.isRequired,
   authReducer: PropTypes.object.isRequired,
+  inTagsPage: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
