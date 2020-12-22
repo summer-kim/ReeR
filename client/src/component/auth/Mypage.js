@@ -19,7 +19,9 @@ const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
         <Link onClick={logout} className='menu' to='/'>
           Logout
         </Link>
-        <div className='menu'>My Bag</div>
+        <Link to='/mybag' className='menu'>
+          My Bag
+        </Link>
         <div className='menu'>My Likes(post)</div>
         <div className='menu'>My Likes(tag)</div>
         <div className='menu'>My Post</div>

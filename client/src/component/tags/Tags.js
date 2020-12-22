@@ -41,11 +41,11 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
             </div>
           </div>
           <div className='flex-container'>
-            {/* <a href='./addPost.html'>
+            <Link to='/makepost'>
               <div className='icons btn-main'>
                 <i className='fas fa-plus flex-container'></i>
               </div>
-            </a> */}
+            </Link>
             <Link to='/mybag'>
               <div className='icons btn-main'>
                 <i className='fas fa-shopping-bag flex-container'></i>
