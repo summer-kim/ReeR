@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import lala from '../../img/lala.jpg';
@@ -10,6 +10,7 @@ import {
   unlikePostUndo,
 } from '../../action/postAction';
 import { addToMyBag, addToMyBagUndo } from '../../action/authAction';
+import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 const ContentSitem = ({
   content: {
@@ -81,126 +82,76 @@ const ContentSitem = ({
   };
 
   //expose tagname only 3 and fill the rest
-  const sortAndLimitTag = (tags) => {
-    //sort tags by number of likes
-    if (tags) {
-      tags.sort((a, b) => {
-        if (a.likes.length < b.likes.length) {
-          return 1;
-        }
-        if (a.likes.length > b.likes.length) {
-          return -1;
-        }
-        if (a.likes.length === b.likes.length) {
-          return 0;
-        }
-        return 0;
-      });
-    }
-    if (tags.length > 3) {
-      tags = tags.slice(0, 3);
-    }
-    switch (tags.length) {
-      case 0:
-        return (
-          <Fragment>
-            <span className='tag'>No Tag! Make your own tag</span>
-            <span className='tag'>No Tag! Make your own tag</span>
-            <span className='tag'>No Tag! Make your own tag</span>
-          </Fragment>
-        );
-      case 1:
-        return (
-          <Fragment>
-            <span className='tag'>{tags[0].tagName}</span>
-            <span className='tag'>No Tag! Make your own tag</span>
-            <span className='tag'>No Tag! Make your own tag</span>
-          </Fragment>
-        );
-      case 2:
-        return (
-          <Fragment>
-            {tags.map((tag) => (
-              <span className='tag'>{tag.tagName}</span>
-            ))}
-            <span className='tag'>No Tag! Make your own tag</span>
-          </Fragment>
-        );
-      case 3:
-        return tags.map((tag) => <span className='tag'>{tag.tagName}</span>);
-      default:
-        break;
-    }
-  };
+
   return (
-    <div className='item'>
-      <div className='item-img'>
-        <Link to='/content'>
+    <Link to={`/post/${_id}`}>
+      <div className='item'>
+        <div className='item-img'>
           <img src={lala} alt='#' />
-        </Link>
-        <div className='item-text'>
-          <div
-            onClick={onClickLike}
-            className={
-              Liked ? 'emoji emoji-heart emoji-reverse' : 'emoji emoji-heart'
-            }
-          >
-            <i className='fas fa-heart'></i>
-          </div>
-          <div
-            onClick={onClickUnlike}
-            className={
-              Unliked
-                ? 'emoji emoji-broken emoji-reverse'
-                : 'emoji emoji-broken'
-            }
-          >
-            <i className='fas fa-heart-broken'></i>
-          </div>
-          <div
-            onClick={onClickMyBag}
-            className={
-              Put ? 'emoji emoji-plus emoji-reverse' : 'emoji emoji-plus'
-            }
-          >
-            <i className='fas fa-plus'></i>
+          <div className='item-text'>
+            <div
+              onClick={onClickLike}
+              className={
+                Liked ? 'emoji emoji-heart emoji-reverse' : 'emoji emoji-heart'
+              }
+            >
+              <i className='fas fa-heart'></i>
+            </div>
+            <div
+              onClick={onClickUnlike}
+              className={
+                Unliked
+                  ? 'emoji emoji-broken emoji-reverse'
+                  : 'emoji emoji-broken'
+              }
+            >
+              <i className='fas fa-heart-broken'></i>
+            </div>
+            <div
+              onClick={onClickMyBag}
+              className={
+                Put ? 'emoji emoji-plus emoji-reverse' : 'emoji emoji-plus'
+              }
+            >
+              <i className='fas fa-plus'></i>
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-        <span className='movieTitle'>{movieName}</span>
-      </div>
-      <div className='info'>
-        <span>
-          {genre.map((gen, index) => {
-            if (index === genre.length - 1) {
-              return (
-                <span key={index} className='genre'>
-                  {gen.toUpperCase()}
-                </span>
-              );
-            } else {
-              return (
-                <span key={index} className='genre'>
-                  {gen.toUpperCase()}/
-                </span>
-              );
-            }
-          })}
-        </span>
-        <span className='interest'>
-          <span className='interest-span'>
-            <i className='fas fa-heart'></i>
-            {likes.length}
+        <div>
+          <span className='movieTitle'>{movieName}</span>
+        </div>
+        <div className='info'>
+          <span>
+            {genre.map((gen, index) => {
+              if (index === genre.length - 1) {
+                return (
+                  <span key={index} className='genre'>
+                    {gen.toUpperCase()}
+                  </span>
+                );
+              } else {
+                return (
+                  <span key={index} className='genre'>
+                    {gen.toUpperCase()}/
+                  </span>
+                );
+              }
+            })}
           </span>
-          <span className='interest-span'>
-            <i className='fas fa-heart-broken'></i>
-            {unlikes.length}
+          <span className='interest'>
+            <span className='interest-span'>
+              <i className='fas fa-heart'></i>
+              {likes.length}
+            </span>
+            <span className='interest-span'>
+              <i className='fas fa-heart-broken'></i>
+              {unlikes.length}
+            </span>
           </span>
-        </span>
+        </div>
+        <div className='tags'>{sortAndLimitTag(tags)}</div>
       </div>
-      <div className='tags'>{sortAndLimitTag(tags)}</div>
-    </div>
+    </Link>
   );
 };
 ContentSitem.propTypes = {
