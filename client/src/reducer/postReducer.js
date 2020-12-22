@@ -29,18 +29,14 @@ function postReducer(state = initialState, action) {
         loading: false,
         error: {},
       };
-    // case GET_CONTENT:
-    //   return {
-    //     ...state,
-    //     content: state.content.some(
-    //       (content) => content._id.toString() === payload._id.toString()
-    //     )
-    //       ? [...state.content]
-    //       : [...state.content.push(payload)],
-
-    //     loading: false,
-    //     error: {},
-    //   };
+    case GET_CONTENT:
+      return {
+        ...state,
+        content: payload,
+        posting: true,
+        loading: false,
+        error: {},
+      };
     case CREATE_CONTENT:
       return {
         ...state,

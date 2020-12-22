@@ -25,7 +25,21 @@ export const getContents = () => async (dispatch) => {
     });
   }
 };
-
+//get content by postid
+export const getContent = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/post/${postid}`);
+    dispatch({
+      type: GET_CONTENT,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: CONTENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 //get contents in user's myBag
 export const getContentMyBag = () => async (dispatch) => {
   try {
