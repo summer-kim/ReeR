@@ -3,7 +3,7 @@ import {
   GET_CONTENT,
   GET_CONTENTS,
   CONTENT_ERROR,
-  //CLEAR_CONTENT,
+  CREATE_CONTENT,
   //UPDATE_CONTENT,
   LIKE_ERROR,
   LIKE_UPDATE,
@@ -32,6 +32,27 @@ export const getContentMyBag = () => async (dispatch) => {
     const res = await axios.get('/post/myBag');
     dispatch({
       type: GET_CONTENTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: CONTENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//create content
+export const createContent = (formData, history) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  try {
+    const res = await axios.post('/post', formData, config);
+    dispatch({
+      type: CREATE_CONTENT,
       payload: res.data,
     });
   } catch (err) {

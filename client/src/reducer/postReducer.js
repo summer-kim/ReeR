@@ -2,7 +2,7 @@ import {
   GET_CONTENT,
   GET_CONTENTS,
   CONTENT_ERROR,
-  //CLEAR_CONTENT,
+  CREATE_CONTENT,
   //UPDATE_CONTENT,
   LIKE_UPDATE,
   UNLIKE_UPDATE,
@@ -12,6 +12,7 @@ import {
 const initialState = {
   contents: [],
   content: [],
+  posting: false,
   loading: true,
   error: {},
 };
@@ -24,6 +25,7 @@ function postReducer(state = initialState, action) {
         ...state,
         contents: payload,
         content: [],
+        posting: false,
         loading: false,
         error: {},
       };
@@ -39,10 +41,18 @@ function postReducer(state = initialState, action) {
     //     loading: false,
     //     error: {},
     //   };
+    case CREATE_CONTENT:
+      return {
+        ...state,
+        posting: true,
+        loading: false,
+        error: {},
+      };
     case CONTENT_ERROR:
       return {
         ...state,
         error: payload,
+        posting: false,
         loading: false,
         contents: [],
         content: [],
@@ -58,6 +68,7 @@ function postReducer(state = initialState, action) {
               }
             : content
         ),
+        posting: false,
         loading: false,
         error: {},
       };
@@ -72,6 +83,7 @@ function postReducer(state = initialState, action) {
               }
             : content
         ),
+        posting: false,
         loading: false,
         error: {},
       };
@@ -79,6 +91,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         error: payload,
+        posting: false,
         loading: false,
       };
     default:
