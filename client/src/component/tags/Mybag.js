@@ -5,17 +5,16 @@ import PropTypes from 'prop-types';
 import Spinner from '../layout/spinner';
 import ContentSitem from '../content/ContentSitem';
 import { Link, Redirect } from 'react-router-dom';
-import { getContentsByid } from '../../action/postAction';
+import { getContentMyBag } from '../../action/postAction';
 
 const Mybag = ({
-  getContentsByid,
+  getContentMyBag,
   authReducer: { isAuthenticated },
-  postReducer,
+  postReducer: { contents, loading },
 }) => {
   useEffect(() => {
-    getContentsByid();
-  }, [getContentsByid]);
-
+    getContentMyBag();
+  }, [getContentMyBag]);
   if (!isAuthenticated) {
     return <Redirect to='/tags' />;
   }
@@ -50,12 +49,12 @@ const Mybag = ({
             </div>
           </div>
           <div className='flex-container'>
-            <a href='./addPost.html'>
+            <Link to='/makepost'>
               <div className='icons btn-main'>
                 <i className='fas fa-plus flex-container'></i>
               </div>
-            </a>
-            <Link to='/Mybag' className='current'>
+            </Link>
+            <Link to='/mybag' className='current'>
               <div className='icons btn-main'>
                 <i className='fas fa-shopping-bag flex-container'></i>
               </div>
@@ -72,14 +71,17 @@ const Mybag = ({
         </h4>
         <div className='bottom-line'></div>
         <div id='main2-content' className='grid'>
-          {postReducer.loading ? (
+          {loading ? (
             <Spinner />
-          ) : postReducer.contents.length > 0 ? (
-            postReducer.contents.map((content) => (
-              <ContentSitem key={content._id} content={content} />
-            ))
+          ) : contents.length > 0 ? (
+            contents.map(
+              (content, index) =>
+                index <= 30 && (
+                  <ContentSitem key={content._id} content={content} />
+                )
+            )
           ) : (
-            <h4>No Content found...</h4>
+            <h4 className='title'>No Content found...</h4>
           )}
         </div>
       </section>
@@ -89,10 +91,10 @@ const Mybag = ({
 Mybag.propTypes = {
   authReducer: PropTypes.object.isRequired,
   postReducer: PropTypes.object.isRequired,
-  getContentsByid: PropTypes.func.isRequired,
+  getContentMyBag: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { getContentsByid })(Mybag);
+export default connect(mapStateToProps, { getContentMyBag })(Mybag);

@@ -11,7 +11,7 @@ import {
 
 const initialState = {
   contents: [],
-  content: null,
+  content: [],
   loading: true,
   error: {},
 };
@@ -23,23 +23,29 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: payload,
+        content: [],
         loading: false,
         error: {},
       };
-    case GET_CONTENT:
-      return {
-        ...state,
-        content: payload,
-        loading: false,
-        error: {},
-      };
+    // case GET_CONTENT:
+    //   return {
+    //     ...state,
+    //     content: state.content.some(
+    //       (content) => content._id.toString() === payload._id.toString()
+    //     )
+    //       ? [...state.content]
+    //       : [...state.content.push(payload)],
+
+    //     loading: false,
+    //     error: {},
+    //   };
     case CONTENT_ERROR:
       return {
         ...state,
         error: payload,
         loading: false,
         contents: [],
-        content: null,
+        content: [],
       };
     case LIKE_UPDATE:
       return {

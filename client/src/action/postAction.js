@@ -26,10 +26,10 @@ export const getContents = () => async (dispatch) => {
   }
 };
 
-//get contents by id
-export const getContentsByid = () => async (dispatch) => {
+//get contents in user's myBag
+export const getContentMyBag = () => async (dispatch) => {
   try {
-    const res = await axios.get('/post/posts');
+    const res = await axios.get('/post/myBag');
     dispatch({
       type: GET_CONTENTS,
       payload: res.data,
