@@ -1,46 +1,69 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getContent } from '../../action/postAction';
+import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
-const contentItem = () => {
+import lala from '../../img/lala.jpg';
+
+const ContentItem = ({ getContent, postReducer: { content }, match }) => {
+  useEffect(() => {
+    getContent(match.params.postid);
+  }, [getContent]);
+
+  const {
+    _id = '',
+    movieName = '',
+    genre = [],
+    summary = '',
+    img = '',
+    user = '',
+    likes = [],
+    unlikes = [],
+    tags = [],
+  } = content;
   return (
     <Fragment>
       <div id='space80'></div>
       <section id='about1' className='m1 p2 flex-container'>
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
-            <img src='./img/lala.jpg' alt='' />
+            <img src={lala} alt='' />
           </div>
           <div id='about1-bio-side'>
             <div>
-              <h1>LaLa Land</h1>
+              <h1>{movieName}</h1>
               <div className='bottom-line'></div>
             </div>
             <div>
               <div className='info'>
-                <span className='genre'> Adventure/SF </span>
+                <span>
+                  {' '}
+                  {genre.map((gen, index) => {
+                    if (index === genre.length - 1) {
+                      return (
+                        <span key={index} className='genre'>
+                          {gen.toUpperCase()}
+                        </span>
+                      );
+                    } else {
+                      return (
+                        <span key={index} className='genre'>
+                          {gen.toUpperCase()}/
+                        </span>
+                      );
+                    }
+                  })}
+                </span>
                 <span className='interest'>
-                  <i className='fas fa-heart'></i>98
+                  <i className='fas fa-heart'></i>
+                  {likes ? likes.length : 0}
                 </span>
               </div>
               <div className='summary'>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Perspiciatis nostrum, eaque velit ipsam facilis sed, quisquam
-                  nesciunt unde nihil voluptatum commodi consequuntur molestiae?
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Dolorum, tempore!
-                </p>
+                <p>{summary}</p>
               </div>
-              <div className='tags'>
-                <span className='tag'>
-                  <span>#</span>Adventureous
-                </span>
-                <span className='tag'>
-                  <span>#</span>Good to watch at night
-                </span>
-                <span className='tag'>
-                  <span>#</span>Teach me the lessons of life
-                </span>
-              </div>
+              <div className='tags'>{sortAndLimitTag(tags)}</div>
             </div>
           </div>
         </div>
@@ -177,4 +200,11 @@ const contentItem = () => {
     </Fragment>
   );
 };
-export default contentItem;
+ContentItem.propTypes = {
+  getContent: PropTypes.func.isRequired,
+  postReducer: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  postReducer: state.postReducer,
+});
+export default connect(mapStateToProps, { getContent })(ContentItem);
