@@ -73,7 +73,7 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
                 )
             )
           ) : (
-            <h4>No Content found...</h4>
+            <h4 className='parag'>No Content found...</h4>
           )}
         </div>
       </section>
