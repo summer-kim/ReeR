@@ -65,7 +65,7 @@ const Mybag = ({
 
       <div id='space110'></div>
 
-      <section id='main2' className='chart-down m1 p2 flex-container'>
+      <section id='main2' className='chart-down flex-container myBag'>
         <h4 className='title flex-container'>
           <i className='fas fa-heart'></i>My Bag
         </h4>

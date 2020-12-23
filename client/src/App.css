@@ -674,6 +674,11 @@
   top: 0;
   z-index: 0;
 }
+.myBag {
+  background: #bec9d8b6;
+  margin-top: 1rem;
+  padding: 2rem 4rem !important;
+}
 
 #space110 {
   height: 110px;
