@@ -53,6 +53,7 @@ const ContentSitem = ({
 
   //when User click like heart button
   const onClickLike = (e) => {
+    e.preventDefault();
     if (Liked) {
       likePostUndo(_id);
       Liked = false;
@@ -63,6 +64,7 @@ const ContentSitem = ({
   };
   //when User click unlike heart-broken button
   const onClickUnlike = (e) => {
+    e.preventDefault();
     if (Unliked) {
       unlikePostUndo(_id);
       Unliked = false;
@@ -72,6 +74,7 @@ const ContentSitem = ({
     }
   };
   const onClickMyBag = (e) => {
+    e.preventDefault();
     if (Put) {
       addToMyBagUndo(_id);
       Put = false;
