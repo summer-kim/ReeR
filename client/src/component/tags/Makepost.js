@@ -9,7 +9,7 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
     movieName: '',
     summary: '',
     img: '',
-    genre: '',
+    genre: [],
   });
   if (posting) {
     return <Redirect to='/tags' />;
@@ -45,15 +45,118 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
                 onChange={(e) => onChange(e)}
               />
             </div>
-            <div class='eachForm'>
+            <div className='eachForm'>
               <label for='genre'>Genre </label>
-              <span class='guide'>Separate them with comma ( , )</span>
-              <input
-                type='text'
-                name='genre'
-                value={genre}
-                onChange={(e) => onChange(e)}
-              />
+              <div className='checkGenre'>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='SF'
+                    onChange={(e) => onChange(e)}
+                  />
+                  SF
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Fantasy'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Fantasy
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Drama'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Drama
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Comedy'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Comedy
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Horror'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Horror
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Thriller'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Thriller
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Kids'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Kids
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Family'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Family
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Animation'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Animation
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Action'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Action
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Crime'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Crime
+                </span>
+                <span className='eachCheck'>
+                  <input
+                    type='checkbox'
+                    name='genre'
+                    value='Romance'
+                    onChange={(e) => onChange(e)}
+                  />
+                  Romance
+                </span>
+              </div>
             </div>
             <div class='eachForm'>
               <label for='summary'>Summary</label>
