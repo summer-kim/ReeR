@@ -17,6 +17,7 @@ import Mypage from './component/auth/Mypage';
 import About from './component/layout/About';
 import Tags from './component/tags/Tags';
 import Mybag from './component/tags/Mybag';
+import Mylikes from './component/tags/Mylikes';
 import Makepost from './component/tags/Makepost';
 import ContentItem from './component/content/ContentItem';
 
@@ -41,6 +42,7 @@ const App = () => {
             <Route exact path='/about' component={About} />
             <Route exact path='/tags' component={Tags} />
             <Route exact path='/mybag' component={Mybag} />
+            <Route exact path='/mylikes' component={Mylikes} />
             <Route exact path='/makepost' component={Makepost} />
             <Route exact path='/post/:postid' component={ContentItem} />
           </Switch>

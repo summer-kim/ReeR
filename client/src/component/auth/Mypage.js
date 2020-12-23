@@ -22,7 +22,9 @@ const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
         <Link to='/mybag' className='menu'>
           My Bag
         </Link>
-        <div className='menu'>My Likes(post)</div>
+        <Link to='/mylikes' className='menu'>
+          My Likes(post)
+        </Link>
         <div className='menu'>My Likes(tag)</div>
         <div className='menu'>My Post</div>
       </div>

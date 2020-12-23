@@ -73,6 +73,24 @@ router.get('/myBag', auth, async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+// @route    GET /post/likes
+// @desc     Get all post in user.likes
+// @access   Private
+router.get('/likes', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    let idList = [];
+    user.likes.forEach((list) => idList.push(list.post));
+
+    const posts = await Post.find({ _id: idList });
+
+    res.json(posts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 // @route    GET /post/:id
 // @desc     Get post by ID
 // @access   Private

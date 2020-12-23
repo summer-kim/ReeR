@@ -55,6 +55,21 @@ export const getContentMyBag = () => async (dispatch) => {
     });
   }
 };
+//get contents in user's myBag
+export const getContentMylikes = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/post/likes');
+    dispatch({
+      type: GET_CONTENTS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: CONTENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 //create content
 export const createContent = (formData, history) => async (dispatch) => {
