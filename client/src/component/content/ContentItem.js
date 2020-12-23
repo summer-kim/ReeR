@@ -1,16 +1,26 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getContent } from '../../action/postAction';
+import { addTag } from '../../action/tagAction';
+
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import lala from '../../img/lala.jpg';
 
-const ContentItem = ({ getContent, postReducer: { content }, match }) => {
+const ContentItem = ({
+  getContent,
+  addTag,
+  postReducer: { content },
+  match,
+}) => {
   useEffect(() => {
     getContent(match.params.postid);
   }, [getContent]);
 
+  const [tagData, setData] = useState({
+    tagName: '',
+  });
   const {
     _id = '',
     movieName = '',
@@ -22,6 +32,14 @@ const ContentItem = ({ getContent, postReducer: { content }, match }) => {
     unlikes = [],
     tags = [],
   } = content;
+
+  const { tagName } = tagData;
+  const onChange = (e) =>
+    setData({ ...tagData, [e.target.name]: e.target.value });
+  const onSubmit = (e) => {
+    e.preventDefault();
+    addTag({ tagData, _id });
+  };
   return (
     <Fragment>
       <div id='space80'></div>
@@ -74,125 +92,46 @@ const ContentItem = ({ getContent, postReducer: { content }, match }) => {
         </h4>
         <div className='tagBox p1'>
           <div className='tagList grid'>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Adventureous
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  {' '}
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Lorem ipsum dolor sit amet,
-                consectetur adipisicing.
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  {' '}
-                  <i className='fas fa-heart'></i>98{' '}
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Adventureous
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Lorem ipsum dolor sit amet
-                consectetur adipisicing elit.
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Adventureous
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Lorem ipsum dolor sit amet.
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Lorem ipsum dolor sit.
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
-            <div className='tag'>
-              <div className='tagName flex-container'>
-                <i className='fas fa-hashtag'></i>Lorem ipsum dolor sit amet
-                consectetur.
-              </div>
-              <div className='people-like'>
-                <span className='interest'>
-                  <i className='fas fa-heart'></i>98
-                </span>
-                <span className='interest'>
-                  <i className='fas fa-heart-broken'></i>100
-                </span>
-              </div>
-            </div>
+            {tags.length > 0 ? (
+              tags.map((tag) => (
+                <div className='tag'>
+                  <div className='tagName flex-container'>
+                    <i className='fas fa-hashtag'></i>
+                    {tag.tagName}
+                  </div>
+                  <div className='people-like'>
+                    <span className='interest'>
+                      {' '}
+                      <i className='fas fa-heart'></i>
+                      {tag.likes.length}
+                    </span>
+                    <span className='interest'>
+                      <i className='fas fa-heart-broken'></i>
+                      {tag.unlikes.length}
+                    </span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <h4 className='parag'> No Tag founded </h4>
+            )}
           </div>
           <div className='tagInput flex-container'>
             <i className='fas fa-plus'></i>
             <i className='fas fa-hashtag hashTag'></i>
-            <input
-              className='inputBox'
-              classtype='text'
-              placeholder='Tag Name (50 letters limit)'
-            />
-            <input className='btn-main' type='submit' value='ADD' />
+            <form onSubmit={onSubmit}>
+              <input
+                className='inputBox'
+                classtype='text'
+                placeholder='Tag Name (50 letters limit)'
+                name='tagName'
+                value={tagName}
+                onChange={onChange}
+              />
+              <button className='btn-main' type='submit'>
+                ADD
+              </button>
+            </form>
           </div>
         </div>
       </section>
@@ -203,8 +142,9 @@ const ContentItem = ({ getContent, postReducer: { content }, match }) => {
 ContentItem.propTypes = {
   getContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
+  addTag: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { getContent })(ContentItem);
+export default connect(mapStateToProps, { getContent, addTag })(ContentItem);
