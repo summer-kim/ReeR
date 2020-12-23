@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getContent } from '../../action/postAction';
-import { addTag } from '../../action/tagAction';
+import { addTag, removeTag } from '../../action/tagAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
@@ -11,6 +11,7 @@ import lala from '../../img/lala.jpg';
 const ContentItem = ({
   getContent,
   addTag,
+  removeTag,
   postReducer: { content },
   match,
   authReducer,
@@ -103,7 +104,10 @@ const ContentItem = ({
                     {tag.tagName}
                   </div>
                   <div className='people-like'>
-                    <span className='trash'>
+                    <span
+                      className='trash'
+                      onClick={() => removeTag({ postid: _id, tagid: tag._id })}
+                    >
                       {tag.user === authReducer.user._id ? (
                         <i class='fas fa-trash-alt'></i>
                       ) : (
@@ -156,10 +160,13 @@ ContentItem.propTypes = {
   getContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   addTag: PropTypes.func.isRequired,
+  removeTag: PropTypes.func.isRequired,
   authReducer: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { getContent, addTag })(ContentItem);
+export default connect(mapStateToProps, { getContent, addTag, removeTag })(
+  ContentItem
+);

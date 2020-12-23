@@ -7,7 +7,7 @@ import {
   LIKE_UPDATE,
   UNLIKE_UPDATE,
   LIKE_ERROR,
-  ADD_TAG,
+  TAG_UPDATE,
   TAG_ERROR,
 } from '../action/types';
 
@@ -93,7 +93,7 @@ function postReducer(state = initialState, action) {
         posting: false,
         loading: false,
       };
-    case ADD_TAG:
+    case TAG_UPDATE:
       return {
         ...state,
         content: { ...state.content, tags: payload },
