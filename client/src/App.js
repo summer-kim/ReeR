@@ -14,6 +14,7 @@ import Login from './component/auth/Login';
 import Register from './component/auth/Register';
 import Header from './component/layout/Header';
 import Mypage from './component/auth/Mypage';
+import Mypost from './component/auth/Mypost';
 import About from './component/layout/About';
 import Tags from './component/tags/Tags';
 import Mybag from './component/tags/Mybag';
@@ -39,6 +40,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/mypage' component={Mypage} />
+            <Route exact path='/mypost' component={Mypost} />
             <Route exact path='/about' component={About} />
             <Route exact path='/tags' component={Tags} />
             <Route exact path='/mybag' component={Mybag} />

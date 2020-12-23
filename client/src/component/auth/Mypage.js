@@ -22,11 +22,13 @@ const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
         <Link to='/mybag' className='menu'>
           My Bag
         </Link>
-        <Link to='/mylikes' className='menu'>
-          My Likes(post)
+        <Link to='/mypost' className='menu'>
+          My Post
         </Link>
-        <div className='menu'>My Likes(tag)</div>
-        <div className='menu'>My Post</div>
+        <Link to='/mylikes' className='menu'>
+          My Likes (post)
+        </Link>
+        {/* <div className='menu'>My Likes(tag)</div> */}
       </div>
     </section>
   );
