@@ -125,12 +125,10 @@ router.put('/likes/:postid', auth, async (req, res) => {
     if (user.likes.some((list) => list.post.toString() === req.params.postid)) {
       return res.status(400).json({ msg: 'Already add this content' });
     }
-    console.log(1);
     user.likes.unshift({
       post: req.params.postid,
     });
     await user.save();
-    console.log(user.likes);
     res.json(user.likes);
   } catch (err) {
     console.error(err.message);
