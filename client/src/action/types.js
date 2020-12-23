@@ -9,7 +9,8 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_MYBAG = 'UPDATE_MYBAG';
-export const MYBAG_ERROR = 'MYBAG_ERROR';
+export const UPDATE_MYLIKES = 'UPDATE_MYLIKES';
+export const PUT_ERROR = 'PUT_ERROR';
 //For Post
 export const GET_CONTENT = 'GET_CONTENT';
 export const GET_CONTENTS = 'GET_CONTENTS';
@@ -22,5 +23,4 @@ export const LIKE_ERROR = 'LIKE_ERROR';
 //for Tag
 export const TAG_UPDATE = 'TAG_UPDATE';
 export const TAG_ERROR = 'TAG_ERROR';
-//export const ADD_TAG = 'ADD_TAG';
 //export const ADD_TAG = 'ADD_TAG';

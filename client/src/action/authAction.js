@@ -7,7 +7,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   UPDATE_MYBAG,
-  MYBAG_ERROR,
+  UPDATE_MYLIKES,
+  PUT_ERROR,
   // CLEAR_PROFILE,
 } from './types';
 import axios from 'axios';
@@ -95,7 +96,7 @@ export const addToMyBag = (postid) => async (dispatch) => {
     });
   } catch (err) {
     dispatch({
-      type: MYBAG_ERROR,
+      type: PUT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
@@ -110,9 +111,38 @@ export const addToMyBagUndo = (postid) => async (dispatch) => {
     });
   } catch (err) {
     dispatch({
-      type: MYBAG_ERROR,
+      type: PUT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
-    console.log(err.response);
+  }
+};
+export const addToMylikes = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/auth/likes/${postid}`);
+
+    dispatch({
+      type: UPDATE_MYLIKES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PUT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+export const addToMylikesUndo = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/auth/likesUndo/${postid}`);
+
+    dispatch({
+      type: UPDATE_MYLIKES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PUT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

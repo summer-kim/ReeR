@@ -9,7 +9,12 @@ import {
   unlikePost,
   unlikePostUndo,
 } from '../../action/postAction';
-import { addToMyBag, addToMyBagUndo } from '../../action/authAction';
+import {
+  addToMyBag,
+  addToMyBagUndo,
+  addToMylikes,
+  addToMylikesUndo,
+} from '../../action/authAction';
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 const ContentSitem = ({
@@ -30,6 +35,8 @@ const ContentSitem = ({
   authReducer,
   addToMyBag,
   addToMyBagUndo,
+  addToMylikes,
+  addToMylikesUndo,
 }) => {
   //variables for change button color depends on User already like content or not
   let Liked = false;
@@ -56,9 +63,11 @@ const ContentSitem = ({
     e.preventDefault();
     if (Liked) {
       likePostUndo(_id);
+      addToMylikesUndo(_id);
       Liked = false;
     } else {
       likePost(_id);
+      addToMylikes(_id);
       Liked = true;
     }
   };
@@ -166,6 +175,8 @@ ContentSitem.propTypes = {
   unlikePostUndo: PropTypes.func.isRequired,
   addToMyBag: PropTypes.func.isRequired,
   addToMyBagUndo: PropTypes.func.isRequired,
+  addToMylikes: PropTypes.func.isRequired,
+  addToMylikesUndo: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
@@ -177,4 +188,6 @@ export default connect(mapStateToProps, {
   unlikePostUndo,
   addToMyBag,
   addToMyBagUndo,
+  addToMylikes,
+  addToMylikesUndo,
 })(ContentSitem);

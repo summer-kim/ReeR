@@ -7,7 +7,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   UPDATE_MYBAG,
-  MYBAG_ERROR,
+  UPDATE_MYLIKES,
+  PUT_ERROR,
 } from '../action/types';
 
 const initialState = {
@@ -60,7 +61,14 @@ function authReducer(state = initialState, action) {
         user: { ...state.user, myBag: payload },
         error: {},
       };
-    case MYBAG_ERROR:
+    case UPDATE_MYLIKES:
+      return {
+        ...state,
+        loading: false,
+        user: { ...state.user, likes: payload },
+        error: {},
+      };
+    case PUT_ERROR:
       return {
         ...state,
         error: payload,

@@ -76,7 +76,7 @@ router.post(
     }
   }
 );
-// @route    POST /auth/myBag/:postid
+// @route    PUT /auth/myBag/:postid
 // @desc     add content to myBag
 // @access   Private
 router.put('/myBag/:postid', auth, async (req, res) => {
@@ -95,7 +95,7 @@ router.put('/myBag/:postid', auth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-// @route    POST /auth/myBagUndo/:postid
+// @route    PUT /auth/myBagUndo/:postid
 // @desc     remove content to myBag
 // @access   Private
 router.put('/myBagUndo/:postid', auth, async (req, res) => {
@@ -111,6 +111,48 @@ router.put('/myBagUndo/:postid', auth, async (req, res) => {
     );
     await user.save();
     res.json(user.myBag);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+// @route    PUT /auth/likes/:postid
+// @desc     add content to likes
+// @access   Private
+router.put('/likes/:postid', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (user.likes.some((list) => list.post.toString() === req.params.postid)) {
+      return res.status(400).json({ msg: 'Already add this content' });
+    }
+    console.log(1);
+    user.likes.unshift({
+      post: req.params.postid,
+    });
+    await user.save();
+    console.log(user.likes);
+    res.json(user.likes);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+// @route    PUT /auth/likesUndo/:postid
+// @desc     remove content to likes
+// @access   Private
+router.put('/likesUndo/:postid', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    if (
+      !user.likes.some((list) => list.post.toString() === req.params.postid)
+    ) {
+      return res.status(400).json({ msg: 'this content never been added' });
+    }
+    user.likes = user.likes.filter(
+      (list) => list.post.toString() !== req.params.postid
+    );
+    await user.save();
+    res.json(user.likes);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
