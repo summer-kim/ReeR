@@ -54,7 +54,6 @@ const PostSchema = new mongoose.Schema({
     {
       tagName: {
         type: String,
-        required: true,
       },
       user: {
         type: Schema.Types.ObjectId,
