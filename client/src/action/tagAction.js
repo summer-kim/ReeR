@@ -35,3 +35,61 @@ export const removeTag = ({ postid, tagid }) => async (dispatch) => {
     });
   }
 };
+export const likeTag = ({ postid, tagid }) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/tags/likes/${postid}/${tagid}`);
+    dispatch({
+      type: TAG_UPDATE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const likeTagUndo = ({ postid, tagid }) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/tags/likesBack/${postid}/${tagid}`);
+    dispatch({
+      type: TAG_UPDATE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+export const unlikeTag = ({ postid, tagid }) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/tags/unlikes/${postid}/${tagid}`);
+    dispatch({
+      type: TAG_UPDATE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const unlikeTagUndo = ({ postid, tagid }) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/post/tags/unlikesBack/${postid}/${tagid}`);
+    dispatch({
+      type: TAG_UPDATE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: TAG_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

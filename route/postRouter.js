@@ -252,7 +252,7 @@ router.put(
       tag.likes.unshift(newLike);
       await post.save();
 
-      res.json(tag);
+      res.json(post.tags);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -282,7 +282,7 @@ router.put(
       tag.unlikes.unshift(newUnlike);
       await post.save();
 
-      res.json(tag);
+      res.json(post.tags);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -308,7 +308,7 @@ router.put(
         (like) => like.user.toString() !== req.user.id
       );
       await post.save();
-      res.json(tag);
+      res.json(post.tags);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
@@ -336,7 +336,7 @@ router.put(
         (unlike) => unlike.user.toString() !== req.user.id
       );
       await post.save();
-      res.json(tag);
+      res.json(post.tags);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
