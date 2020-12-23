@@ -1,6 +1,9 @@
 import React from 'react';
 
 const Footer = () => {
+  const urlLinked = 'https://www.linkedin.com/in/dasom-kim-0218';
+  const urlInsta = 'https://www.instagram.com/summer_in__winter_/';
+  const urlGithub = 'https://github.com/summer-kim';
   return (
     <footer id='footer' className='p2 flex-container'>
       <div id='footer-content'>
@@ -12,9 +15,15 @@ const Footer = () => {
         </p>
       </div>
       <div id='footer-social'>
-        <i className='fab fa-facebook'></i>
-        <i className='fab fa-instagram'></i>
-        <i className='fab fa-linkedin'></i>
+        <a href={urlGithub}>
+          <i class='fab fa-github'></i>
+        </a>
+        <a href={urlInsta}>
+          <i className='fab fa-instagram'></i>
+        </a>
+        <a href={urlLinked}>
+          <i className='fab fa-linkedin'></i>
+        </a>
       </div>
     </footer>
   );
