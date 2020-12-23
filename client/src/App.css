@@ -367,22 +367,24 @@
   border-radius: 5px;
   border: 2px solid #c4c4c4;
 }
-.tagBox .tagInput {
-  width: 100%;
+
+.tagBox .tagInput form {
+  width: 70%;
+  display: flex;
 }
 .tagBox .tagInput .inputBox {
-  width: 70%;
-  height: 25px;
+  flex: 12;
 }
-.tagBox .tagInput .btn-main {
+.tagBox .tagInput form .btn-main {
+  flex: 1;
   border: none;
-  padding: 4px;
+  padding: 6px 12px;
   margin-left: 5px;
 }
 .tagBox .tagInput .hashTag {
   background: #cf7177;
   color: #fff;
-  padding: 4px;
+  padding: 5px;
   margin-left: 5px;
   margin-right: 0;
 }
