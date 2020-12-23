@@ -212,6 +212,9 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    if (req.body.tagName.length > 50) {
+      return res.status(400).json({ errors: '50 letters limit' });
+    }
     try {
       const post = await Post.findById(req.params.id);
       const newTag = {
