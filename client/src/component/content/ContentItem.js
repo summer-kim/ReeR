@@ -13,6 +13,7 @@ const ContentItem = ({
   addTag,
   postReducer: { content },
   match,
+  authReducer,
 }) => {
   useEffect(() => {
     getContent(match.params.postid);
@@ -34,11 +35,13 @@ const ContentItem = ({
   } = content;
 
   const { tagName } = tagData;
+  const inputBox = document.getElementById('inputBox');
   const onChange = (e) =>
     setData({ ...tagData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
     e.preventDefault();
     addTag({ tagData, _id });
+    inputBox.value = '';
   };
   return (
     <Fragment>
@@ -100,14 +103,23 @@ const ContentItem = ({
                     {tag.tagName}
                   </div>
                   <div className='people-like'>
-                    <span className='interest'>
-                      {' '}
-                      <i className='fas fa-heart'></i>
-                      {tag.likes.length}
+                    <span className='trash'>
+                      {tag.user === authReducer.user._id ? (
+                        <i class='fas fa-trash-alt'></i>
+                      ) : (
+                        ''
+                      )}
                     </span>
-                    <span className='interest'>
-                      <i className='fas fa-heart-broken'></i>
-                      {tag.unlikes.length}
+                    <span className='flex-container'>
+                      <span className='interest'>
+                        {' '}
+                        <i className='fas fa-heart'></i>
+                        {tag.likes.length}
+                      </span>
+                      <span className='interest'>
+                        <i className='fas fa-heart-broken'></i>
+                        {tag.unlikes.length}
+                      </span>
                     </span>
                   </div>
                 </div>
@@ -127,6 +139,7 @@ const ContentItem = ({
                 name='tagName'
                 value={tagName}
                 onChange={onChange}
+                id='inputBox'
               />
               <button className='btn-main' type='submit'>
                 ADD
@@ -143,8 +156,10 @@ ContentItem.propTypes = {
   getContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   addTag: PropTypes.func.isRequired,
+  authReducer: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
+  authReducer: state.authReducer,
 });
 export default connect(mapStateToProps, { getContent, addTag })(ContentItem);

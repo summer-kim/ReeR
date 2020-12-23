@@ -354,18 +354,23 @@
 }
 .tagBox .tag .people-like {
   font-size: 14px;
-  float: right;
+  justify-content: space-between;
   display: flex;
 }
-.tagBox .tag .people-like .interest {
+.tagBox .tag .people-like .interest i {
   margin: 0 2px;
   padding: 1px 3px;
   border: 2px solid #fff;
   transition: all 0.3s;
 }
-.tagBox .tag .people-like .interest:hover {
+.tagBox .tag .people-like .interest i:hover {
+  background: #cf7177;
   border-radius: 5px;
-  border: 2px solid #c4c4c4;
+  color: #fff;
+  border: 2px solid #cf7177;
+}
+.tagBox .trash:hover {
+  color: #333333;
 }
 
 .tagBox .tagInput form {
