@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
@@ -12,11 +12,65 @@ const Mypost = ({
   authReducer: { isAuthenticated, user },
   postReducer: { contents = [], loading },
 }) => {
+  const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
+  const { contentsMarked, sort } = sortedData;
   useEffect(() => {
     getContents();
   }, [getContents]);
   if (!isAuthenticated) {
     return <Redirect to='/' />;
+  }
+  const onClickGenre = (e) => {
+    if (e.target.classList.contains('picked')) {
+      e.target.classList.remove('picked');
+      setData({ ...sortedData, contentsMarked: [] });
+    } else {
+      const gen = e.target.innerText;
+      const contentsPrep = contents.filter((content) =>
+        content.genre.includes(gen)
+      );
+      e.target.classList.add('picked');
+      setData({ ...sortedData, contentsMarked: contentsPrep });
+    }
+  };
+  const sortSelected = (e) => {
+    setData({ ...sortedData, sort: e.target.value });
+  };
+  if (sort === 'Liked') {
+    if (contentsMarked.length > 0) {
+      contentsMarked.sort((a, b) => {
+        if (a.likes.length < b.likes.length) {
+          return 1;
+        }
+        if (a.likes.length > b.likes.length) {
+          return -1;
+        }
+        if (a.likes.length === b.likes.length) {
+          return 0;
+        }
+        return 0;
+      });
+    } else {
+      contents.sort((a, b) => {
+        if (a.likes.length < b.likes.length) {
+          return 1;
+        }
+        if (a.likes.length > b.likes.length) {
+          return -1;
+        }
+        if (a.likes.length === b.likes.length) {
+          return 0;
+        }
+        return 0;
+      });
+    }
+  }
+  if (sort === 'Newest') {
+    if (contentsMarked.length > 0) {
+      contentsMarked.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      contents.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
   }
   return (
     <Fragment>
@@ -24,10 +78,9 @@ const Mypost = ({
         <div className='filter flex-container'>
           <div className='flex-container'>
             <div className='sort'>
-              <select name='sort'>
-                <option value='Lastest'>Newest</option>
-                <option value='Lastest'>Like Number</option>
-                <option value='Lastest'>Most Popular</option>
+              <select name='sort' value={sort} onChange={sortSelected}>
+                <option value='Newest'>Newest</option>
+                <option value='Liked'>Liked Number</option>
               </select>
             </div>
             <div>
@@ -36,28 +89,22 @@ const Mypost = ({
                 <input type='checkbox' className='toggler' />
                 <div className='hidden'>
                   <div>
-                    <span>Sth</span>
-                    <span>Milk Tea</span>
-                    <span>Decaffein coffee</span>
-                  </div>
-                  <div>
-                    <i className='far fa-times-circle'></i>
+                    <span onClick={onClickGenre}>SF</span>
+                    <span onClick={onClickGenre}>Fantasy</span>
+                    <span onClick={onClickGenre}>Drama</span>
+                    <span onClick={onClickGenre}>Comedy</span>
+                    <span onClick={onClickGenre}>Horror</span>
+                    <span onClick={onClickGenre}>Thriller</span>
+                    <span onClick={onClickGenre}>Kids</span>
+                    <span onClick={onClickGenre}>Family</span>
+                    <span onClick={onClickGenre}>Animation</span>
+                    <span onClick={onClickGenre}>Action</span>
+                    <span onClick={onClickGenre}>Crime</span>
+                    <span onClick={onClickGenre}>Romance</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className='flex-container'>
-            <Link to='/makepost'>
-              <div className='icons btn-main'>
-                <i className='fas fa-plus flex-container'></i>
-              </div>
-            </Link>
-            <Link to='/mybag'>
-              <div className='icons btn-main'>
-                <i className='fas fa-shopping-bag flex-container'></i>
-              </div>
-            </Link>
           </div>
         </div>
       </section>
@@ -73,15 +120,25 @@ const Mypost = ({
           {loading ? (
             <Spinner />
           ) : contents.some((content) => content.user === user._id) ? (
-            contents.map((content) => {
-              if (content.user === user._id) {
-                return <ContentSitem key={content._id} content={content} />;
-              } else {
-                return;
-              }
-            })
+            contentsMarked.length > 0 ? (
+              contentsMarked.map((content) => {
+                if (content.user === user._id) {
+                  return <ContentSitem key={content._id} content={content} />;
+                } else {
+                  return;
+                }
+              })
+            ) : (
+              contents.map((content) => {
+                if (content.user === user._id) {
+                  return <ContentSitem key={content._id} content={content} />;
+                } else {
+                  return;
+                }
+              })
+            )
           ) : (
-            <h4 className='parag'>No Content found...</h4>
+            <h4 className='parag'>No Content Created...</h4>
           )}
         </div>
       </section>
