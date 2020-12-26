@@ -138,13 +138,13 @@ const ContentSitem = ({
               if (index === genre.length - 1) {
                 return (
                   <span key={index} className='genre'>
-                    {gen.toUpperCase()}
+                    {gen}
                   </span>
                 );
               } else {
                 return (
                   <span key={index} className='genre'>
-                    {gen.toUpperCase()}/
+                    {gen}/
                   </span>
                 );
               }

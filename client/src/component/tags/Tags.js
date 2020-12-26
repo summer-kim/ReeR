@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -8,33 +8,93 @@ import { getContents } from '../../action/postAction';
 import Spinner from '../layout/spinner';
 
 const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
+  const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
+  const { contentsMarked, sort } = sortedData;
   useEffect(() => {
     getContents();
   }, [getContents]);
+
+  const onClickGenre = (e) => {
+    if (e.target.classList.contains('picked')) {
+      e.target.classList.remove('picked');
+      setData({ ...sortedData, contentsMarked: [] });
+    } else {
+      const gen = e.target.innerText;
+      const contentsPrep = contents.filter((content) =>
+        content.genre.includes(gen)
+      );
+      e.target.classList.add('picked');
+      setData({ ...sortedData, contentsMarked: contentsPrep });
+    }
+  };
+  const sortSelected = (e) => {
+    setData({ ...sortedData, sort: e.target.value });
+  };
+  if (sort === 'Liked') {
+    if (contentsMarked.length > 0) {
+      contentsMarked.sort((a, b) => {
+        if (a.likes.length < b.likes.length) {
+          return 1;
+        }
+        if (a.likes.length > b.likes.length) {
+          return -1;
+        }
+        if (a.likes.length === b.likes.length) {
+          return 0;
+        }
+        return 0;
+      });
+    } else {
+      contents.sort((a, b) => {
+        if (a.likes.length < b.likes.length) {
+          return 1;
+        }
+        if (a.likes.length > b.likes.length) {
+          return -1;
+        }
+        if (a.likes.length === b.likes.length) {
+          return 0;
+        }
+        return 0;
+      });
+    }
+  }
+  if (sort === 'Newest') {
+    if (contentsMarked.length > 0) {
+      contentsMarked.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else {
+      contents.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
+  }
   return (
     <Fragment>
       <section id='main-filter'>
         <div className='filter flex-container'>
           <div className='flex-container'>
             <div className='sort'>
-              <select name='sort'>
-                <option value='Lastest'>Newest</option>
-                <option value='Lastest'>Like Number</option>
-                <option value='Lastest'>Most Popular</option>
+              <select name='sort' value={sort} onChange={sortSelected}>
+                <option value='Newest'>Newest</option>
+                <option value='Liked'>Liked Number</option>
               </select>
             </div>
             <div>
               <div className='sort-part'>
-                Category<i className='fas fa-sort-down arrow'></i>
+                Genre<i className='fas fa-sort-down arrow'></i>
                 <input type='checkbox' className='toggler' />
                 <div className='hidden'>
                   <div>
-                    <span>Sth</span>
-                    <span>Milk Tea</span>
-                    <span>Decaffein coffee</span>
-                  </div>
-                  <div>
-                    <i className='far fa-times-circle'></i>
+                    <span onClick={onClickGenre}>SF</span>
+                    <span onClick={onClickGenre}>Fantasy</span>
+                    <span onClick={onClickGenre}>Drama</span>
+                    <span onClick={onClickGenre}>Comedy</span>
+                    <span onClick={onClickGenre}>Horror</span>
+                    <span onClick={onClickGenre}>Thriller</span>
+                    <span onClick={onClickGenre}>Kids</span>
+                    <span onClick={onClickGenre}>Family</span>
+                    <span onClick={onClickGenre}>Animation</span>
+                    <span onClick={onClickGenre}>Action</span>
+                    <span onClick={onClickGenre}>Crime</span>
+                    <span onClick={onClickGenre}>Romance</span>
                   </div>
                 </div>
               </div>
@@ -65,6 +125,13 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
+          ) : contentsMarked.length > 0 ? (
+            contentsMarked.map(
+              (content, index) =>
+                index <= 30 && (
+                  <ContentSitem key={content._id} content={content} />
+                )
+            )
           ) : contents.length > 0 ? (
             contents.map(
               (content, index) =>
@@ -73,7 +140,7 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
                 )
             )
           ) : (
-            <h4 className='parag'>No Content found...</h4>
+            <h4 className='parag'> No contents founded...</h4>
           )}
         </div>
       </section>
