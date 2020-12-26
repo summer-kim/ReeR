@@ -97,7 +97,7 @@ const ContentItem = ({
         <div className='tagBox p1'>
           <div className='tagList grid'>
             {tags.length > 0 ? (
-              tags.map((tag) => <Tagbox tag={tag} postid={_id} />)
+              tags.map((tag) => <Tagbox tag={tag} postid={_id} key={tag._id} />)
             ) : (
               <h4 className='parag'> No Tag founded </h4>
             )}
