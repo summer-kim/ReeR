@@ -896,13 +896,20 @@ i {
   display: inline-block;
   padding-top: 0.5rem;
 }
-
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+.item-info > div {
+  display: flex;
+  flex-direction: column;
+}
 .info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.info .genre {
+.genre {
   font-weight: 300;
   font-size: 13px;
 }
@@ -913,7 +920,13 @@ i {
 .interest i {
   color: #cf7177;
 }
-
+.preview-interest {
+  font-family: 'Arial';
+  text-align: right;
+}
+.preview-interest i {
+  color: #cf7177;
+}
 .tags {
   margin-top: 1rem;
   line-height: 1.25;
