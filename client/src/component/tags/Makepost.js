@@ -16,7 +16,13 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
   }
   const { movieName, summary, img, genre } = formData;
   const onChange = (e) => {
-    setData({ ...formData, [e.target.name]: e.target.value });
+    setData({
+      ...formData,
+      [e.target.name]:
+        e.target.name === 'genre'
+          ? [...formData.genre, e.target.value]
+          : e.target.value,
+    });
   };
   const onSubmit = (e) => {
     e.preventDefault();

@@ -29,12 +29,9 @@ router.post(
         movieName,
         summary,
         img,
-        genre: Array.isArray(genre)
-          ? genre
-          : genre.split(',').map((sth) => sth.trim()),
-        user: req.user.id,
+        genre,
       });
-
+      console.log(genre);
       await post.save();
       res.json(post);
     } catch (err) {
