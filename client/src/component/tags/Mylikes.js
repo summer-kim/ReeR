@@ -1,16 +1,18 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
 import { getContentMylikes } from '../../action/postAction';
 import Spinner from '../layout/spinner';
+import { setAlert } from '../../action/alertAction';
 
 const Mylikes = ({
   getContentMylikes,
   authReducer: { isAuthenticated },
   postReducer: { contents = [], loading },
+  setAlert,
 }) => {
   const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
   const { contentsMarked, sort } = sortedData;
@@ -29,6 +31,9 @@ const Mylikes = ({
       const contentsPrep = contents.filter((content) =>
         content.genre.includes(gen)
       );
+      if (contentsPrep.length === 0) {
+        return setAlert(`Contents of ${gen} has not been liked yet`);
+      }
       e.target.classList.add('picked');
       setData({ ...sortedData, contentsMarked: contentsPrep });
     }
@@ -119,9 +124,12 @@ Mylikes.propTypes = {
   getContentMylikes: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { getContentMylikes })(Mylikes);
+export default connect(mapStateToProps, { getContentMylikes, setAlert })(
+  Mylikes
+);

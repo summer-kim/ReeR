@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 
 import Spinner from '../layout/spinner';
 import ContentSitem from '../content/ContentSitem';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { getContentMyBag } from '../../action/postAction';
+import { setAlert } from '../../action/alertAction';
 
 const Mybag = ({
   getContentMyBag,
   authReducer: { isAuthenticated },
   postReducer: { contents = [], loading },
+  setAlert,
 }) => {
   const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
   const { contentsMarked, sort } = sortedData;
@@ -29,6 +31,9 @@ const Mybag = ({
       const contentsPrep = contents.filter((content) =>
         content.genre.includes(gen)
       );
+      if (contentsPrep.length === 0) {
+        return setAlert(`Contents of ${gen} has not been added yet`);
+      }
       e.target.classList.add('picked');
       setData({ ...sortedData, contentsMarked: contentsPrep });
     }
@@ -119,9 +124,10 @@ Mybag.propTypes = {
   authReducer: PropTypes.object.isRequired,
   postReducer: PropTypes.object.isRequired,
   getContentMyBag: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { getContentMyBag })(Mybag);
+export default connect(mapStateToProps, { getContentMyBag, setAlert })(Mybag);

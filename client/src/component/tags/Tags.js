@@ -30,7 +30,7 @@ const Tags = ({
         content.genre.includes(gen)
       );
       if (contentsPrep.length === 0) {
-        setAlert(`Contents of ${gen} has not been created yet`);
+        return setAlert(`Contents of ${gen} has not been created yet`);
       }
       e.target.classList.add('picked');
       setData({ ...sortedData, contentsMarked: contentsPrep });
