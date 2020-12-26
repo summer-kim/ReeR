@@ -787,6 +787,7 @@ i {
   z-index: 2;
   opacity: 0.9;
   position: fixed;
+  top: 0;
   width: 100vw;
   height: 65px;
   justify-content: space-between;
@@ -992,4 +993,18 @@ i {
 #footer-social i:hover {
   color: #cf7177;
   background: #ebebeb;
+}
+.alert {
+  position: fixed;
+  top: 65px;
+  left: 30%;
+  width: 40vw;
+  font-size: 1.2rem;
+  padding: 1rem;
+  text-align: center;
+  margin: 0.3rem;
+  background: #cf7177;
+  border-radius: 10px;
+  color: #ebebeb;
+  transition: all 0.3s;
 }

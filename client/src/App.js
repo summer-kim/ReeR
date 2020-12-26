@@ -10,6 +10,8 @@ import setAuthToken from './util/setAuthToken';
 import Home from './component/layout/Home';
 import Navbar from './component/layout/Navbar';
 import Footer from './component/layout/Footer';
+import Alert from './component/layout/Alert';
+
 import Login from './component/auth/Login';
 import Register from './component/auth/Register';
 import Header from './component/layout/Header';
@@ -36,18 +38,21 @@ const App = () => {
           <Header />
           <Navbar />
           <Route exact path='/' component={Home} />
-          <Switch>
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/mypage' component={Mypage} />
-            <Route exact path='/mypost' component={Mypost} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/tags' component={Tags} />
-            <Route exact path='/mybag' component={Mybag} />
-            <Route exact path='/mylikes' component={Mylikes} />
-            <Route exact path='/makepost' component={Makepost} />
-            <Route exact path='/post/:postid' component={ContentItem} />
-          </Switch>
+          <section className='container'>
+            <Alert />
+            <Switch>
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/mypage' component={Mypage} />
+              <Route exact path='/mypost' component={Mypost} />
+              <Route exact path='/about' component={About} />
+              <Route exact path='/tags' component={Tags} />
+              <Route exact path='/mybag' component={Mybag} />
+              <Route exact path='/mylikes' component={Mylikes} />
+              <Route exact path='/makepost' component={Makepost} />
+              <Route exact path='/post/:postid' component={ContentItem} />
+            </Switch>
+          </section>
           <Footer />
         </Fragment>
       </Router>
