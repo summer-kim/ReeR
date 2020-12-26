@@ -19,8 +19,8 @@ router.post(
   '/register',
   [
     check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Please provide valid email').isEmail(),
-    check('password', 'Provide password at least 6 characters').isLength({
+    check('email', 'Please provide valid Email').isEmail(),
+    check('password', 'Password has to be at least 6 letters').isLength({
       min: 6,
     }),
   ],
@@ -34,7 +34,7 @@ router.post(
     try {
       let user = await User.findOne({ email });
       if (user) {
-        return res.status(400).json({ msg: 'User already exists' });
+        return res.status(400).json({ errors: 'User already exists' });
       }
 
       user = new User({

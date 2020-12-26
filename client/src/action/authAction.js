@@ -13,6 +13,7 @@ import {
 } from './types';
 import axios from 'axios';
 import setAuthToken from '../util/setAuthToken';
+import { setAlert } from './alertAction';
 
 export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
@@ -47,11 +48,14 @@ export const registerUser = ({ name, email, password }) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    // const errors = err.response.data.errors;
-
-    //  if (errors) {
-    //    errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    //  }
+    const errors = err.response.data.errors;
+    if (Array.isArray(errors)) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'fail')));
+      console.log('arr');
+    } else if (errors) {
+      dispatch(setAlert(errors, 'fail'));
+      console.log('exist');
+    }
     dispatch({
       type: REGISTER_FAIL,
     });
