@@ -1007,4 +1007,5 @@ i {
   border-radius: 10px;
   color: #ebebeb;
   transition: all 0.3s;
+  z-index: 5;
 }
