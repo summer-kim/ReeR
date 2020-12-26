@@ -156,7 +156,7 @@ export const unlikePostUndo = (postid) => async (dispatch) => {
 
 export const deleteContent = (postid) => async (dispatch) => {
   try {
-    const res = await axios.delete(`/post/${postid}`);
+    await axios.delete(`/post/${postid}`);
     dispatch({
       type: DELETE_CONTENT,
     });

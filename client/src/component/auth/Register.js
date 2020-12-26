@@ -80,9 +80,9 @@ const Register = ({ registerUser, isAuthenticated, setAlert }) => {
           <p>
             By clicking the Sign Up button, you agree to our
             <br />
-            <a href='#'>Terms & Conditions</a>
+            <Link to='#'>Terms & Conditions</Link>
             and
-            <a href='#'>Privacy Policy</a>
+            <Link to='#'>Privacy Policy</Link>
           </p>
         </div>
       </div>

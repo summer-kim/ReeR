@@ -14,7 +14,7 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
   if (posting) {
     return <Redirect to='/tags' />;
   }
-  const { movieName, summary, img, genre } = formData;
+  const { movieName, summary, img } = formData;
   const onChange = (e) => {
     setData({
       ...formData,

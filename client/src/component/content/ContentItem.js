@@ -8,7 +8,6 @@ import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import lala from '../../img/lala.jpg';
 import Tagbox from '../tags/Tagbox';
-import { withRouter } from 'react-router-dom';
 
 const ContentItem = ({
   getContent,
@@ -21,7 +20,7 @@ const ContentItem = ({
 }) => {
   useEffect(() => {
     getContent(match.params.postid);
-  }, [getContent]);
+  }, [getContent, match.params.postid]);
 
   const [tagData, setData] = useState({
     tagName: '',
