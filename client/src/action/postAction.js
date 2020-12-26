@@ -9,6 +9,7 @@ import {
   LIKE_UPDATE,
   UNLIKE_UPDATE,
 } from './types';
+import { setAlert } from './alertAction';
 
 //get all contents
 export const getContents = () => async (dispatch) => {
@@ -84,6 +85,7 @@ export const createContent = (formData, history) => async (dispatch) => {
       type: CREATE_CONTENT,
       payload: res.data,
     });
+    dispatch(setAlert('Post has successfully created', 'success'));
   } catch (err) {
     dispatch({
       type: CONTENT_ERROR,

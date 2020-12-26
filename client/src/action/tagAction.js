@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { TAG_UPDATE, TAG_ERROR } from './types';
+import { setAlert } from './alertAction';
 
 //get all contents
 export const addTag = ({ tagData, _id }) => async (dispatch) => {
@@ -14,6 +15,7 @@ export const addTag = ({ tagData, _id }) => async (dispatch) => {
       type: TAG_UPDATE,
       payload: res.data,
     });
+    dispatch(setAlert('Tag has successfully added', 'success'));
   } catch (err) {
     dispatch({
       type: TAG_ERROR,
@@ -28,6 +30,7 @@ export const removeTag = ({ postid, tagid }) => async (dispatch) => {
       type: TAG_UPDATE,
       payload: res.data,
     });
+    dispatch(setAlert('Tag has successfully removed', 'success'));
   } catch (err) {
     dispatch({
       type: TAG_ERROR,

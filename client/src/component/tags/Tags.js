@@ -5,9 +5,15 @@ import { Link } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
 import { getContents } from '../../action/postAction';
+import { setAlert } from '../../action/alertAction';
+
 import Spinner from '../layout/spinner';
 
-const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
+const Tags = ({
+  getContents,
+  postReducer: { contents = [], loading },
+  setAlert,
+}) => {
   const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
   const { contentsMarked, sort } = sortedData;
   useEffect(() => {
@@ -23,6 +29,9 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
       const contentsPrep = contents.filter((content) =>
         content.genre.includes(gen)
       );
+      if (contentsPrep.length === 0) {
+        setAlert(`Contents of ${gen} has not been created yet`);
+      }
       e.target.classList.add('picked');
       setData({ ...sortedData, contentsMarked: contentsPrep });
     }
@@ -150,8 +159,9 @@ const Tags = ({ getContents, postReducer: { contents = [], loading } }) => {
 Tags.propTypes = {
   getContents: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { getContents })(Tags);
+export default connect(mapStateToProps, { getContents, setAlert })(Tags);
