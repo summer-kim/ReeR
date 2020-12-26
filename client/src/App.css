@@ -943,11 +943,24 @@ i {
   box-shadow: 0px 3px 5px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
-#main3-content .item .title p {
+#main3-content .item p {
   padding: 1rem;
   text-align: center;
 }
-
+#main3-content .more {
+  display: block;
+  padding: 0.5rem 1rem;
+  background: #cf7177;
+  border-radius: 5px;
+  border: 1px solid #cf7177;
+  color: #fff;
+  transition: all 0.3s;
+}
+#main3-content .more:hover {
+  background: #fff;
+  border: 1px solid #a7a7a7;
+  color: #6d6d6d;
+}
 #footer {
   position: relative;
   bottom: 0;
