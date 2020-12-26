@@ -30,6 +30,7 @@ router.post(
         summary,
         img,
         genre,
+        user: req.user.id,
       });
       console.log(genre);
       await post.save();

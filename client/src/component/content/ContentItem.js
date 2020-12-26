@@ -13,6 +13,7 @@ const ContentItem = ({
   getContent,
   addTag,
   postReducer: { content },
+  authReducer,
   match,
 }) => {
   useEffect(() => {
@@ -58,6 +59,9 @@ const ContentItem = ({
               <div className='bottom-line'></div>
             </div>
             <div>
+              <div className='summary'>
+                <p>{summary}</p>
+              </div>
               <div className='info'>
                 <span>
                   {' '}
@@ -80,12 +84,20 @@ const ContentItem = ({
                 <span className='interest'>
                   <i className='fas fa-heart'></i>
                   {likes ? likes.length : 0}
+                  <span> : </span>
+                  <i className='fas fa-heart-broken'></i>
+                  {unlikes ? unlikes.length : 0}
                 </span>
               </div>
-              <div className='summary'>
-                <p>{summary}</p>
-              </div>
+
               <div className='tags'>{sortAndLimitTag(tags)}</div>
+              <div className='trash'>
+                {!authReducer.loading && user === authReducer.user._id ? (
+                  <i class='fas fa-trash-alt'></i>
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -129,9 +141,11 @@ const ContentItem = ({
 ContentItem.propTypes = {
   getContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
+  authReducer: PropTypes.object.isRequired,
   addTag: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
+  authReducer: state.authReducer,
 });
 export default connect(mapStateToProps, { getContent, addTag })(ContentItem);
