@@ -129,36 +129,37 @@ const ContentSitem = ({
             </div>
           </div>
         </div>
-        <div>
-          <span className='movieTitle'>{movieName}</span>
-        </div>
-        <div className='info'>
-          <span>
-            {genre.map((gen, index) => {
-              if (index === genre.length - 1) {
-                return (
-                  <span key={index} className='genre'>
-                    {gen}
-                  </span>
-                );
-              } else {
-                return (
-                  <span key={index} className='genre'>
-                    {gen}/
-                  </span>
-                );
-              }
-            })}
-          </span>
-          <span className='interest'>
-            <span className='interest-span'>
-              <i className='fas fa-heart'></i>
-              {likes.length}
+        <div className='item-info'>
+          <div>
+            {movieName.length > 30 ? (
+              <span className='movieTitle'>{movieName.substr(0, 30)}..</span>
+            ) : (
+              <span className='movieTitle'>{movieName}</span>
+            )}
+            <span>
+              {genre.map((gen, index) => {
+                if (index === genre.length - 1) {
+                  return (
+                    <span key={index} className='genre'>
+                      {gen}
+                    </span>
+                  );
+                } else {
+                  return (
+                    <span key={index} className='genre'>
+                      {gen}/
+                    </span>
+                  );
+                }
+              })}
             </span>
-            <span className='interest-span'>
-              <i className='fas fa-heart-broken'></i>
-              {unlikes.length}
-            </span>
+          </div>
+          <span className='preview-interest'>
+            <i className='fas fa-heart'></i>
+            {likes.length}
+            <span>:</span>
+            <i className='fas fa-heart-broken'></i>
+            {unlikes.length}
           </span>
         </div>
         <div className='tags'>{sortAndLimitTag(tags)}</div>
