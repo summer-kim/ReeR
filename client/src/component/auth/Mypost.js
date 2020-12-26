@@ -1,16 +1,18 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
 import { getContents } from '../../action/postAction';
 import Spinner from '../layout/spinner';
+import { setAlert } from '../../action/alertAction';
 
 const Mypost = ({
   getContents,
   authReducer: { isAuthenticated, user },
   postReducer: { contents = [], loading },
+  setAlert,
 }) => {
   const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
   const { contentsMarked, sort } = sortedData;
@@ -29,6 +31,9 @@ const Mypost = ({
       const contentsPrep = contents.filter((content) =>
         content.genre.includes(gen)
       );
+      if (contentsPrep.length === 0) {
+        return setAlert(`Contents of ${gen} has not been created yet`);
+      }
       e.target.classList.add('picked');
       setData({ ...sortedData, contentsMarked: contentsPrep });
     }
@@ -99,21 +104,17 @@ const Mypost = ({
             <Spinner />
           ) : contents.some((content) => content.user === user._id) ? (
             contentsMarked.length > 0 ? (
-              contentsMarked.map((content) => {
-                if (content.user === user._id) {
-                  return <ContentSitem key={content._id} content={content} />;
-                } else {
-                  return;
-                }
-              })
+              contentsMarked
+                .filter((content) => content.user === user._id)
+                .map((content) => (
+                  <ContentSitem key={content._id} content={content} />
+                ))
             ) : (
-              contents.map((content) => {
-                if (content.user === user._id) {
-                  return <ContentSitem key={content._id} content={content} />;
-                } else {
-                  return;
-                }
-              })
+              contents
+                .filter((content) => content.user === user._id)
+                .map((content) => (
+                  <ContentSitem key={content._id} content={content} />
+                ))
             )
           ) : (
             <h4 className='parag'>No Content Created...</h4>
@@ -127,9 +128,10 @@ Mypost.propTypes = {
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   getContents: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { getContents })(Mypost);
+export default connect(mapStateToProps, { getContents, setAlert })(Mypost);
