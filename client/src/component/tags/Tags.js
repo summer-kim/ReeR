@@ -41,31 +41,9 @@ const Tags = ({
   };
   if (sort === 'Liked') {
     if (contentsMarked.length > 0) {
-      contentsMarked.sort((a, b) => {
-        if (a.likes.length < b.likes.length) {
-          return 1;
-        }
-        if (a.likes.length > b.likes.length) {
-          return -1;
-        }
-        if (a.likes.length === b.likes.length) {
-          return 0;
-        }
-        return 0;
-      });
+      contentsMarked.sort((a, b) => b.likes.length - a.likes.length);
     } else {
-      contents.sort((a, b) => {
-        if (a.likes.length < b.likes.length) {
-          return 1;
-        }
-        if (a.likes.length > b.likes.length) {
-          return -1;
-        }
-        if (a.likes.length === b.likes.length) {
-          return 0;
-        }
-        return 0;
-      });
+      contents.sort((a, b) => b.likes.length - a.likes.length);
     }
   }
   if (sort === 'Newest') {

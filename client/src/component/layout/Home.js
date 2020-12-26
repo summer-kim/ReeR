@@ -15,6 +15,11 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   useEffect(() => {
     getContents();
   }, [getContents]);
+
+  const sortContents = (array) => {
+    array.sort((a, b) => b.likes.length - a.likes.length);
+  };
+  sortContents(contents);
   return (
     <Fragment>
       <section id='main1' className='p2 flex-container'>
