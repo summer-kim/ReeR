@@ -20,7 +20,7 @@ export const UPDATE_CONTENT = 'UPDATE_CONTENT';
 export const LIKE_UPDATE = 'LIKE_UPDATE';
 export const UNLIKE_UPDATE = 'UNLIKE_UPDATE';
 export const LIKE_ERROR = 'LIKE_ERROR';
+export const DELETE_CONTENT = 'DELETE_CONTENT';
 //for Tag
 export const TAG_UPDATE = 'TAG_UPDATE';
 export const TAG_ERROR = 'TAG_ERROR';
-//export const ADD_TAG = 'ADD_TAG';

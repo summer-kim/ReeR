@@ -1,20 +1,23 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getContent } from '../../action/postAction';
+import { getContent, deleteContent } from '../../action/postAction';
 import { addTag } from '../../action/tagAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import lala from '../../img/lala.jpg';
 import Tagbox from '../tags/Tagbox';
+import { withRouter } from 'react-router-dom';
 
 const ContentItem = ({
   getContent,
   addTag,
+  deleteContent,
   postReducer: { content },
   authReducer,
   match,
+  history,
 }) => {
   useEffect(() => {
     getContent(match.params.postid);
@@ -44,6 +47,11 @@ const ContentItem = ({
     addTag({ tagData, _id });
     setData({ tagName: '' });
     inputBox.value = '';
+  };
+
+  const onClickDelete = (postid) => {
+    deleteContent(postid);
+    history.goBack();
   };
   return (
     <Fragment>
@@ -93,7 +101,10 @@ const ContentItem = ({
               <div className='tags'>{sortAndLimitTag(tags)}</div>
               <div className='trash'>
                 {!authReducer.loading && user === authReducer.user._id ? (
-                  <i class='fas fa-trash-alt'></i>
+                  <i
+                    class='fas fa-trash-alt'
+                    onClick={() => onClickDelete(_id)}
+                  ></i>
                 ) : (
                   ''
                 )}
@@ -140,6 +151,7 @@ const ContentItem = ({
 };
 ContentItem.propTypes = {
   getContent: PropTypes.func.isRequired,
+  deleteContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   addTag: PropTypes.func.isRequired,
@@ -148,4 +160,6 @@ const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { getContent, addTag })(ContentItem);
+export default connect(mapStateToProps, { getContent, addTag, deleteContent })(
+  ContentItem
+);

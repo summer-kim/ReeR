@@ -9,6 +9,7 @@ import {
   LIKE_ERROR,
   TAG_UPDATE,
   TAG_ERROR,
+  DELETE_CONTENT,
 } from '../action/types';
 
 const initialState = {
@@ -97,6 +98,13 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         content: { ...state.content, tags: payload },
+        posting: false,
+        loading: false,
+      };
+    case DELETE_CONTENT:
+      return {
+        ...state,
+        content: [],
         posting: false,
         loading: false,
       };

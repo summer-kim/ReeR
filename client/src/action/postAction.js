@@ -8,6 +8,7 @@ import {
   LIKE_ERROR,
   LIKE_UPDATE,
   UNLIKE_UPDATE,
+  DELETE_CONTENT,
 } from './types';
 import { setAlert } from './alertAction';
 
@@ -148,6 +149,21 @@ export const unlikePostUndo = (postid) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const deleteContent = (postid) => async (dispatch) => {
+  try {
+    const res = await axios.delete(`/post/${postid}`);
+    dispatch({
+      type: DELETE_CONTENT,
+    });
+    dispatch(setAlert('Post has successfully removed', 'success'));
+  } catch (err) {
+    dispatch({
+      type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
