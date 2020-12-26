@@ -19,11 +19,17 @@ const About = () => {
             <div>
               <h4>Your Project Is In Safe Hands</h4>
               <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Perspiciatis nostrum, eaque velit ipsam facilis sed, quisquam
-                nesciunt unde nihil voluptatum commodi consequuntur molestiae?
-                Fugiat, perspiciatis reprehenderit. Architecto delectus vitae
-                deserunt!
+                <br />
+                The main 5 personalities that define me are <br />
+                Creative, Enthusiastic, Innovative, Optimistic, and Supportive.
+                <br />
+                I'm borned with creativity and If I come up with some idea,
+                <br /> I'll be enthusiastic and innovative. And always giving
+                optimistic energy <br />
+                to my team because of my supportiveness
+                <br />
+                <br />
+                <br />
               </p>
             </div>
           </div>
