@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/spinner';
 //img
-import sample from '../../img/sample.JPG';
+import decision from '../../img/decision.jpg';
+import dislike from '../../img/dislike.jpg';
+import like from '../../img/like.jpg';
 
 import { getContents } from '../../action/postAction';
 import ContentSitem from '../content/ContentSitem';
+import { Link } from 'react-router-dom';
 
 const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   useEffect(() => {
@@ -32,9 +35,9 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           <br />
           for your personal taste.
         </p>
-        <a href='#' className='btn-light'>
+        <Link to='/register' className='btn-light'>
           <i className='fas fa-angle-double-right'></i>Register
-        </a>
+        </Link>
       </section>
       <section id='main2' className='m1 p2 flex-container'>
         <h4 className='title flex-container'>
@@ -62,44 +65,48 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
         <div id='main3-content' className='grid'>
           <div className='item txt-center'>
             <div className='item-img'>
-              <img src={sample} alt='#' />
+              <img src={decision} alt='#' />
               <div className='item-text'>
-                <div className='more'>
+                <Link className='more' to='/register'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
-                </div>
+                </Link>
               </div>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-              quibusdam itaque deserunt facere nulla commodi delectus adipisci
+              If you ever hesitated
+              <br /> because you didn't know <br />
+              what Movie or Series to choose,
             </p>
           </div>
           <div className='item txt-center'>
             <div className='item-img'>
-              <img src={require('../../img/sample.JPG')} alt='#' />
+              <img src={dislike} style={{ 'object-fit': 'contain' }} alt='#' />
               <div className='item-text'>
-                <div className='more'>
+                <Link className='more' to='/register'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
-                </div>
+                </Link>
               </div>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-              quibusdam itaque deserunt facere nulla commodi delectus adipisci
+              If you dislike
+              <br /> spending your time on searching
+              <br />
+              what Movie or Series to watch,
             </p>
           </div>
           <div className='item txt-center'>
             <div className='item-img'>
-              <img src='./img/sample.JPG' alt='#' />
+              <img src={like} alt='#' />
               <div className='item-text'>
-                <div className='more'>
+                <Link className='more' to='/register'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
-                </div>
+                </Link>
               </div>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-              quibusdam itaque deserunt facere nulla commodi delectus adipisci
+              <br />
+              if you like something <br />
+              Convenient and Efficient
             </p>
           </div>
         </div>
