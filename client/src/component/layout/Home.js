@@ -80,7 +80,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           </div>
           <div className='item txt-center'>
             <div className='item-img'>
-              <img src={dislike} style={{ 'object-fit': 'contain' }} alt='#' />
+              <img src={dislike} style={{ objectFit: 'contain' }} alt='#' />
               <div className='item-text'>
                 <Link className='more' to='/register'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
