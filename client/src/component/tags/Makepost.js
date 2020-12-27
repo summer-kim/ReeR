@@ -14,7 +14,7 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
   if (posting) {
     return <Redirect to='/tags' />;
   }
-  const { movieName, summary, img } = formData;
+  const { movieName, summary, genre, img = '' } = formData;
   const onChange = (e) => {
     setData({
       ...formData,
@@ -24,9 +24,16 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
           : e.target.value,
     });
   };
+
   const onSubmit = (e) => {
+    const data = new FormData();
+    data.append('movieName', movieName);
+    data.append('summary', summary);
+    data.append('genre', genre);
+    data.append('img', img);
+    console.log(data);
     e.preventDefault();
-    createContent(formData, history);
+    createContent(data, history);
   };
   return (
     <section class='addPost' id='register'>
@@ -181,8 +188,9 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
               <input
                 type='file'
                 name='img'
-                value={img}
-                onChange={(e) => onChange(e)}
+                onChange={(e) =>
+                  setData({ ...formData, img: e.target.files[0] })
+                }
               />
             </div>
             <button class='btn-main' type='submit'>

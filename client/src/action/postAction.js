@@ -74,14 +74,14 @@ export const getContentMylikes = () => async (dispatch) => {
 };
 
 //create content
-export const createContent = (formData, history) => async (dispatch) => {
+export const createContent = (data, history) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data ',
     },
   };
   try {
-    const res = await axios.post('/post', formData, config);
+    const res = await axios.post('/post', data, config);
     dispatch({
       type: CREATE_CONTENT,
       payload: res.data,
@@ -94,6 +94,7 @@ export const createContent = (formData, history) => async (dispatch) => {
     });
   }
 };
+
 //like
 export const likePost = (postid) => async (dispatch) => {
   try {

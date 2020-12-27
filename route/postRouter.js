@@ -3,6 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const checkObjectId = require('../middleware/checkObjectId');
+const multer = require('multer');
 
 const Post = require('../model/postModel');
 const User = require('../model/userModel');
@@ -10,6 +11,27 @@ const User = require('../model/userModel');
 // @route    POST '/post'
 // @desc     Create a post
 // @access   Private
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './client/public/uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('please upload image file!'));
+    }
+    cb(undefined, true);
+  },
+});
 router.post(
   '/',
   [
@@ -17,22 +39,26 @@ router.post(
     check('movieName', 'please fill out the movie title').not().isEmpty(),
     check('summary', 'please fill out the summary').not().isEmpty(),
     check('genre', 'please fill out genre of the movie').not().isEmpty(),
+    upload.single('img'),
   ],
   async (req, res) => {
-    const errors = validationResult(req);
+    const errors = validationResult(req.body);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+
     try {
-      const { movieName, summary, img = '', genre } = req.body;
+      const { movieName, summary, genre } = req.body;
+
       const post = new Post({
         movieName,
         summary,
-        img,
+        img: req.file.filename,
         genre,
         user: req.user.id,
       });
-      console.log(genre);
+
       await post.save();
       res.json(post);
     } catch (err) {
