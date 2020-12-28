@@ -74,14 +74,15 @@ export const getContentMylikes = () => async (dispatch) => {
 };
 
 //create content
-export const createContent = (data, history) => async (dispatch) => {
+export const createContent = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'multipart/form-data ',
+      'Content-Type': 'application/json',
     },
   };
   try {
-    const res = await axios.post('/post', data, config);
+    const res = await axios.post('/post', formData, config);
+
     dispatch({
       type: CREATE_CONTENT,
       payload: res.data,
@@ -95,6 +96,27 @@ export const createContent = (data, history) => async (dispatch) => {
   }
 };
 
+export const createContentimg = (data) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'multipart/form-data ',
+    },
+  };
+  try {
+    const res = await axios.post('/post/img', data, config);
+
+    dispatch({
+      type: CREATE_CONTENT,
+      payload: res.data,
+    });
+    dispatch(setAlert('Post has successfully created', 'success'));
+  } catch (err) {
+    dispatch({
+      type: CONTENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 //like
 export const likePost = (postid) => async (dispatch) => {
   try {

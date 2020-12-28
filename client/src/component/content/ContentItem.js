@@ -6,7 +6,7 @@ import { addTag } from '../../action/tagAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
-import lala from '../../img/lala.jpg';
+import logo from '../../img/logo.png';
 import Tagbox from '../tags/Tagbox';
 
 const ContentItem = ({
@@ -58,7 +58,10 @@ const ContentItem = ({
       <section id='about1' className='m1 p2 flex-container'>
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
-            <img src={lala} alt='' />
+            <img
+              src={img ? window.location.origin + '/uploads/' + img : logo}
+              alt='#'
+            />
           </div>
           <div id='about1-bio-side'>
             <div>

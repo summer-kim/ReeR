@@ -2,19 +2,23 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
-import { createContent } from '../../action/postAction';
+import { createContent, createContentimg } from '../../action/postAction';
 
-const Makepost = ({ createContent, history, postReducer: { posting } }) => {
+const Makepost = ({
+  createContent,
+  createContentimg,
+  postReducer: { posting },
+}) => {
   const [formData, setData] = useState({
     movieName: '',
     summary: '',
     img: '',
-    genre: [],
+    genre: '',
   });
   if (posting) {
     return <Redirect to='/tags' />;
   }
-  const { movieName, summary, genre, img = '' } = formData;
+  const { movieName, summary, genre, img } = formData;
   const onChange = (e) => {
     setData({
       ...formData,
@@ -26,14 +30,17 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
   };
 
   const onSubmit = (e) => {
-    const data = new FormData();
-    data.append('movieName', movieName);
-    data.append('summary', summary);
-    data.append('genre', genre);
-    data.append('img', img);
-    console.log(data);
     e.preventDefault();
-    createContent(data, history);
+    if (img) {
+      const data = new FormData();
+      data.append('movieName', movieName);
+      data.append('summary', summary);
+      data.append('genre', genre);
+      data.append('img', img);
+      createContentimg(data);
+    }
+    console.log(movieName, summary);
+    createContent(formData);
   };
   return (
     <section class='addPost' id='register'>
@@ -42,7 +49,7 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
           <h2>Upload Post</h2>
           <div class='bottom-line'></div>
           <p class='parag'>
-            *image is not necessary
+            *You can put a image later
             <br />
             *You can attach a tag later
           </p>
@@ -184,7 +191,7 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
             </div>
             <div class='eachForm'>
               <label for='img'>Image</label>
-              <span class='guide'>Not necessary</span>
+              <span class='guide'>less than 3.14MB</span>
               <input
                 type='file'
                 name='img'
@@ -205,11 +212,12 @@ const Makepost = ({ createContent, history, postReducer: { posting } }) => {
 
 Makepost.propTypes = {
   createContent: PropTypes.func.isRequired,
+  createContentimg: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { createContent })(
+export default connect(mapStateToProps, { createContent, createContentimg })(
   withRouter(Makepost)
 );

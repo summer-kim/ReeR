@@ -8,9 +8,6 @@ const multer = require('multer');
 const Post = require('../model/postModel');
 const User = require('../model/userModel');
 
-// @route    POST '/post'
-// @desc     Create a post
-// @access   Private
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './client/public/uploads/');
@@ -23,23 +20,27 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   limits: {
-    fileSize: 1000000,
+    fileSize: 1024 * 1024 * 3,
   },
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error('please upload image file!'));
-    }
-    cb(undefined, true);
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/))
+      return cb(new Error('JPG, JPEG, PNG file Only'));
+
+    cb(null, true);
   },
-});
+}).single('img');
+
+// @route    POST '/post/img'
+// @desc     Create a post if it has image
+// @access   Private
 router.post(
-  '/',
+  '/img',
   [
     auth,
     check('movieName', 'please fill out the movie title').not().isEmpty(),
     check('summary', 'please fill out the summary').not().isEmpty(),
     check('genre', 'please fill out genre of the movie').not().isEmpty(),
-    upload.single('img'),
+    upload,
   ],
   async (req, res) => {
     const errors = validationResult(req.body);
@@ -47,23 +48,58 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
     try {
       const { movieName, summary, genre } = req.body;
-
+      console.log('img');
+      const genre_arr = genre.split(',');
       const post = new Post({
         movieName,
         summary,
         img: req.file.filename,
-        genre,
+        genre: genre_arr,
         user: req.user.id,
       });
-
       await post.save();
       res.json(post);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).json({ errors: err.message });
+    }
+  }
+);
+
+// @route    POST '/post'
+// @desc     Create a post if it has not image
+// @access   Private
+router.post(
+  '/',
+  [
+    auth,
+    check('movieName', 'please fill out the movie title').not().isEmpty(),
+    check('summary', 'please fill out the summary').not().isEmpty(),
+    check('genre', 'please fill out genre of the movie').not().isEmpty(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req.body);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      const { movieName, summary, genre } = req.body;
+      console.log(req.body);
+      const post = new Post({
+        movieName,
+        summary,
+        img: '',
+        genre,
+        user: req.user.id,
+      });
+      await post.save();
+      res.json(post);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).json({ errors: err.message });
     }
   }
 );

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import lala from '../../img/lala.jpg';
 import PropTypes from 'prop-types';
 import {
   likePost,
@@ -16,6 +15,7 @@ import {
   addToMylikesUndo,
 } from '../../action/authAction';
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
+import logo from '../../img/logo.png';
 
 const ContentSitem = ({
   content: {
@@ -99,7 +99,10 @@ const ContentSitem = ({
     <Link to={`/post/${_id}`}>
       <div className='item'>
         <div className='item-img'>
-          <img src={lala} alt='#' />
+          <img
+            src={img ? window.location.origin + '/uploads/' + img : logo}
+            alt='Click and Watch more details'
+          />
           <div className='item-text'>
             <div
               onClick={onClickLike}
