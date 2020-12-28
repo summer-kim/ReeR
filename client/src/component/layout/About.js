@@ -66,6 +66,12 @@ const About = () => {
             </div>
           </div>
           <div id='about2-skill'>
+            <h4>Redux:</h4>
+            <div className='progress'>
+              <div style={{ width: '70%' }}></div>
+            </div>
+          </div>
+          <div id='about2-skill'>
             <h4>Passion:</h4>
             <div className='progress'>
               <div style={{ width: '100%' }}></div>

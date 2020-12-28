@@ -93,8 +93,6 @@ const ContentSitem = ({
     }
   };
 
-  //expose tagname only 3 and fill the rest
-
   return (
     <Link to={`/post/${_id}`}>
       <div className='item'>
