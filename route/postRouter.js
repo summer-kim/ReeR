@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const auth = require('../middleware/auth');
 const checkObjectId = require('../middleware/checkObjectId');
 const multer = require('multer');
+const fs = require('fs');
 
 const Post = require('../model/postModel');
 const User = require('../model/userModel');
@@ -50,7 +51,6 @@ router.post(
     }
     try {
       const { movieName, summary, genre } = req.body;
-      console.log('img');
       const genre_arr = genre.split(',');
       const post = new Post({
         movieName,
@@ -87,7 +87,6 @@ router.post(
     }
     try {
       const { movieName, summary, genre } = req.body;
-      console.log(req.body);
       const post = new Post({
         movieName,
         summary,
@@ -181,6 +180,15 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
+    if (post.img) {
+      await fs.unlink(`./client/public/uploads/${post.img}`, (err) => {
+        if (err) {
+          console.log('fail to delete img');
+          throw err;
+        }
+        console.log('successfully delete img');
+      });
+    }
     await post.remove();
     res.json({ msg: 'Post removed' });
   } catch (err) {
@@ -224,7 +232,7 @@ router.put('/likesBack/:id', [auth, checkObjectId('id')], async (req, res) => {
     return res.json(post.likes);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ msg: 'Error detected' });
   }
 });
 // @route    PUT /post/unlikes/:id
