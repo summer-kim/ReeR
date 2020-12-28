@@ -13,7 +13,7 @@ const Makepost = ({
     movieName: '',
     summary: '',
     img: '',
-    genre: '',
+    genre: [],
   });
   if (posting) {
     return <Redirect to='/tags' />;
@@ -24,7 +24,9 @@ const Makepost = ({
       ...formData,
       [e.target.name]:
         e.target.name === 'genre'
-          ? [...formData.genre, e.target.value]
+          ? formData.genre.some((gen) => gen === e.target.value)
+            ? [...formData.genre.filter((gen) => gen !== e.target.value)]
+            : [...formData.genre, e.target.value]
           : e.target.value,
     });
   };
