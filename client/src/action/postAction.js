@@ -125,13 +125,17 @@ export const likePost = (postid) => async (dispatch) => {
       type: LIKE_UPDATE,
       payload: { postid, likes: res.data },
     });
+    dispatch(setAlert('Successfully Liked', 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    const msg = err.response.data.msg;
+    dispatch(setAlert(msg, 'fail'));
   }
 };
+
 export const likePostUndo = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/post/likesBack/${postid}`);
@@ -139,11 +143,14 @@ export const likePostUndo = (postid) => async (dispatch) => {
       type: LIKE_UPDATE,
       payload: { postid, likes: res.data },
     });
+    dispatch(setAlert('Cancel Liked', 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    const msg = err.response.data.msg;
+    dispatch(setAlert(msg, 'fail'));
   }
 };
 
@@ -155,13 +162,17 @@ export const unlikePost = (postid) => async (dispatch) => {
       type: UNLIKE_UPDATE,
       payload: { postid, unlikes: res.data },
     });
+    dispatch(setAlert('Successfully Unliked', 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    const msg = err.response.data.msg;
+    dispatch(setAlert(msg, 'fail'));
   }
 };
+
 export const unlikePostUndo = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/post/unlikesBack/${postid}`);
@@ -169,6 +180,7 @@ export const unlikePostUndo = (postid) => async (dispatch) => {
       type: UNLIKE_UPDATE,
       payload: { postid, unlikes: res.data },
     });
+    dispatch(setAlert('Cancel Unliked', 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
@@ -183,6 +195,7 @@ export const deleteContent = (postid) => async (dispatch) => {
     dispatch({
       type: DELETE_CONTENT,
     });
+
     dispatch(setAlert('Post has successfully removed', 'success'));
   } catch (err) {
     dispatch({

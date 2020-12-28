@@ -98,6 +98,7 @@ export const addToMyBag = (postid) => async (dispatch) => {
       type: UPDATE_MYBAG,
       payload: res.data,
     });
+    dispatch(setAlert('Successfully add to myBag', 'success'));
   } catch (err) {
     dispatch({
       type: PUT_ERROR,
@@ -113,6 +114,7 @@ export const addToMyBagUndo = (postid) => async (dispatch) => {
       type: UPDATE_MYBAG,
       payload: res.data,
     });
+    dispatch(setAlert('Successfully remove from myBag', 'success'));
   } catch (err) {
     dispatch({
       type: PUT_ERROR,
