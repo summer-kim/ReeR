@@ -22,6 +22,8 @@ import Tags from './component/tags/Tags';
 import Mybag from './component/tags/Mybag';
 import Mylikes from './component/tags/Mylikes';
 import Makepost from './component/tags/Makepost';
+import Editpost from './component/tags/Editpost';
+
 import ContentItem from './component/content/ContentItem';
 
 if (localStorage.token) {
@@ -50,6 +52,7 @@ const App = () => {
               <Route exact path='/mybag' component={Mybag} />
               <Route exact path='/mylikes' component={Mylikes} />
               <Route exact path='/makepost' component={Makepost} />
+              <Route exact path='/editpost/:postid' component={Editpost} />
               <Route exact path='/post/:postid' component={ContentItem} />
             </Switch>
           </section>

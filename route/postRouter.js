@@ -50,13 +50,37 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const { movieName, summary, genre } = req.body;
-      const genre_arr = genre.split(',');
+      const { movieName, summary, genre, postid = '' } = req.body;
+      if (postid) {
+        const old_post = await Post.findById(postid);
+        if (old_post.img) {
+          await fs.unlink(`./client/public/uploads/${old_post.img}`, (err) => {
+            if (err) {
+              console.log('fail to delete img');
+              throw err;
+            }
+            console.log('successfully delete img');
+          });
+        }
+        const post = await Post.findOneAndUpdate(
+          { _id: postid },
+          {
+            $set: {
+              movieName,
+              summary,
+              genre: genre.split(','),
+              img: req.file.filename,
+            },
+          },
+          { new: true }
+        );
+        return res.json(post);
+      }
       const post = new Post({
         movieName,
         summary,
         img: req.file.filename,
-        genre: genre_arr,
+        genre: genre.split(','),
         user: req.user.id,
       });
       await post.save();
@@ -80,13 +104,21 @@ router.post(
     check('genre', 'please fill out genre of the movie').not().isEmpty(),
   ],
   async (req, res) => {
-    const errors = validationResult(req.body);
+    const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const { movieName, summary, genre } = req.body;
+      const { movieName, summary, genre, postid = '' } = req.body;
+      if (postid) {
+        const post = await Post.findOneAndUpdate(
+          { _id: postid },
+          { $set: { movieName, summary, genre } },
+          { new: true }
+        );
+        return res.json(post);
+      }
       const post = new Post({
         movieName,
         summary,
@@ -305,7 +337,7 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    if (req.body.tagName.length > 50) {
+    if (req.body.tagName.length > 60) {
       return res.status(400).json({ errors: '50 letters limit' });
     }
     try {

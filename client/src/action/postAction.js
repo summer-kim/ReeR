@@ -80,20 +80,33 @@ export const getContentMylikes = () => async (dispatch) => {
 };
 
 //create content
-export const createContent = (formData) => async (dispatch) => {
+export const createContent = (formData, postid = '', edit = false) => async (
+  dispatch
+) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
   try {
-    const res = await axios.post('/post', formData, config);
+    const body = formData;
+    if (postid) {
+      body.postid = postid;
+    }
+    const res = await axios.post('/post', body, config);
 
     dispatch({
       type: CREATE_CONTENT,
       payload: res.data,
     });
-    dispatch(setAlert('Post has successfully created', 'success'));
+    dispatch(
+      setAlert(
+        !edit
+          ? 'Post has successfully created'
+          : 'Post has successfully updated',
+        'success'
+      )
+    );
   } catch (err) {
     dispatch({
       type: CONTENT_ERROR,
@@ -102,20 +115,32 @@ export const createContent = (formData) => async (dispatch) => {
   }
 };
 
-export const createContentimg = (data) => async (dispatch) => {
+export const createContentimg = (data, postid = '', edit = false) => async (
+  dispatch
+) => {
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data ',
     },
   };
   try {
+    if (postid) {
+      data.append('postid', postid);
+    }
     const res = await axios.post('/post/img', data, config);
 
     dispatch({
       type: CREATE_CONTENT,
       payload: res.data,
     });
-    dispatch(setAlert('Post has successfully created', 'success'));
+    dispatch(
+      setAlert(
+        !edit
+          ? 'Post has successfully created'
+          : 'Post has successfully updated',
+        'success'
+      )
+    );
   } catch (err) {
     dispatch({
       type: CONTENT_ERROR,
