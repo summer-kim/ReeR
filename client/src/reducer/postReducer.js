@@ -36,7 +36,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         content: payload,
-        posting: true,
+        posting: false,
         loading: false,
         error: {},
       };
@@ -67,6 +67,7 @@ function postReducer(state = initialState, action) {
               }
             : content
         ),
+        content: { ...state.content, likes: payload.likes },
         posting: false,
         loading: false,
         error: {},
@@ -82,6 +83,8 @@ function postReducer(state = initialState, action) {
               }
             : content
         ),
+        content: { ...state.content, unlikes: payload.unlikes },
+
         posting: false,
         loading: false,
         error: {},
@@ -104,6 +107,9 @@ function postReducer(state = initialState, action) {
     case DELETE_CONTENT:
       return {
         ...state,
+        contents: state.contents.filter(
+          (content) => content._id.toString() !== payload
+        ),
         content: [],
         posting: false,
         loading: false,
