@@ -17,7 +17,7 @@ const Header = () => {
       <link rel='icon' src={favicon} />
       <link rel='preconnect' href='https://fonts.gstatic.com' />
       <link
-        href='https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600&family=Pacifico&display=swap'
+        href='https://fonts.googleapis.com/css2?family=Raleway:wght@200;300;400;500;600&family=Pacifico&family=Prata&display=swap'
         rel='stylesheet'
       />
     </Helmet>
