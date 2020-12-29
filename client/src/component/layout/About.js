@@ -8,7 +8,7 @@ const About = () => {
       <section id='about1' className='m1 p2 flex-container'>
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
-            <img src={summer} alt='CEO' />
+            <img src={summer} alt='CEO' style={{ objectFit: 'cover' }} />
           </div>
           <div id='about1-bio-side'>
             <div>
