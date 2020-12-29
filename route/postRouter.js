@@ -170,16 +170,22 @@ router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
 // @access   Private
 router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
   try {
-    //Todo
-    //erase post from myBag
     const post = await Post.findById(req.params.id);
     if (!post) {
       return res.status(404).json({ msg: 'Post not found' });
     }
-    //check user
+    //check if user has right to delete
     if (post.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
+    const user = await User.findById(req.user.id);
+    user.myBag = user.myBag.filter(
+      (content) => content.post.toString() !== req.params.id
+    );
+    user.likes = user.likes.filter(
+      (content) => content.post.toString() !== req.params.id
+    );
+
     if (post.img) {
       await fs.unlink(`./client/public/uploads/${post.img}`, (err) => {
         if (err) {
@@ -189,6 +195,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
         console.log('successfully delete img');
       });
     }
+    await user.save();
     await post.remove();
     res.json({ msg: 'Post removed' });
   } catch (err) {
