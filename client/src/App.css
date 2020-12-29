@@ -393,19 +393,37 @@
   border-radius: 5px;
   margin-left: 5px;
   padding: 2px 3px;
+  min-width: 40px;
+  cursor: pointer;
 }
-.content-interest > span i {
+.heartbtn i {
   color: #cf7177;
 }
-.content-interest > span:hover {
+
+.heartbtn:hover {
   background: #cf7177;
   color: #fff;
 }
-.content-interest > span:hover i {
+
+.heartbtn:hover i {
   color: #fff;
 }
-.plus {
-  margin-right: 3px;
+.whenliked {
+  background: #cf7177;
+  color: #fff;
+}
+.whenliked i {
+  color: #fff !important;
+}
+.whenliked:hover {
+  background: #fff !important;
+  color: rgba(61, 61, 61, 0.85) !important;
+}
+.whenliked:hover i {
+  color: #cf7177 !important;
+}
+.trash {
+  margin-left: 5px;
 }
 .plus:hover {
   color: #cf7177;
@@ -903,12 +921,14 @@ i {
   height: 100%;
   opacity: 0.7;
   z-index: -1;
-  background: url('./img/platform.jpg') no-repeat center center/cover;
+  background: url('./img/disney.jpg') no-repeat center top/cover;
 }
 #main1 h1 {
   margin-top: 1rem;
   font-size: 2rem;
   text-align: center;
+  font-family: 'Prata', serif;
+  font-weight: lighter;
 }
 #main1 a {
   padding: 1rem 1.5rem;
