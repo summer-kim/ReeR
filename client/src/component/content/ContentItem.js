@@ -21,6 +21,9 @@ import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import logo from '../../img/logo.png';
 import Tagbox from '../tags/Tagbox';
+import postReducer from '../../reducer/postReducer';
+import { setAlert } from '../../action/alertAction';
+import { Link } from 'react-router-dom';
 
 const ContentItem = ({
   getContent,
@@ -39,42 +42,9 @@ const ContentItem = ({
   addToMylikes,
   addToMylikesUndo,
 }) => {
-  const [tagData, setData] = useState({
-    tagName: '',
-  });
-  const [likeData, setlikeData] = useState({
-    Liked: false,
-    Unliked: false,
-    Put: false,
-  });
   useEffect(() => {
     getContent(match.params.postid);
-  }, [
-    getContent,
-    match.params.postid,
-    likeData.Liked,
-    likeData.Unliked,
-    likeData.Put,
-  ]);
-  const setVariable = () => {
-    if (authReducer.user) {
-      if (likes && likes.some((like) => like.user === authReducer.user._id)) {
-        setlikeData({ Liked: true });
-      }
-      if (
-        unlikes &&
-        unlikes.some((unlike) => unlike.user === authReducer.user._id)
-      ) {
-        setlikeData({ Unliked: true });
-      }
-      if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
-        setlikeData({ Put: true });
-      }
-    }
-  };
-  useEffect(() => {
-    setVariable();
-  }, [authReducer.loading]);
+  }, [getContent, match.params.postid]);
   const {
     _id = '',
     movieName = '',
@@ -86,36 +56,63 @@ const ContentItem = ({
     unlikes = [],
     tags = [],
   } = content;
+  const [tagData, setData] = useState({
+    tagName: '',
+  });
+  const [likeData, setlikeData] = useState({
+    Liked: false,
+    Unliked: false,
+    Put: false,
+  });
+  const setVariable = async () => {
+    if (authReducer.user) {
+      if (likes && likes.some((like) => like.user === authReducer.user._id)) {
+        await setlikeData({ ...likeData, Liked: true });
+      }
+      if (
+        unlikes &&
+        unlikes.some((unlike) => unlike.user === authReducer.user._id)
+      ) {
+        await setlikeData({ ...likeData, Unliked: true });
+      }
+      if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
+        await setlikeData({ ...likeData, Put: true });
+      }
+    }
+  };
+  useEffect(() => {
+    setVariable();
+  }, [postReducer.loading, authReducer.loading]);
 
   //when User click like heart button
-  const onClickLike = async () => {
+  const onClickLike = () => {
     if (likeData.Liked) {
-      await likePostUndo(_id);
+      likePostUndo(_id);
       addToMylikesUndo(_id);
-      setlikeData({ Liked: false });
+      setlikeData({ ...likeData, Liked: false });
     } else {
-      await likePost(_id);
+      likePost(_id);
       addToMylikes(_id);
-      setlikeData({ Liked: true });
+      setlikeData({ ...likeData, Liked: true });
     }
   };
   //when User click unlike heart-broken button
-  const onClickUnlike = async () => {
+  const onClickUnlike = () => {
     if (likeData.Uniked) {
-      await unlikePostUndo(_id);
-      setlikeData({ Uniked: false });
+      unlikePostUndo(_id);
+      setlikeData({ ...likeData, Uniked: false });
     } else {
-      await unlikePost(_id);
-      setlikeData({ Uniked: true });
+      unlikePost(_id);
+      setlikeData({ ...likeData, Uniked: true });
     }
   };
-  const onClickMyBag = async () => {
+  const onClickMyBag = () => {
     if (likeData.Put) {
-      await addToMyBagUndo(_id);
-      setlikeData({ Put: false });
+      addToMyBagUndo(_id);
+      setlikeData({ ...likeData, Put: false });
     } else {
-      await addToMyBag(_id);
-      setlikeData({ Put: true });
+      addToMyBag(_id);
+      setlikeData({ ...likeData, Put: true });
     }
   };
 
@@ -174,24 +171,18 @@ const ContentItem = ({
                   })}
                 </span>
                 <span className='content-interest'>
-                  <span>
-                    <i
-                      onClick={() => onClickLike()}
-                      className={
-                        likeData.Liked ? 'fas fa-heart clicked' : 'fas fa-heart'
-                      }
-                    ></i>
+                  <span
+                    onClick={() => onClickLike()}
+                    className={likeData.Liked ? 'whenliked' : 'heartbtn'}
+                  >
+                    <i className='fas fa-heart'></i>
                     {likes ? likes.length : 0}
                   </span>
-                  <span>
-                    <i
-                      onClick={() => onClickUnlike()}
-                      className={
-                        likeData.Uniked
-                          ? 'fas fa-heart-broken clicked'
-                          : 'fas fa-heart-broken'
-                      }
-                    ></i>{' '}
+                  <span
+                    onClick={() => onClickUnlike()}
+                    className={likeData.Uniked ? 'whenliked' : 'heartbtn'}
+                  >
+                    <i className='fas fa-heart-broken'></i>
                     {unlikes ? unlikes.length : 0}
                   </span>
                 </span>
@@ -205,6 +196,15 @@ const ContentItem = ({
                 >
                   <i className='fas fa-plus'></i>
                 </div>
+                {!authReducer.loading &&
+                authReducer.user &&
+                user === authReducer.user._id ? (
+                  <Link className='trash'>
+                    <i class='fas fa-edit'></i>
+                  </Link>
+                ) : (
+                  ''
+                )}
                 <div className='trash'>
                   {!authReducer.loading &&
                   authReducer.user &&
