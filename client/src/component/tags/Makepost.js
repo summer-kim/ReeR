@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 import { createContent, createContentimg } from '../../action/postAction';
+import { setAlert } from '../../action/alertAction';
 
 const Makepost = ({
+  setAlert,
   createContent,
   createContentimg,
   postReducer: { posting },
@@ -33,6 +35,18 @@ const Makepost = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
+    if (!movieName) {
+      return setAlert('You have to fill out the Name of the content');
+    }
+    if (genre.length === 0) {
+      return setAlert('You have to check the Genre of the content');
+    }
+    if (!summary) {
+      return setAlert('You have to fill out the Summary of the content');
+    }
+    if (summary.length > 200) {
+      return setAlert('Summary should not exceed 200 letters');
+    }
     if (img) {
       const data = new FormData();
       data.append('movieName', movieName);
@@ -58,7 +72,7 @@ const Makepost = ({
         <div class='form'>
           <form onSubmit={(e) => onSubmit(e)}>
             <div class='eachForm'>
-              <label for='movieName'>Movie/Series Title</label>
+              <label htmlFor='movieName'>Movie/Series Title</label>
               <input
                 type='text'
                 name='movieName'
@@ -67,7 +81,7 @@ const Makepost = ({
               />
             </div>
             <div className='eachForm'>
-              <label for='genre'>Genre </label>
+              <label htmlFor='genre'>Genre </label>
               <div className='checkGenre'>
                 <span className='eachCheck'>
                   <input
@@ -180,18 +194,19 @@ const Makepost = ({
               </div>
             </div>
             <div class='eachForm'>
-              <label for='summary'>Summary</label>
+              <label htmlFor='summary'>Summary</label>
               <textarea
                 cols='30'
                 rows='5'
-                placeholder='write summary of content simply!'
+                placeholder='write summary of content simply
+                (200 letters limit)!'
                 name='summary'
                 value={summary}
                 onChange={(e) => onChange(e)}
               ></textarea>
             </div>
             <div class='eachForm'>
-              <label for='img'>Image</label>
+              <label htmlFor='img'>Image</label>
               <span class='guide'>less than 3.14MB</span>
               <input
                 type='file'
@@ -215,10 +230,13 @@ Makepost.propTypes = {
   createContent: PropTypes.func.isRequired,
   createContentimg: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
 });
-export default connect(mapStateToProps, { createContent, createContentimg })(
-  withRouter(Makepost)
-);
+export default connect(mapStateToProps, {
+  createContent,
+  createContentimg,
+  setAlert,
+})(withRouter(Makepost));
