@@ -13,6 +13,7 @@ const Tags = ({
   getContents,
   postReducer: { contents = [], loading },
   setAlert,
+  isAuthenticated,
 }) => {
   const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
   const { contentsMarked, sort } = sortedData;
@@ -88,12 +89,28 @@ const Tags = ({
             </div>
           </div>
           <div className='flex-container'>
-            <Link to='/makepost'>
+            <Link
+              to='/makepost'
+              onClick={(e) => {
+                if (!isAuthenticated) {
+                  e.preventDefault();
+                  return setAlert('You need to Login first');
+                }
+              }}
+            >
               <div className='icons btn-main'>
                 <i className='fas fa-plus flex-container'></i>
               </div>
             </Link>
-            <Link to='/mybag'>
+            <Link
+              to='/mybag'
+              onClick={(e) => {
+                if (!isAuthenticated) {
+                  e.preventDefault();
+                  return setAlert('You need to Login first');
+                }
+              }}
+            >
               <div className='icons btn-main'>
                 <i className='fas fa-shopping-bag flex-container'></i>
               </div>
@@ -138,8 +155,10 @@ Tags.propTypes = {
   getContents: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   setAlert: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
+  isAuthenticated: state.authReducer.isAuthenticated,
 });
 export default connect(mapStateToProps, { getContents, setAlert })(Tags);
