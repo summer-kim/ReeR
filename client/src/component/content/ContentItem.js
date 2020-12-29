@@ -26,10 +26,11 @@ import { setAlert } from '../../action/alertAction';
 import { Link } from 'react-router-dom';
 
 const ContentItem = ({
+  setAlert,
   getContent,
   addTag,
   deleteContent,
-  postReducer: { content },
+  postReducer: { content, contents, loading },
   authReducer,
   match,
   history,
@@ -59,60 +60,59 @@ const ContentItem = ({
   const [tagData, setData] = useState({
     tagName: '',
   });
-  const [likeData, setlikeData] = useState({
-    Liked: false,
-    Unliked: false,
-    Put: false,
-  });
+  const [Liked, setLiked] = useState(false);
+  const [Unliked, setUnliked] = useState(false);
+  const [Put, setPut] = useState(false);
+
   const setVariable = async () => {
     if (authReducer.user) {
+      if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
+        await setPut(true);
+      }
       if (likes && likes.some((like) => like.user === authReducer.user._id)) {
-        await setlikeData({ ...likeData, Liked: true });
+        await setLiked(true);
       }
       if (
         unlikes &&
         unlikes.some((unlike) => unlike.user === authReducer.user._id)
       ) {
-        await setlikeData({ ...likeData, Unliked: true });
-      }
-      if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
-        await setlikeData({ ...likeData, Put: true });
+        await setUnliked(true);
       }
     }
   };
   useEffect(() => {
     setVariable();
-  }, [postReducer.loading, authReducer.loading]);
+  }, [content, loading, contents]);
 
   //when User click like heart button
   const onClickLike = () => {
-    if (likeData.Liked) {
+    if (Liked) {
       likePostUndo(_id);
       addToMylikesUndo(_id);
-      setlikeData({ ...likeData, Liked: false });
+      setLiked(false);
     } else {
       likePost(_id);
       addToMylikes(_id);
-      setlikeData({ ...likeData, Liked: true });
+      setLiked(true);
     }
   };
   //when User click unlike heart-broken button
   const onClickUnlike = () => {
-    if (likeData.Uniked) {
+    if (Unliked) {
       unlikePostUndo(_id);
-      setlikeData({ ...likeData, Uniked: false });
+      setUnliked(false);
     } else {
       unlikePost(_id);
-      setlikeData({ ...likeData, Uniked: true });
+      setUnliked(true);
     }
   };
   const onClickMyBag = () => {
-    if (likeData.Put) {
+    if (Put) {
       addToMyBagUndo(_id);
-      setlikeData({ ...likeData, Put: false });
+      setPut(false);
     } else {
       addToMyBag(_id);
-      setlikeData({ ...likeData, Put: true });
+      setPut(true);
     }
   };
 
@@ -122,6 +122,9 @@ const ContentItem = ({
     setData({ ...tagData, [e.target.name]: e.target.value });
   const onSubmit = (e) => {
     e.preventDefault();
+    if (tagName.length > 60) {
+      return setAlert('tagName should less than 60 letters', 'fail');
+    }
     addTag({ tagData, _id });
     setData({ tagName: '' });
     inputBox.value = '';
@@ -173,14 +176,14 @@ const ContentItem = ({
                 <span className='content-interest'>
                   <span
                     onClick={() => onClickLike()}
-                    className={likeData.Liked ? 'whenliked' : 'heartbtn'}
+                    className={Liked ? 'whenliked' : 'heartbtn'}
                   >
                     <i className='fas fa-heart'></i>
                     {likes ? likes.length : 0}
                   </span>
                   <span
                     onClick={() => onClickUnlike()}
-                    className={likeData.Uniked ? 'whenliked' : 'heartbtn'}
+                    className={Unliked ? 'whenliked' : 'heartbtn'}
                   >
                     <i className='fas fa-heart-broken'></i>
                     {unlikes ? unlikes.length : 0}
@@ -191,7 +194,7 @@ const ContentItem = ({
               <div className='tags'>{sortAndLimitTag(tags)}</div>
               <div className='side-end flex-container'>
                 <div
-                  className={likeData.Put ? 'plus iconSelected' : 'plus'}
+                  className={Put ? 'plus iconSelected' : 'plus'}
                   onClick={() => onClickMyBag()}
                 >
                   <i className='fas fa-plus'></i>
@@ -199,7 +202,7 @@ const ContentItem = ({
                 {!authReducer.loading &&
                 authReducer.user &&
                 user === authReducer.user._id ? (
-                  <Link className='trash'>
+                  <Link className='trash' to={`/editpost/${_id}`}>
                     <i class='fas fa-edit'></i>
                   </Link>
                 ) : (
@@ -272,12 +275,14 @@ ContentItem.propTypes = {
   addToMyBagUndo: PropTypes.func.isRequired,
   addToMylikes: PropTypes.func.isRequired,
   addToMylikesUndo: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
 export default connect(mapStateToProps, {
+  setAlert,
   getContent,
   addTag,
   deleteContent,
