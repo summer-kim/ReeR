@@ -39,9 +39,8 @@ const Makepost = ({
       data.append('summary', summary);
       data.append('genre', genre);
       data.append('img', img);
-      createContentimg(data);
+      return createContentimg(data);
     }
-    console.log(movieName, summary);
     createContent(formData);
   };
   return (
