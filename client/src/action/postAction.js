@@ -40,6 +40,9 @@ export const getContent = (postid) => async (dispatch) => {
       type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    if (err.response.status === 401) {
+      dispatch(setAlert('You need to Login first', 'fail', 3500));
+    }
   }
 };
 //get contents in user's myBag
@@ -55,9 +58,12 @@ export const getContentMyBag = () => async (dispatch) => {
       type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    if (err.response.status === 401) {
+      dispatch(setAlert('You need to Login first', 'fail', 3500));
+    }
   }
 };
-//get contents in user's myBag
+//get contents in user's likes
 export const getContentMylikes = () => async (dispatch) => {
   try {
     const res = await axios.get('/post/likes');
@@ -194,6 +200,7 @@ export const deleteContent = (postid) => async (dispatch) => {
     await axios.delete(`/post/${postid}`);
     dispatch({
       type: DELETE_CONTENT,
+      payload: postid,
     });
 
     dispatch(setAlert('Post has successfully removed', 'success'));
