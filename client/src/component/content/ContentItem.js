@@ -20,9 +20,9 @@ import { addTag } from '../../action/tagAction';
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import Tagbox from '../tags/Tagbox';
-import postReducer from '../../reducer/postReducer';
 import { setAlert } from '../../action/alertAction';
 import { Link } from 'react-router-dom';
+import logo from '../../img/logo.png';
 
 const ContentItem = ({
   setAlert,
@@ -140,11 +140,7 @@ const ContentItem = ({
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
             <img
-              src={
-                img
-                  ? window.location.origin + '/uploads/' + img
-                  : window.location.origin + '/static/js/img/logo.png'
-              }
+              src={img ? window.location.origin + '/uploads/' + img : logo}
               alt='#'
             />
           </div>
