@@ -14,7 +14,7 @@ import Alert from './component/layout/Alert';
 
 import Login from './component/auth/Login';
 import Register from './component/auth/Register';
-import Header from './component/layout/Header';
+// import Header from './component/layout/Header';
 import Mypage from './component/auth/Mypage';
 import Mypost from './component/auth/Mypost';
 import About from './component/layout/About';
@@ -37,7 +37,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Header />
+          {/* <Header /> */}
           <Navbar />
           <Route exact path='/' component={Home} />
           <section className='container'>
