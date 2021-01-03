@@ -6,13 +6,22 @@ const checkObjectId = require('../middleware/checkObjectId');
 const multer = require('multer');
 const fs = require('fs');
 
+const AWS = require('aws-sdk');
+const config = require('config');
+
+const s3 = new AWS.S3({
+  accessKeyId: config.get('AWS_ID'),
+  secretAccessKey: config.get('AWS_SECRET'),
+  region: 'ap-northeast-2',
+});
+
 const Post = require('../model/postModel');
 const User = require('../model/userModel');
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
+  // destination: function (req, file, cb) {
+  //   cb(null, './uploads');
+  // },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
   },
@@ -51,9 +60,12 @@ router.post(
     }
     try {
       const { movieName, summary, genre, postid = '' } = req.body;
+
+      //if user Edit post, not create
       if (postid) {
         const old_post = await Post.findById(postid);
         if (old_post.img) {
+          //Delete image of old post
           await fs.unlink(`./client/public/uploads/${old_post.img}`, (err) => {
             if (err) {
               console.log('fail to delete img');
@@ -74,6 +86,16 @@ router.post(
           },
           { new: true }
         );
+        const param = {
+          Bucket: config.get('AWS_BUCKET_NAME'),
+          Key: `/uploads/${req.file.filename}`,
+          Body: req.file.buffer,
+        };
+        s3.upload(param, (err, data) => {
+          if (err) {
+            return res.status(400).json({ msg: 'upload fail' });
+          }
+        });
         return res.json(post);
       }
       const post = new Post({
@@ -84,6 +106,16 @@ router.post(
         user: req.user.id,
       });
       await post.save();
+      const param = {
+        Bucket: config.get('AWS_BUCKET_NAME'),
+        Key: `/uploads/${req.file.filename}`,
+        Body: req.file.buffer,
+      };
+      s3.upload(param, (err, data) => {
+        if (err) {
+          return res.status(400).json({ msg: 'upload fail' });
+        }
+      });
       res.json(post);
     } catch (err) {
       console.error(err.message);
