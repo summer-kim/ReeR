@@ -98,9 +98,15 @@ const ContentSitem = ({
       <div className='item'>
         <div className='item-img'>
           <img
-            src={img ? window.location.origin + '/uploads/' + img : logo}
+            src={
+              img
+                ? 'https://summerzzang.s3.ap-northeast-2.amazonaws.com/uploads/' +
+                  img
+                : logo
+            }
             alt='Click and Watch more details'
           />
+
           <div className='item-text'>
             <div
               onClick={onClickLike}
