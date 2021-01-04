@@ -254,7 +254,6 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
       await fs.unlink(`./client/public/uploads/${post.img}`, (err) => {
         if (err) {
           console.log('fail to delete img');
-          throw err;
         }
         console.log('successfully delete img');
       });
