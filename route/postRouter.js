@@ -18,17 +18,17 @@ const s3 = new AWS.S3({
 const Post = require('../model/postModel');
 const User = require('../model/userModel');
 
-const storage = multer.diskStorage({
-  // destination: function (req, file, cb) {
-  //   cb(null, './uploads');
-  // },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   // destination: function (req, file, cb) {
+//   //   cb(null, './uploads');
+//   // },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + file.originalname);
+//   },
+// });
 
 const upload = multer({
-  storage,
+  storage: multer.memoryStorage(),
   limits: {
     fileSize: 1024 * 1024 * 3,
   },
@@ -106,8 +106,7 @@ router.post(
         user: req.user.id,
       });
       await post.save();
-      const buffer = await getStream(req.file.stream);
-      console.log(req.file, buffer);
+      console.log(req.file);
       const params = {
         Bucket: config.get('AWS_BUCKET_NAME'),
         Key: `/uploads/${req.file.filename}`,
