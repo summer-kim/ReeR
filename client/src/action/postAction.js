@@ -146,6 +146,7 @@ export const createContentimg = (data, postid = '', edit = false) => async (
       type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
+    dispatch(setAlert(err.response.data.errors, 'fail'));
   }
 };
 //like

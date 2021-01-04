@@ -51,10 +51,8 @@ export const registerUser = ({ name, email, password }) => async (dispatch) => {
     const errors = err.response.data.errors;
     if (Array.isArray(errors)) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'fail')));
-      console.log('arr');
     } else if (errors) {
       dispatch(setAlert(errors, 'fail'));
-      console.log('exist');
     }
     dispatch({
       type: REGISTER_FAIL,
