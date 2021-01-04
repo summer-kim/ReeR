@@ -106,12 +106,13 @@ router.post(
         user: req.user.id,
       });
       await post.save();
-      const param = {
+      console.log(req.file, req.files);
+      const params = {
         Bucket: config.get('AWS_BUCKET_NAME'),
         Key: `/uploads/${req.file.filename}`,
         Body: req.file.buffer,
       };
-      s3.upload(param, (err, data) => {
+      s3.upload(params, (err, data) => {
         if (err) {
           return res.status(400).json({ msg: 'upload fail' });
         }
