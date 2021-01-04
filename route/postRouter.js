@@ -66,12 +66,15 @@ router.post(
         const old_post = await Post.findById(postid);
         if (old_post.img) {
           //Delete image of old post
-          await fs.unlink(`./client/public/uploads/${old_post.img}`, (err) => {
-            if (err) {
-              console.log('fail to delete img');
-              throw err;
+          const oldparams = {
+            Bucket: config.get('AWS_BUCKET_NAME'),
+            Key: `uploads/${old_post.img}`,
+          };
+
+          s3.deleteObject(oldparams, (error, data) => {
+            if (error) {
+              return res.status(400).json({ msg: 'delete img fail' });
             }
-            console.log('successfully delete img');
           });
         }
         const post = await Post.findOneAndUpdate(
@@ -251,11 +254,15 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
     );
 
     if (post.img) {
-      await fs.unlink(`./client/public/uploads/${post.img}`, (err) => {
-        if (err) {
-          console.log('fail to delete img');
+      const oldparams = {
+        Bucket: config.get('AWS_BUCKET_NAME'),
+        Key: `uploads/${post.img}`,
+      };
+
+      s3.deleteObject(oldparams, (error, data) => {
+        if (error) {
+          return res.status(400).json({ msg: 'delete img fail' });
         }
-        console.log('successfully delete img');
       });
     }
     await user.save();
