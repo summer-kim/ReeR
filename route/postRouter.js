@@ -106,7 +106,8 @@ router.post(
         user: req.user.id,
       });
       await post.save();
-      console.log(req.file, req.files);
+      const buffer = await getStream(req.file.stream);
+      console.log(req.file, buffer);
       const params = {
         Bucket: config.get('AWS_BUCKET_NAME'),
         Key: `/uploads/${req.file.filename}`,
