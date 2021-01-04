@@ -15,7 +15,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   useEffect(() => {
     getContents();
     init();
-  }, [getContentsm, init]);
+  }, [getContents, init]);
 
   const sortContents = (array) => {
     array.sort((a, b) => b.likes.length - a.likes.length);
@@ -94,8 +94,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           ReeR:
           <br />
           The Best Platform for Contents
-          <br />
-          　
+          <br />　
           <span
             className='txt-type'
             data-wait='1500'
