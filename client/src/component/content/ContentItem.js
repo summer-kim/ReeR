@@ -140,7 +140,12 @@ const ContentItem = ({
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
             <img
-              src={img ? window.location.origin + '/uploads/' + img : logo}
+              src={
+                img
+                  ? 'https://summerzzang.s3.ap-northeast-2.amazonaws.com/uploads/' +
+                    img
+                  : logo
+              }
               alt='#'
             />
           </div>
