@@ -12,7 +12,7 @@ import {
   // CLEAR_PROFILE,
 } from './types';
 import axios from 'axios';
-import setAuthToken from '../util/setAuthToken';
+import setAuthToken from '../../util/setAuthToken';
 import { setAlert } from './alertAction';
 
 export const loadUser = () => async (dispatch) => {
@@ -81,9 +81,6 @@ export const loginUser = ({ email, password }) => async (dispatch) => {
   }
 };
 export const logout = () => (dispatch) => {
-  // dispatch({
-  //   type: CLEAR_PROFILE,
-  // });
   dispatch({
     type: LOGOUT,
   });
@@ -150,4 +147,3 @@ export const addToMylikesUndo = (postid) => async (dispatch) => {
     });
   }
 };
-setInterval()

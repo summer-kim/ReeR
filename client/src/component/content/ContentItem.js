@@ -1,6 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import {
   getContent,
   deleteContent,
@@ -16,12 +18,11 @@ import {
   addToMylikesUndo,
 } from '../../redux/action/authAction';
 import { addTag } from '../../redux/action/tagAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import Tagbox from '../tags/Tagbox';
-import { setAlert } from '../../action/alertAction';
-import { Link } from 'react-router-dom';
 import logo from '../../img/logo.png';
 
 const ContentItem = ({
