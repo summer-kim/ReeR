@@ -78,10 +78,6 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
     }
   }
 
-  // Init On DOM Load
-  // document.addEventListener('DOMContentLoaded', init);
-
-  // Init App
   function init() {
     const txtElement = document.querySelector('.txt-type');
     const words = JSON.parse(txtElement.getAttribute('data-words'));
@@ -112,7 +108,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           <br />
           for your personal taste.
         </p>
-        <Link to='/register' className='btn-light'>
+        <Link to='/login' className='btn-light'>
           <i className='fas fa-angle-double-right'></i>Register
         </Link>
       </section>
@@ -144,7 +140,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
             <div className='item-img'>
               <img src={decision} alt='#' />
               <div className='item-text'>
-                <Link className='more' to='/register'>
+                <Link className='more' to='/login'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
                 </Link>
               </div>
@@ -159,7 +155,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
             <div className='item-img'>
               <img src={dislike} style={{ objectFit: 'contain' }} alt='#' />
               <div className='item-text'>
-                <Link className='more' to='/register'>
+                <Link className='more' to='/login'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
                 </Link>
               </div>
@@ -175,7 +171,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
             <div className='item-img'>
               <img src={like} alt='#' />
               <div className='item-text'>
-                <Link className='more' to='/register'>
+                <Link className='more' to='/login'>
                   <i className='fas fa-angle-double-right'></i>Go Register!
                 </Link>
               </div>

@@ -4,7 +4,6 @@ import './App.css';
 import Alert from './component/layout/Alert';
 
 import Login from './component/auth/Login';
-import Register from './component/auth/Register';
 import Mypage from './component/auth/Mypage';
 import Mypost from './component/auth/Mypost';
 import About from './component/layout/About';
@@ -22,7 +21,6 @@ const App = () => {
       <Alert />
       <Switch>
         <Route exact path='/login' component={Login} />
-        <Route exact path='/register' component={Register} />
         <Route exact path='/mypage' component={Mypage} />
         <Route exact path='/mypost' component={Mypost} />
         <Route exact path='/about' component={About} />
