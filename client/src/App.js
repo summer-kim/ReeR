@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
 
-import store from './store';
-import { loadUser } from './action/authAction';
+import store from './redux/store';
+import { loadUser } from './redux/action/authAction';
 import setAuthToken from './util/setAuthToken';
 
 import Home from './component/layout/Home';

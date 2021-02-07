@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
-import { createContent, createContentimg } from '../../action/postAction';
-import { setAlert } from '../../action/alertAction';
+
+import { createContent, createContentimg } from '../../redux/action/postAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 const Makepost = ({
   setAlert,

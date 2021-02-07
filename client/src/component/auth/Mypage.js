@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { logout } from '../../action/authAction';
+import { logout } from '../../redux/action/authAction';
 
 const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
   const capName = name.toUpperCase();

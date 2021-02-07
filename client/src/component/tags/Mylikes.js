@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
-import { getContentMylikes } from '../../action/postAction';
 import Spinner from '../layout/spinner';
-import { setAlert } from '../../action/alertAction';
+
+import { getContentMylikes } from '../../redux/action/postAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 const Mylikes = ({
   getContentMylikes,

@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
-import { getContents } from '../../action/postAction';
-import { setAlert } from '../../action/alertAction';
+import { getContents } from '../../redux/action/postAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 import Spinner from '../layout/spinner';
 

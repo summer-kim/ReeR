@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import Spinner from '../layout/spinner';
 import ContentSitem from '../content/ContentSitem';
 import { Redirect } from 'react-router-dom';
-import { getContentMyBag } from '../../action/postAction';
-import { setAlert } from '../../action/alertAction';
+
+import { getContentMyBag } from '../../redux/action/postAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 const Mybag = ({
   getContentMyBag,

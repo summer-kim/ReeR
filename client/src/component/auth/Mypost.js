@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
-import { getContents } from '../../action/postAction';
+import { getContents } from '../../redux/action/postAction';
 import Spinner from '../layout/spinner';
-import { setAlert } from '../../action/alertAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 const Mypost = ({
   getContents,

@@ -7,7 +7,7 @@ import decision from '../../img/decision.jpg';
 import dislike from '../../img/dislike.jpg';
 import like from '../../img/like.jpg';
 
-import { getContents } from '../../action/postAction';
+import { getContents } from '../../redux/action/postAction';
 import ContentSitem from '../content/ContentSitem';
 import { Link } from 'react-router-dom';
 
@@ -97,7 +97,8 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           ReeR:
           <br />
           The Best Platform for Contents
-          <br />　
+          <br />
+          　
           <span
             className='txt-type'
             data-wait='1500'

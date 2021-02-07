@@ -6,8 +6,8 @@ import {
   createContent,
   createContentimg,
   getContent,
-} from '../../action/postAction';
-import { setAlert } from '../../action/alertAction';
+} from '../../redux/action/postAction';
+import { setAlert } from '../../redux/action/alertAction';
 
 const Editpost = ({
   setAlert,

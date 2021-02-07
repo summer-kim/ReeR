@@ -7,13 +7,13 @@ import {
   likePostUndo,
   unlikePost,
   unlikePostUndo,
-} from '../../action/postAction';
+} from '../../redux/action/postAction';
 import {
   addToMyBag,
   addToMyBagUndo,
   addToMylikes,
   addToMylikesUndo,
-} from '../../action/authAction';
+} from '../../redux/action/authAction';
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 import logo from '../../img/logo.png';
 

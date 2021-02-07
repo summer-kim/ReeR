@@ -8,14 +8,14 @@ import {
   likePostUndo,
   unlikePost,
   unlikePostUndo,
-} from '../../action/postAction';
+} from '../../redux/action/postAction';
 import {
   addToMyBag,
   addToMyBagUndo,
   addToMylikes,
   addToMylikesUndo,
-} from '../../action/authAction';
-import { addTag } from '../../action/tagAction';
+} from '../../redux/action/authAction';
+import { addTag } from '../../redux/action/tagAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
