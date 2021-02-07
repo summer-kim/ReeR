@@ -10,7 +10,7 @@ import setAuthToken from './util/setAuthToken';
 import Home from './component/layout/Home';
 import Navbar from './component/layout/Navbar';
 import Footer from './component/layout/Footer';
-import Routes from './Routes';
+import RoutesBundle from './RoutesBundle';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -25,7 +25,7 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Route exact path='/' component={Home} />
-          <Route component={Routes} />
+          <Route component={RoutesBundle} />
           <Footer />
         </Fragment>
       </Router>
