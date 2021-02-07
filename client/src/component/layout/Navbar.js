@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ authReducer: { isAuthenticated, loading }, inTagsPage }) => {
+const Navbar = ({ authReducer: { isAuthenticated, loading } }) => {
   const authLink = (
     <NavLink to='/mypage' activeClassName='current'>
       <i className='far fa-user'></i>
@@ -35,9 +35,7 @@ const Navbar = ({ authReducer: { isAuthenticated, loading }, inTagsPage }) => {
   );
 };
 Navbar.propTypes = {
-  //logout: PropTypes.func.isRequired,
   authReducer: PropTypes.object.isRequired,
-  inTagsPage: PropTypes.bool,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
