@@ -14,54 +14,85 @@ const Mypost = ({
   postReducer: { contents = [], loading },
   setAlert,
 }) => {
-  const [sortedData, setData] = useState({ contentsMarked: [], sort: '' });
-  const { contentsMarked, sort } = sortedData;
+  const [filteredContents, setFilteredContents] = useState([]);
+  const [genreSelected, setGenreSelected] = useState('');
+  const [undoSelect, setUndoSelect] = useState(true);
+  const genres = [
+    'SF',
+    'Fantasy',
+    'Drama',
+    'Comedy',
+    'Horror',
+    'Thriller',
+    'Kids',
+    'Family',
+    'Animation',
+    'Action',
+    'Crime',
+    'Romance',
+  ];
+
   useEffect(() => {
-    getContents();
-  }, [getContents]);
+    if (undoSelect) {
+      getContents();
+      setFilteredContents(
+        contents.filter((content) => content.user === user._id)
+      );
+      setUndoSelect(false);
+    }
+  }, [undoSelect]);
+
+  useEffect(() => {
+    if (genreSelected) {
+      const justSelected = filteredContents.filter((content) =>
+        content.genre.includes(genreSelected)
+      );
+      if (justSelected.length === 0) {
+        setAlert(`Contents of ${genreSelected} has not been created yet`);
+        setGenreSelected('');
+        setUndoSelect(true);
+        return;
+      }
+      setFilteredContents(justSelected);
+    }
+  }, [genreSelected]);
+
   if (!isAuthenticated) {
     return <Redirect to='/' />;
   }
   const onClickGenre = (e) => {
-    if (e.target.classList.contains('picked')) {
-      e.target.classList.remove('picked');
-      setData({ ...sortedData, contentsMarked: [] });
+    if (genreSelected == e.target.innerHTML) {
+      setGenreSelected('');
+      setUndoSelect(true);
     } else {
-      const gen = e.target.innerText;
-      const contentsPrep = contents.filter((content) =>
-        content.genre.includes(gen)
-      );
-      if (contentsPrep.length === 0) {
-        return setAlert(`Contents of ${gen} has not been created yet`);
-      }
-      e.target.classList.add('picked');
-      setData({ ...sortedData, contentsMarked: contentsPrep });
+      setGenreSelected(e.target.innerHTML);
     }
   };
-  const sortSelected = (e) => {
-    setData({ ...sortedData, sort: e.target.value });
-  };
-  if (sort === 'Liked') {
-    if (contentsMarked.length > 0) {
-      contentsMarked.sort((a, b) => b.likes.length - a.likes.length);
-    } else {
-      contents.sort((a, b) => b.likes.length - a.likes.length);
-    }
-  }
-  if (sort === 'Newest') {
-    if (contentsMarked.length > 0) {
-      contentsMarked.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else {
-      contents.sort((a, b) => new Date(b.date) - new Date(a.date));
-    }
-  }
+
+  // const sortSelected = (e) => {
+  //   setData({ ...sortedData, sort: e.target.value });
+  // };
+  // if (sort === 'Liked') {
+  //   if (contentsMarked.length > 0) {
+  //     contentsMarked.sort((a, b) => b.likes.length - a.likes.length);
+  //   } else {
+  //     contents.sort((a, b) => b.likes.length - a.likes.length);
+  //   }
+  // }
+  // if (sort === 'Newest') {
+  //   if (contentsMarked.length > 0) {
+  //     contentsMarked.sort((a, b) => new Date(b.date) - new Date(a.date));
+  //   } else {
+  //     contents.sort((a, b) => new Date(b.date) - new Date(a.date));
+  //   }
+  // }
   return (
     <Fragment>
       <section id='main-filter'>
         <div className='filter flex-container'>
           <div className='flex-container'>
             <div className='sort'>
-              <select name='sort' value={sort} onChange={sortSelected}>
+              <select name='sort' value=''>
                 <option value='Newest'>Newest</option>
                 <option value='Liked'>Liked Number</option>
               </select>
@@ -72,18 +103,17 @@ const Mypost = ({
                 <input type='checkbox' className='toggler' />
                 <div className='hidden'>
                   <div>
-                    <span onClick={onClickGenre}>SF</span>
-                    <span onClick={onClickGenre}>Fantasy</span>
-                    <span onClick={onClickGenre}>Drama</span>
-                    <span onClick={onClickGenre}>Comedy</span>
-                    <span onClick={onClickGenre}>Horror</span>
-                    <span onClick={onClickGenre}>Thriller</span>
-                    <span onClick={onClickGenre}>Kids</span>
-                    <span onClick={onClickGenre}>Family</span>
-                    <span onClick={onClickGenre}>Animation</span>
-                    <span onClick={onClickGenre}>Action</span>
-                    <span onClick={onClickGenre}>Crime</span>
-                    <span onClick={onClickGenre}>Romance</span>
+                    {genres.map((genre, idx) => (
+                      <span
+                        onClick={onClickGenre}
+                        className={
+                          genreSelected == genre ? 'picked' : undefined
+                        }
+                        key={idx}
+                      >
+                        {genre}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -102,20 +132,10 @@ const Mypost = ({
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
-          ) : contents.some((content) => content.user === user._id) ? (
-            contentsMarked.length > 0 ? (
-              contentsMarked
-                .filter((content) => content.user === user._id)
-                .map((content) => (
-                  <ContentSitem key={content._id} content={content} />
-                ))
-            ) : (
-              contents
-                .filter((content) => content.user === user._id)
-                .map((content) => (
-                  <ContentSitem key={content._id} content={content} />
-                ))
-            )
+          ) : filteredContents ? (
+            filteredContents.map((content) => (
+              <ContentSitem key={content._id} content={content} />
+            ))
           ) : (
             <h4 className='parag'>No Content Created...</h4>
           )}
