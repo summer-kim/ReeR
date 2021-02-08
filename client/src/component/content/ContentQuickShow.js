@@ -17,7 +17,7 @@ import {
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 import logo from '../../img/logo.png';
 
-const ContentSitem = ({
+const ContentQuickShow = ({
   content: {
     _id,
     genre, //array
@@ -174,7 +174,7 @@ const ContentSitem = ({
     </Link>
   );
 };
-ContentSitem.propTypes = {
+ContentQuickShow.propTypes = {
   content: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   likePost: PropTypes.func.isRequired,
@@ -198,4 +198,4 @@ export default connect(mapStateToProps, {
   addToMyBagUndo,
   addToMylikes,
   addToMylikesUndo,
-})(ContentSitem);
+})(ContentQuickShow);

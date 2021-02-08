@@ -8,7 +8,7 @@ import dislike from '../../img/dislike.jpg';
 import like from '../../img/like.jpg';
 
 import { getContents } from '../../redux/action/postAction';
-import ContentSitem from '../content/ContentSitem';
+import ContentQuickShow from '../content/ContentQuickShow';
 import { Link } from 'react-router-dom';
 
 const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
@@ -124,7 +124,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
             contents.map(
               (content, index) =>
                 index <= 2 && (
-                  <ContentSitem key={content._id} content={content} />
+                  <ContentQuickShow key={content._id} content={content} />
                 )
             )
           ) : (

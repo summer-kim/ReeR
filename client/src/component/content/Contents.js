@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect, Link } from 'react-router-dom';
 
-import ContentSitem from '../content/ContentSitem';
+import ContentQuickShow from './ContentQuickShow';
 import { getContents } from '../../redux/action/postAction';
 import Spinner from '../layout/spinner';
 import { setAlert } from '../../redux/action/alertAction';
@@ -195,7 +195,7 @@ const Contents = ({
             <Spinner />
           ) : FilteredContents.length > 0 ? (
             FilteredContents.map((content) => (
-              <ContentSitem key={content._id} content={content} />
+              <ContentQuickShow key={content._id} content={content} />
             ))
           ) : (
             <h4 className='parag'>No Content Created...</h4>
