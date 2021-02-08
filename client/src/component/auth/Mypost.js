@@ -14,8 +14,16 @@ const Mypost = ({
   postReducer: { contents = [], loading },
   setAlert,
 }) => {
+  //Array for get default Contents created by User
+  const [ContentsByUser, setContentsByUser] = useState([]);
+
+  //Array for filtered Contents to be showed. This will be initiated by ContentsByUser
   const [FilteredContents, setFilteredContents] = useState([]);
+
+  //String for specific Genre which is selected
   const [GenreSelected, setGenreSelected] = useState('');
+
+  //Bool for initiating FilteredContents
   const [UndoSelect, setUndoSelect] = useState(true);
   const genres = [
     'SF',
@@ -32,21 +40,24 @@ const Mypost = ({
     'Romance',
   ];
 
-  //get Post from server
+  //get Post from server and filtering
   useEffect(() => {
-    if (UndoSelect) {
-      getContents();
-      setFilteredContents(
-        contents.filter((content) => content.user === user._id)
-      );
+    getContents();
+    setContentsByUser(contents.filter((content) => content.user === user._id));
+  }, []);
+
+  //Undo selecting genre OR get contents from ContentsByUser
+  useEffect(() => {
+    if (UndoSelect || FilteredContents.length === 0) {
+      setFilteredContents(ContentsByUser);
       setUndoSelect(false);
     }
-  }, [UndoSelect]);
+  }, [UndoSelect, ContentsByUser]);
 
   //updating Contents depends on genre selected
   useEffect(() => {
     if (GenreSelected) {
-      const justSelected = FilteredContents.filter((content) =>
+      const justSelected = ContentsByUser.filter((content) =>
         content.genre.includes(GenreSelected)
       );
       if (justSelected.length === 0) {
@@ -59,9 +70,6 @@ const Mypost = ({
     }
   }, [GenreSelected]);
 
-  if (!isAuthenticated) {
-    return <Redirect to='/' />;
-  }
   const onClickGenre = (e) => {
     if (GenreSelected == e.target.innerHTML) {
       setGenreSelected('');
@@ -88,13 +96,16 @@ const Mypost = ({
   //     contents.sort((a, b) => new Date(b.date) - new Date(a.date));
   //   }
   // }
+  if (!isAuthenticated) {
+    return <Redirect to='/' />;
+  }
   return (
     <Fragment>
       <section id='main-filter'>
         <div className='filter flex-container'>
           <div className='flex-container'>
             <div className='sort'>
-              <select name='sort' value=''>
+              <select name='sort' defaultValue='sort'>
                 <option value='Newest'>Newest</option>
                 <option value='Liked'>Liked Number</option>
               </select>
@@ -134,7 +145,7 @@ const Mypost = ({
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
-          ) : FilteredContents ? (
+          ) : FilteredContents.length > 0 ? (
             FilteredContents.map((content) => (
               <ContentSitem key={content._id} content={content} />
             ))
