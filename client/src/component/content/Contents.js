@@ -1,14 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import ContentSitem from '../content/ContentSitem';
 import { getContents } from '../../redux/action/postAction';
 import Spinner from '../layout/spinner';
 import { setAlert } from '../../redux/action/alertAction';
 
-const Mypost = ({
+import '../../css/movie.css';
+
+const Contents = ({
   getContents,
   authReducer: { isAuthenticated, user },
   postReducer: { contents = [], loading },
@@ -148,6 +150,36 @@ const Mypost = ({
               </div>
             </div>
           </div>
+          {match.params.type === 'all' && (
+            <div className='flex-container'>
+              <Link
+                to='/makepost'
+                onClick={(e) => {
+                  if (!isAuthenticated) {
+                    e.preventDefault();
+                    return setAlert('You need to Login first');
+                  }
+                }}
+              >
+                <div className='icons btn-main'>
+                  <i className='fas fa-plus flex-container'></i>
+                </div>
+              </Link>
+              <Link
+                to='/contents/bag'
+                onClick={(e) => {
+                  if (!isAuthenticated) {
+                    e.preventDefault();
+                    return setAlert('You need to Login first');
+                  }
+                }}
+              >
+                <div className='icons btn-main'>
+                  <i className='fas fa-shopping-bag flex-container'></i>
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -173,7 +205,7 @@ const Mypost = ({
     </Fragment>
   );
 };
-Mypost.propTypes = {
+Contents.propTypes = {
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   getContents: PropTypes.func.isRequired,
@@ -183,4 +215,4 @@ const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
-export default connect(mapStateToProps, { getContents, setAlert })(Mypost);
+export default connect(mapStateToProps, { getContents, setAlert })(Contents);

@@ -17,8 +17,8 @@ const Navbar = ({ authReducer: { isAuthenticated, loading } }) => {
 
   return (
     <nav id='nav' className='flex-container'>
-      <NavLink activeClassName='current' id='nav-a' to='/tags'>
-        <i className='fas fa-tags'></i>Tags
+      <NavLink activeClassName='current' id='nav-a' to='/contents/all'>
+        <i className='fas fa-film'></i>Movies
       </NavLink>
       <div id='nav-b'>
         <Link to='/'>
