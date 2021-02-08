@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const connectDB = require('../config/db');
+const connectDB = require('./config/db');
 const path = require('path');
 
 connectDB();
@@ -8,10 +8,10 @@ connectDB();
 // Init Middleware
 app.use(express.json());
 
-app.use('/auth', require('./route/authRouter'));
-app.use('/user', require('./route/userRouter'));
-app.use('/profile', require('./route/profileRouter'));
-app.use('/post', require('./route/postRouter'));
+app.use('/auth', require('./server/route/authRouter'));
+app.use('/user', require('./server/route/userRouter'));
+app.use('/profile', require('./server/route/profileRouter'));
+app.use('/post', require('./server/route/postRouter'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
