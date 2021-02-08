@@ -8,6 +8,7 @@ import {
   unlikeTag,
   unlikeTagUndo,
 } from '../../redux/action/tagAction';
+import '../../css/tagbox.css';
 
 const Tagbox = ({
   tag,

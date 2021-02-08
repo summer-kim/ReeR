@@ -1,0 +1,79 @@
+#login {
+  height: 110vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#login-box {
+  text-align: center;
+  padding: 1.5rem;
+  margin: auto;
+  background: #fff;
+  width: 450px;
+  height: auto;
+  box-shadow: 2px 2px 1px 0 rgba(95, 95, 95, 0.5);
+  flex-direction: column;
+}
+#login-box h2 {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+}
+#login-box .bottom-line {
+  border-bottom: 2px solid #cf7177;
+}
+#login-box .parag {
+  width: 250px;
+  line-height: 1.2;
+  font-size: 14px;
+}
+#login-box .form {
+  margin: 1rem 0;
+  width: 100%;
+}
+#login-box .form .eachForm {
+  margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+#login-box .form .eachForm label {
+  text-align: left;
+}
+#login-box .form .eachForm input {
+  margin-top: 3px;
+  height: 22px;
+}
+#login-box .condition {
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 300;
+}
+#login-box .condition a {
+  color: #cf7177;
+}
+#login-box button {
+  margin: 0.5rem 0;
+  width: 100%;
+  height: 40px;
+  font-weight: 300;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-family: 'Raleway', sans-serif;
+  border: 1px solid rgba(61, 61, 61, 0.85);
+  cursor: pointer;
+}
+#login .loginLink {
+  margin-top: 1rem;
+  flex-direction: column;
+  font-size: 14px;
+}
+#login .loginLink div {
+  margin-top: 0.5rem;
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}

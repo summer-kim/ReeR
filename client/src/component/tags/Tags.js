@@ -7,6 +7,7 @@ import ContentSitem from '../content/ContentSitem';
 import { getContents } from '../../redux/action/postAction';
 import { setAlert } from '../../redux/action/alertAction';
 
+import '../../css/movie.css';
 import Spinner from '../layout/spinner';
 
 const Tags = ({

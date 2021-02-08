@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import '../../css/login.css';
 
 import { loginUser, registerUser } from '../../redux/action/authAction';
 import { setAlert } from '../../redux/action/alertAction';
 
-const Login = ({ loginUser, isAuthenticated }) => {
+const Login = ({ loginUser, isAuthenticated, registerUser, setAlert }) => {
   const [isLoginPage, setIsLoginPage] = useState(true);
 
   const [loginData, setLoginData] = useState({
@@ -33,12 +34,12 @@ const Login = ({ loginUser, isAuthenticated }) => {
       return;
     }
 
-    const { name, email, password, password2 } = registerData;
+    const { password, password2 } = registerData;
 
     if (password !== password2) {
-      setAlert('Password does not match', 'fail');
+      setAlert("Password doesn't matched", 'fail');
     } else {
-      registerUser({ name, email, password });
+      registerUser(registerData);
     }
   };
 
@@ -103,8 +104,12 @@ const Login = ({ loginUser, isAuthenticated }) => {
 Login.propTypes = {
   loginUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  registerUser: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   isAuthenticated: state.authReducer.isAuthenticated,
 });
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(mapStateToProps, { loginUser, registerUser, setAlert })(
+  Login
+);

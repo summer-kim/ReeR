@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import './App.css';
 
 import Alert from './component/layout/Alert';
 

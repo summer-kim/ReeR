@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import summer from '../../img/summer.jpg';
+import '../../css/about.css';
 
 const About = () => {
   return (

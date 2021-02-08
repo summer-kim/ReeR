@@ -24,6 +24,7 @@ import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
 import Tagbox from '../tags/Tagbox';
 import logo from '../../img/logo.png';
+import '../../css/contentItem.css';
 
 const ContentItem = ({
   setAlert,
