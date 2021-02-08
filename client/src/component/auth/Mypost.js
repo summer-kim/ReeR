@@ -14,9 +14,9 @@ const Mypost = ({
   postReducer: { contents = [], loading },
   setAlert,
 }) => {
-  const [filteredContents, setFilteredContents] = useState([]);
-  const [genreSelected, setGenreSelected] = useState('');
-  const [undoSelect, setUndoSelect] = useState(true);
+  const [FilteredContents, setFilteredContents] = useState([]);
+  const [GenreSelected, setGenreSelected] = useState('');
+  const [UndoSelect, setUndoSelect] = useState(true);
   const genres = [
     'SF',
     'Fantasy',
@@ -32,36 +32,38 @@ const Mypost = ({
     'Romance',
   ];
 
+  //get Post from server
   useEffect(() => {
-    if (undoSelect) {
+    if (UndoSelect) {
       getContents();
       setFilteredContents(
         contents.filter((content) => content.user === user._id)
       );
       setUndoSelect(false);
     }
-  }, [undoSelect]);
+  }, [UndoSelect]);
 
+  //updating Contents depends on genre selected
   useEffect(() => {
-    if (genreSelected) {
-      const justSelected = filteredContents.filter((content) =>
-        content.genre.includes(genreSelected)
+    if (GenreSelected) {
+      const justSelected = FilteredContents.filter((content) =>
+        content.genre.includes(GenreSelected)
       );
       if (justSelected.length === 0) {
-        setAlert(`Contents of ${genreSelected} has not been created yet`);
+        setAlert(`Contents of ${GenreSelected} has not been created yet`);
         setGenreSelected('');
         setUndoSelect(true);
         return;
       }
       setFilteredContents(justSelected);
     }
-  }, [genreSelected]);
+  }, [GenreSelected]);
 
   if (!isAuthenticated) {
     return <Redirect to='/' />;
   }
   const onClickGenre = (e) => {
-    if (genreSelected == e.target.innerHTML) {
+    if (GenreSelected == e.target.innerHTML) {
       setGenreSelected('');
       setUndoSelect(true);
     } else {
@@ -107,7 +109,7 @@ const Mypost = ({
                       <span
                         onClick={onClickGenre}
                         className={
-                          genreSelected == genre ? 'picked' : undefined
+                          GenreSelected == genre ? 'picked' : undefined
                         }
                         key={idx}
                       >
@@ -132,8 +134,8 @@ const Mypost = ({
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
-          ) : filteredContents ? (
-            filteredContents.map((content) => (
+          ) : FilteredContents ? (
+            FilteredContents.map((content) => (
               <ContentSitem key={content._id} content={content} />
             ))
           ) : (
