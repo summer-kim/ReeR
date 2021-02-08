@@ -13,6 +13,7 @@ const Mypost = ({
   authReducer: { isAuthenticated, user },
   postReducer: { contents = [], loading },
   setAlert,
+  match,
 }) => {
   //Array for get default Contents created by User
   const [ContentsByUser, setContentsByUser] = useState([]);
@@ -45,7 +46,17 @@ const Mypost = ({
     getContents();
     setContentsByUser(
       contents
-        .filter((content) => content.user === user._id)
+        .filter((content) => {
+          if (match.params.type === 'create') {
+            return content.user === user._id;
+          } else if (match.params.type === 'bag') {
+            return user.myBag.includes(content._id);
+          } else if (match.params.type === 'liked') {
+            return user.likes.includes(content._id);
+          } else {
+            return true;
+          }
+        })
         .sort((a, b) => new Date(b.date) - new Date(a.date))
     );
   }, []);
