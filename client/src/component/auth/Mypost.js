@@ -43,7 +43,11 @@ const Mypost = ({
   //get Post from server and filtering
   useEffect(() => {
     getContents();
-    setContentsByUser(contents.filter((content) => content.user === user._id));
+    setContentsByUser(
+      contents
+        .filter((content) => content.user === user._id)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+    );
   }, []);
 
   //Undo selecting genre OR get contents from ContentsByUser
@@ -70,6 +74,7 @@ const Mypost = ({
     }
   }, [GenreSelected]);
 
+  //when user choose specific genre
   const onClickGenre = (e) => {
     if (GenreSelected == e.target.innerHTML) {
       setGenreSelected('');
@@ -79,23 +84,23 @@ const Mypost = ({
     }
   };
 
-  // const sortSelected = (e) => {
-  //   setData({ ...sortedData, sort: e.target.value });
-  // };
-  // if (sort === 'Liked') {
-  //   if (contentsMarked.length > 0) {
-  //     contentsMarked.sort((a, b) => b.likes.length - a.likes.length);
-  //   } else {
-  //     contents.sort((a, b) => b.likes.length - a.likes.length);
-  //   }
-  // }
-  // if (sort === 'Newest') {
-  //   if (contentsMarked.length > 0) {
-  //     contentsMarked.sort((a, b) => new Date(b.date) - new Date(a.date));
-  //   } else {
-  //     contents.sort((a, b) => new Date(b.date) - new Date(a.date));
-  //   }
-  // }
+  //when user select specific order
+  const onChangeSort = (e) => {
+    if (e.target.value == 'Liked') {
+      // sort by number of likes
+      setFilteredContents(
+        [...FilteredContents].sort((a, b) => b.likes.length - a.likes.length)
+      );
+    } else {
+      // sort by time
+      setFilteredContents(
+        [...FilteredContents].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        )
+      );
+    }
+  };
+
   if (!isAuthenticated) {
     return <Redirect to='/' />;
   }
@@ -105,7 +110,7 @@ const Mypost = ({
         <div className='filter flex-container'>
           <div className='flex-container'>
             <div className='sort'>
-              <select name='sort' defaultValue='sort'>
+              <select name='sort' defaultValue='sort' onChange={onChangeSort}>
                 <option value='Newest'>Newest</option>
                 <option value='Liked'>Liked Number</option>
               </select>
