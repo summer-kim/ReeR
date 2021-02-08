@@ -131,8 +131,8 @@ const ContentItem = ({
     inputBox.value = '';
   };
 
-  const onClickDelete = (postid) => {
-    deleteContent(postid);
+  const onClickDelete = async (postid) => {
+    await deleteContent(postid);
     history.goBack();
   };
   return (
