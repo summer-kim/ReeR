@@ -53,7 +53,7 @@ const ContentSitem = ({
     ) {
       Unliked = true;
     }
-    if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
+    if (authReducer.user.myBag.some((list) => list.toString() === _id)) {
       Put = true;
     }
   }

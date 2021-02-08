@@ -19,22 +19,13 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  myBag: [
-    {
-      post: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post',
-      },
-    },
-  ],
-  likes: [
-    {
-      post: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post',
-      },
-    },
-  ],
+  myBag: {
+    type: Array,
+  },
+
+  likes: {
+    type: Array,
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);

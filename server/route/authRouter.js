@@ -82,12 +82,12 @@ router.post(
 router.put('/myBag/:postid', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    if (user.myBag.some((list) => list.post.toString() === req.params.postid)) {
+
+    if (user.myBag.some((list) => list.toString() === req.params.postid)) {
       return res.status(400).json({ msg: 'Already add this content' });
     }
-    user.myBag.unshift({
-      post: req.params.postid,
-    });
+    user.myBag.unshift(req.params.postid);
+
     await user.save();
     res.json(user.myBag);
   } catch (err) {
@@ -101,14 +101,12 @@ router.put('/myBag/:postid', auth, async (req, res) => {
 router.put('/myBagUndo/:postid', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    if (
-      !user.myBag.some((list) => list.post.toString() === req.params.postid)
-    ) {
+
+    if (!user.myBag.some((list) => list.toString() === req.params.postid)) {
       return res.status(400).json({ msg: 'this content never been added' });
     }
-    user.myBag = user.myBag.filter(
-      (list) => list.post.toString() !== req.params.postid
-    );
+    user.myBag.splice(user.myBag.indexOf(req.params.postid), 1);
+
     await user.save();
     res.json(user.myBag);
   } catch (err) {
@@ -122,12 +120,12 @@ router.put('/myBagUndo/:postid', auth, async (req, res) => {
 router.put('/likes/:postid', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    if (user.likes.some((list) => list.post.toString() === req.params.postid)) {
+
+    if (user.likes.some((list) => list.toString() === req.params.postid)) {
       return res.status(400).json({ msg: 'Already add this content' });
     }
-    user.likes.unshift({
-      post: req.params.postid,
-    });
+    user.likes.unshift(req.params.postid);
+
     await user.save();
     res.json(user.likes);
   } catch (err) {
@@ -141,14 +139,12 @@ router.put('/likes/:postid', auth, async (req, res) => {
 router.put('/likesUndo/:postid', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
-    if (
-      !user.likes.some((list) => list.post.toString() === req.params.postid)
-    ) {
+
+    if (!user.likes.some((list) => list.toString() === req.params.postid)) {
       return res.status(400).json({ msg: 'this content never been added' });
     }
-    user.likes = user.likes.filter(
-      (list) => list.post.toString() !== req.params.postid
-    );
+    user.likes.splice(user.likes.indexOf(req.params.postid), 1);
+
     await user.save();
     res.json(user.likes);
   } catch (err) {

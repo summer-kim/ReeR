@@ -67,7 +67,7 @@ const ContentItem = ({
 
   const setVariable = async () => {
     if (authReducer.user) {
-      if (authReducer.user.myBag.some((list) => list.post.toString() === _id)) {
+      if (authReducer.user.myBag.some((list) => list.toString() === _id)) {
         await setPut(true);
       }
       if (likes && likes.some((like) => like.user === authReducer.user._id)) {
