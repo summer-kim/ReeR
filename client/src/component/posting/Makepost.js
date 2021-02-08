@@ -59,8 +59,8 @@ const Makepost = ({
     createContent(formData);
   };
   return (
-    <section class='addPost' id='register'>
-      <div id='register-box' class='flex-container'>
+    <section class='addPost' id='login'>
+      <div id='login-box' class='flex-container'>
         <div class='intro'>
           <h2>Upload Post</h2>
           <div class='bottom-line'></div>

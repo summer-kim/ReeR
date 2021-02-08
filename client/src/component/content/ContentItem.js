@@ -22,7 +22,7 @@ import { setAlert } from '../../redux/action/alertAction';
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 
-import Tagbox from '../tags/Tagbox';
+import Tagbox from './Tagbox';
 import logo from '../../img/logo.png';
 import '../../css/contentItem.css';
 
