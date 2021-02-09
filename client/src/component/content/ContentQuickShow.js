@@ -34,8 +34,11 @@ const ContentQuickShow = ({
   const [Bag, setBag] = useState(false);
 
   //variables of how many people liked/unliked this
-  const [LikeNum, setLikeNum] = useState(likes.length);
-  const [UnlikeNum, setUnlikeNum] = useState(unlikes.length);
+  const [LikeNum, setLikeNum] = useState({
+    like: likes.length,
+    unlike: unlikes.length,
+  });
+  //const [UnlikeNum, setUnlikeNum] = useState(unlikes.length);
 
   useEffect(() => {
     if (authReducer.user && !loading) {
@@ -49,25 +52,14 @@ const ContentQuickShow = ({
   }, []);
 
   //when User click like heart button
-  const onClick = (type) => {
-    switch (type) {
-      case 'like':
-        Liked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        Liked ? setLikeNum(LikeNum - 1) : setLikeNum(LikeNum + 1);
-        setLiked(!Liked);
-        break;
-      case 'unlike':
-        Unliked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        Unliked ? setUnlikeNum(UnlikeNum - 1) : setUnlikeNum(UnlikeNum + 1);
-        setUnliked(!Unliked);
-        break;
-      case 'bag':
-        Bag ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        setBag(!Bag);
-        break;
-      default:
-        break;
-    }
+  const onClick = (type, bool, funct) => {
+    bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+    type !== 'bag' &&
+      setLikeNum({
+        ...LikeNum,
+        [type]: bool ? LikeNum[type] - 1 : LikeNum[type] + 1,
+      });
+    funct(!bool);
   };
 
   return (
@@ -88,7 +80,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('like');
+                onClick('like', Liked, setLiked);
               }}
               className={
                 Liked ? 'emoji emoji-heart' : 'emoji emoji-heart emoji-reverse'
@@ -99,7 +91,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('unlike');
+                onClick('unlike', Unliked, setUnliked);
               }}
               className={
                 Unliked
@@ -112,7 +104,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('bag');
+                onClick('bag', Bag, setBag);
               }}
               className={
                 Bag ? 'emoji emoji-plus ' : 'emoji emoji-plus emoji-reverse'
@@ -124,35 +116,25 @@ const ContentQuickShow = ({
         </div>
         <div className='item-info'>
           <div>
-            {movieName.length > 30 ? (
-              <span className='movieTitle'>{movieName.substr(0, 30)}..</span>
-            ) : (
-              <span className='movieTitle'>{movieName}</span>
-            )}
+            <span className='movieTitle'>
+              {movieName.length > 30
+                ? movieName.substr(0, 30) + '..'
+                : movieName}
+            </span>
             <span>
-              {genre.map((gen, index) => {
-                if (index === genre.length - 1) {
-                  return (
-                    <span key={index} className='genre'>
-                      {gen}
-                    </span>
-                  );
-                } else {
-                  return (
-                    <span key={index} className='genre'>
-                      {gen}/
-                    </span>
-                  );
-                }
-              })}
+              {genre.map((gen, index) => (
+                <span key={index} className='genre'>
+                  {index === genre.length - 1 ? gen : gen + '/'}
+                </span>
+              ))}
             </span>
           </div>
           <span className='preview-interest'>
             <i className='fas fa-heart'></i>
-            {LikeNum}
+            {LikeNum.like}
             <span>:</span>
             <i className='fas fa-heart-broken'></i>
-            {UnlikeNum}
+            {LikeNum.unlike}
           </span>
         </div>
         <div className='tags'>{sortAndLimitTag(tags)}</div>

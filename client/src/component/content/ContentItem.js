@@ -24,7 +24,7 @@ const ContentItem = ({
   getContent,
   addTag,
   deleteContent,
-  postReducer: { content, contents, loading },
+  postReducer: { content, loading },
   authReducer,
   match,
   history,
@@ -33,7 +33,8 @@ const ContentItem = ({
 }) => {
   useEffect(() => {
     getContent(match.params.postid);
-  }, [getContent, match.params.postid]);
+  }, []);
+
   const {
     _id = '',
     movieName = '',
@@ -46,10 +47,6 @@ const ContentItem = ({
     tags = [],
   } = content;
 
-  const [tagData, setData] = useState({
-    tagName: '',
-  });
-
   //variables for changing button color depends on User already liked content or not
   const [Liked, setLiked] = useState(false);
   const [Unliked, setUnliked] = useState(false);
@@ -58,40 +55,27 @@ const ContentItem = ({
   const [Bag, setBag] = useState(false);
 
   useEffect(() => {
-    if (authReducer.user && !loading) {
-      likes.some((like) => like.user === authReducer.user._id) &&
-        setLiked(true);
-      unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
-        setUnliked(true);
-      authReducer.user.myBag.some((list) => list.toString() === _id) &&
-        setBag(true);
-    }
-  }, []);
+    likes.some((like) => like.user === authReducer.user._id) && setLiked(true);
+    unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
+      setUnliked(true);
+    authReducer.user.myBag.some((list) => list.toString() === _id) &&
+      setBag(true);
+  }, [content]);
 
   //when User click like heart button
-  const onClick = (type) => {
-    switch (type) {
-      case 'like':
-        Liked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        setLiked(!Liked);
-        break;
-      case 'unlike':
-        Unliked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        setUnliked(!Unliked);
-        break;
-      case 'bag':
-        Bag ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-        setBag(!Bag);
-        break;
-      default:
-        break;
-    }
+  const onClick = (type, bool, funct) => {
+    bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+    funct(!bool);
   };
 
+  const [tagData, setData] = useState({
+    tagName: '',
+  });
   const { tagName } = tagData;
   const inputBox = document.getElementById('inputBox');
-  const onChange = (e) =>
-    setData({ ...tagData, [e.target.name]: e.target.value });
+
+  const onChange = (e) => setData({ tagName: e.target.value });
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (tagName.length > 60) {
@@ -102,8 +86,8 @@ const ContentItem = ({
     inputBox.value = '';
   };
 
-  const onClickDelete = async (postid) => {
-    await deleteContent(postid);
+  const onClickDelete = (postid) => {
+    deleteContent(postid);
     history.goBack();
   };
   return (
@@ -154,7 +138,7 @@ const ContentItem = ({
                   <span
                     onClick={(e) => {
                       e.preventDefault();
-                      onClick('like');
+                      onClick('like', Liked, setLiked);
                     }}
                     className={Liked ? 'whenliked' : 'heartbtn'}
                   >
@@ -164,7 +148,7 @@ const ContentItem = ({
                   <span
                     onClick={(e) => {
                       e.preventDefault();
-                      onClick('unlike');
+                      onClick('unlike', Unliked, setUnliked);
                     }}
                     className={Unliked ? 'whenliked' : 'heartbtn'}
                   >
@@ -180,7 +164,7 @@ const ContentItem = ({
                   className={Bag ? 'plus iconSelected' : 'plus'}
                   onClick={(e) => {
                     e.preventDefault();
-                    onClick('bag');
+                    onClick('bag', Bag, setBag);
                   }}
                 >
                   <i className='fas fa-plus'></i>
@@ -231,7 +215,6 @@ const ContentItem = ({
                 className='inputBox'
                 classtype='text'
                 placeholder='Tag Name (50 letters limit)'
-                name='tagName'
                 value={tagName}
                 onChange={onChange}
                 id='inputBox'
