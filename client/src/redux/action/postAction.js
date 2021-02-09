@@ -10,7 +10,12 @@ import {
   DELETE_CONTENT,
 } from './types';
 import { setAlert } from './alertAction';
-import { addToMylikes, addToMylikesUndo } from './authAction';
+import {
+  addToMylikes,
+  addToMylikesUndo,
+  addToMyBag,
+  addToMyBagUndo,
+} from './authAction';
 
 //get all contents
 export const getContents = () => async (dispatch) => {
@@ -117,8 +122,12 @@ export const createContentimg = (data, postid = '', edit = false) => async (
   }
 };
 //like
-export const likeUnlikePost = (type, postid) => async (dispatch) => {
+export const likeUnlikeBag = (type, postid) => async (dispatch) => {
   try {
+    if (type === 'bag') {
+      dispatch(addToMyBag(postid));
+      return;
+    }
     const res = await axios.put(`/post/${type}s/${postid}`);
     if (type === 'like') {
       dispatch({
@@ -143,8 +152,12 @@ export const likeUnlikePost = (type, postid) => async (dispatch) => {
   }
 };
 
-export const likeUnlikePostUndo = (type, postid) => async (dispatch) => {
+export const likeUnlikeBagUndo = (type, postid) => async (dispatch) => {
   try {
+    if (type === 'bag') {
+      dispatch(addToMyBagUndo(postid));
+      return;
+    }
     const res = await axios.put(`/post/${type}sBack/${postid}`);
     if (type === 'like') {
       dispatch({
