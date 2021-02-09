@@ -6,10 +6,8 @@ import { Link } from 'react-router-dom';
 import {
   getContent,
   deleteContent,
-  likePost,
-  likePostUndo,
-  unlikePost,
-  unlikePostUndo,
+  likeUnlikePost,
+  likeUnlikePostUndo,
 } from '../../redux/action/postAction';
 import {
   addToMyBag,
@@ -35,10 +33,9 @@ const ContentItem = ({
   authReducer,
   match,
   history,
-  likePost,
-  likePostUndo,
-  unlikePost,
-  unlikePostUndo,
+
+  likeUnlikePost,
+  likeUnlikePostUndo,
   addToMyBag,
   addToMyBagUndo,
   addToMylikes,
@@ -88,25 +85,25 @@ const ContentItem = ({
   //when User click like heart button
   const onClickLike = () => {
     if (Liked) {
-      likePostUndo(_id);
+      likeUnlikePostUndo(_id);
       addToMylikesUndo(_id);
       setLiked(false);
     } else {
-      likePost(_id);
+      likeUnlikePost(_id);
       addToMylikes(_id);
       setLiked(true);
     }
   };
   //when User click unlike heart-broken button
-  const onClickUnlike = () => {
-    if (Unliked) {
-      unlikePostUndo(_id);
-      setUnliked(false);
-    } else {
-      unlikePost(_id);
-      setUnliked(true);
-    }
-  };
+  // const onClickUnlike = () => {
+  //   if (Unliked) {
+  //     unlikePostUndo(_id);
+  //     setUnliked(false);
+  //   } else {
+  //     unlikePost(_id);
+  //     setUnliked(true);
+  //   }
+  // };
   const onClickMyBag = () => {
     if (Put) {
       addToMyBagUndo(_id);
@@ -188,7 +185,7 @@ const ContentItem = ({
                     {likes ? likes.length : 0}
                   </span>
                   <span
-                    onClick={() => onClickUnlike()}
+                    onClick={() => onClickLike()}
                     className={Unliked ? 'whenliked' : 'heartbtn'}
                   >
                     <i className='fas fa-heart-broken'></i>
@@ -273,10 +270,8 @@ ContentItem.propTypes = {
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   addTag: PropTypes.func.isRequired,
-  likePost: PropTypes.func.isRequired,
-  likePostUndo: PropTypes.func.isRequired,
-  unlikePost: PropTypes.func.isRequired,
-  unlikePostUndo: PropTypes.func.isRequired,
+  likeUnlikePost: PropTypes.func.isRequired,
+  likeUnlikePostUndo: PropTypes.func.isRequired,
   addToMyBag: PropTypes.func.isRequired,
   addToMyBagUndo: PropTypes.func.isRequired,
   addToMylikes: PropTypes.func.isRequired,
@@ -292,10 +287,9 @@ export default connect(mapStateToProps, {
   getContent,
   addTag,
   deleteContent,
-  likePost,
-  likePostUndo,
-  unlikePost,
-  unlikePostUndo,
+  likeUnlikePost,
+  likeUnlikePostUndo,
+
   addToMyBag,
   addToMyBagUndo,
   addToMylikes,

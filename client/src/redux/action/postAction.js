@@ -10,6 +10,7 @@ import {
   DELETE_CONTENT,
 } from './types';
 import { setAlert } from './alertAction';
+import { addToMylikes, addToMylikesUndo } from './authAction';
 
 //get all contents
 export const getContents = () => async (dispatch) => {
@@ -116,14 +117,22 @@ export const createContentimg = (data, postid = '', edit = false) => async (
   }
 };
 //like
-export const likePost = (postid) => async (dispatch) => {
+export const likeUnlikePost = (type, postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/post/likes/${postid}`);
-    dispatch({
-      type: LIKE_UPDATE,
-      payload: { postid, likes: res.data },
-    });
-    dispatch(setAlert('Successfully Liked', 'success'));
+    const res = await axios.put(`/post/${type}s/${postid}`);
+    if (type === 'like') {
+      dispatch({
+        type: LIKE_UPDATE,
+        payload: { postid, likes: res.data },
+      });
+      dispatch(addToMylikes(postid));
+    } else {
+      dispatch({
+        type: UNLIKE_UPDATE,
+        payload: { postid, unlikes: res.data },
+      });
+    }
+    dispatch(setAlert(`Successfully ${type}d`, 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
@@ -134,14 +143,22 @@ export const likePost = (postid) => async (dispatch) => {
   }
 };
 
-export const likePostUndo = (postid) => async (dispatch) => {
+export const likeUnlikePostUndo = (type, postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/post/likesBack/${postid}`);
-    dispatch({
-      type: LIKE_UPDATE,
-      payload: { postid, likes: res.data },
-    });
-    dispatch(setAlert('Cancel Liked', 'success'));
+    const res = await axios.put(`/post/${type}sBack/${postid}`);
+    if (type === 'like') {
+      dispatch({
+        type: LIKE_UPDATE,
+        payload: { postid, likes: res.data },
+      });
+      dispatch(addToMylikesUndo(postid));
+    } else {
+      dispatch({
+        type: UNLIKE_UPDATE,
+        payload: { postid, unlikes: res.data },
+      });
+    }
+    dispatch(setAlert(`Cancel ${type}d`, 'success'));
   } catch (err) {
     dispatch({
       type: LIKE_ERROR,
@@ -149,41 +166,6 @@ export const likePostUndo = (postid) => async (dispatch) => {
     });
     const msg = err.response.data.msg;
     dispatch(setAlert(msg, 'fail'));
-  }
-};
-
-//unlike
-export const unlikePost = (postid) => async (dispatch) => {
-  try {
-    const res = await axios.put(`/post/unlikes/${postid}`);
-    dispatch({
-      type: UNLIKE_UPDATE,
-      payload: { postid, unlikes: res.data },
-    });
-    dispatch(setAlert('Successfully Unliked', 'success'));
-  } catch (err) {
-    dispatch({
-      type: LIKE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-    const msg = err.response.data.msg;
-    dispatch(setAlert(msg, 'fail'));
-  }
-};
-
-export const unlikePostUndo = (postid) => async (dispatch) => {
-  try {
-    const res = await axios.put(`/post/unlikesBack/${postid}`);
-    dispatch({
-      type: UNLIKE_UPDATE,
-      payload: { postid, unlikes: res.data },
-    });
-    dispatch(setAlert('Cancel Unliked', 'success'));
-  } catch (err) {
-    dispatch({
-      type: LIKE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
   }
 };
 
