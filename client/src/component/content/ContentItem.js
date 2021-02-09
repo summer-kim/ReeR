@@ -10,19 +10,14 @@ import {
   likeUnlikeBagUndo,
 } from '../../redux/action/postAction';
 
-import { addTag } from '../../redux/action/tagAction';
-import { setAlert } from '../../redux/action/alertAction';
-
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
+import TagSection from './TagSection';
 
-import Tagbox from './Tagbox';
 import logo from '../../img/logo.png';
 import '../../css/contentItem.css';
 
 const ContentItem = ({
-  setAlert,
   getContent,
-  addTag,
   deleteContent,
   postReducer: { content, loading },
   authReducer,
@@ -55,35 +50,20 @@ const ContentItem = ({
   const [Bag, setBag] = useState(false);
 
   useEffect(() => {
-    likes.some((like) => like.user === authReducer.user._id) && setLiked(true);
-    unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
-      setUnliked(true);
-    authReducer.user.myBag.some((list) => list.toString() === _id) &&
-      setBag(true);
+    if (authReducer.user && !loading) {
+      likes.some((like) => like.user === authReducer.user._id) &&
+        setLiked(true);
+      unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
+        setUnliked(true);
+      authReducer.user.myBag.some((list) => list.toString() === _id) &&
+        setBag(true);
+    }
   }, [content]);
 
   //when User click like heart button
   const onClick = (type, bool, funct) => {
     bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
     funct(!bool);
-  };
-
-  const [tagData, setData] = useState({
-    tagName: '',
-  });
-  const { tagName } = tagData;
-  const inputBox = document.getElementById('inputBox');
-
-  const onChange = (e) => setData({ tagName: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (tagName.length > 60) {
-      return setAlert('tagName should less than 60 letters', 'fail');
-    }
-    addTag({ tagData, _id });
-    setData({ tagName: '' });
-    inputBox.value = '';
   };
 
   const onClickDelete = (postid) => {
@@ -117,24 +97,14 @@ const ContentItem = ({
               <div className='summary'>
                 <p>{summary}</p>
               </div>
+
               <div className='info'>
                 <span>
-                  {' '}
-                  {genre.map((gen, index) => {
-                    if (index === genre.length - 1) {
-                      return (
-                        <span key={index} className='genre'>
-                          {gen}
-                        </span>
-                      );
-                    } else {
-                      return (
-                        <span key={index} className='genre'>
-                          {gen}/
-                        </span>
-                      );
-                    }
-                  })}
+                  {genre.map((gen, index) => (
+                    <span key={index} className='genre'>
+                      {index === genre.length - 1 ? gen : gen + '/'}
+                    </span>
+                  ))}
                 </span>
                 <span className='content-interest'>
                   <span
@@ -161,6 +131,7 @@ const ContentItem = ({
               </div>
 
               <div className='tags'>{sortAndLimitTag(tags)}</div>
+
               <div className='side-end flex-container'>
                 <div
                   className={Bag ? 'plus iconSelected' : 'plus'}
@@ -173,61 +144,25 @@ const ContentItem = ({
                 </div>
                 {!authReducer.loading &&
                 authReducer.user &&
-                user === authReducer.user._id ? (
-                  <Link className='trash' to={`/editpost/${_id}`}>
-                    <i class='fas fa-edit'></i>
-                  </Link>
-                ) : (
-                  ''
-                )}
-                <div className='trash'>
-                  {!authReducer.loading &&
-                  authReducer.user &&
-                  user === authReducer.user._id ? (
-                    <i
-                      class='fas fa-trash-alt'
-                      onClick={() => onClickDelete(_id)}
-                    ></i>
-                  ) : (
-                    ''
-                  )}
-                </div>
+                user === authReducer.user._id ? ( //Only user who created can see
+                  <Fragment>
+                    <Link className='trash' to={`/editpost/${_id}`}>
+                      <i class='fas fa-edit'></i>
+                    </Link>
+                    <div className='trash'>
+                      <i
+                        class='fas fa-trash-alt'
+                        onClick={() => onClickDelete(_id)}
+                      ></i>
+                    </div>
+                  </Fragment>
+                ) : undefined}
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section id='aboutTag' className='p1 m1'>
-        <h4 className='title'>
-          <i className='fas fa-heart'></i>Tag List
-        </h4>
-        <div className='tagBox p1'>
-          <div className='tagList grid'>
-            {tags.length > 0 ? (
-              tags.map((tag) => <Tagbox tag={tag} postid={_id} key={tag._id} />)
-            ) : (
-              <h4 className='parag'> No Tag founded </h4>
-            )}
-          </div>
-          <div className='tagInput flex-container'>
-            <i className='fas fa-plus'></i>
-            <i className='fas fa-hashtag hashTag'></i>
-            <form onSubmit={onSubmit}>
-              <input
-                className='inputBox'
-                classtype='text'
-                placeholder='Tag Name (50 letters limit)'
-                value={tagName}
-                onChange={onChange}
-                id='inputBox'
-              />
-              <button className='btn-main' type='submit'>
-                ADD
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
+      <TagSection tags={tags} _id={_id} />
       <div id='space80'></div>
     </Fragment>
   );
@@ -237,19 +172,15 @@ ContentItem.propTypes = {
   deleteContent: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
-  addTag: PropTypes.func.isRequired,
   likeUnlikeBag: PropTypes.func.isRequired,
   likeUnlikeBagUndo: PropTypes.func.isRequired,
-  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
   authReducer: state.authReducer,
 });
 export default connect(mapStateToProps, {
-  setAlert,
   getContent,
-  addTag,
   deleteContent,
   likeUnlikeBag,
   likeUnlikeBagUndo,
