@@ -46,11 +46,8 @@ const Contents = ({
   const switchType = (create, bag, liked, movies) => {
     switch (match.params.type) {
       case 'create':
-        console.log(create);
         return create;
       case 'bag':
-        console.log(bag);
-
         return bag;
       case 'liked':
         return liked;
@@ -74,15 +71,20 @@ const Contents = ({
         })
         .sort((a, b) => new Date(b.date) - new Date(a.date))
     );
-  }, []);
+  }, [match.params.type]);
+
+  //if ContentsByUser is changed when moved to other pages and so on
+  useEffect(() => {
+    setFilteredContents(ContentsByUser);
+  }, [ContentsByUser]);
 
   //Undo selecting genre OR get contents from ContentsByUser
   useEffect(() => {
-    if (UndoSelect || FilteredContents.length === 0) {
+    if (UndoSelect) {
       setFilteredContents(ContentsByUser);
       setUndoSelect(false);
     }
-  }, [UndoSelect, ContentsByUser]);
+  }, [UndoSelect]);
 
   //updating Contents depends on genre selected
   useEffect(() => {
