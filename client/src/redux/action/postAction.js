@@ -44,39 +44,6 @@ export const getContent = (postid) => async (dispatch) => {
     }
   }
 };
-//get contents in user's myBag
-export const getContentMyBag = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/post/myBag');
-    dispatch({
-      type: GET_CONTENTS,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: CONTENT_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-    if (err.response.status === 401) {
-      dispatch(setAlert('You need to Login first', 'fail', 3500));
-    }
-  }
-};
-//get contents in user's likes
-export const getContentMylikes = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/post/likes');
-    dispatch({
-      type: GET_CONTENTS,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: CONTENT_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
 
 //create content
 export const createContent = (formData, postid = '', edit = false) => async (
