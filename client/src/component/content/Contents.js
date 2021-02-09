@@ -43,21 +43,34 @@ const Contents = ({
     'Romance',
   ];
 
+  const switchType = (create, bag, liked, movies) => {
+    switch (match.params.type) {
+      case 'create':
+        console.log(create);
+        return create;
+      case 'bag':
+        console.log(bag);
+
+        return bag;
+      case 'liked':
+        return liked;
+      default:
+        return movies;
+    }
+  };
+
   //get Post from server and filtering
   useEffect(() => {
     getContents();
     setContentsByUser(
       contents
         .filter((content) => {
-          if (match.params.type === 'create') {
-            return content.user === user._id;
-          } else if (match.params.type === 'bag') {
-            return user.myBag.includes(content._id);
-          } else if (match.params.type === 'liked') {
-            return user.likes.includes(content._id);
-          } else {
-            return true;
-          }
+          return switchType(
+            content.user === user._id,
+            user.myBag.includes(content._id),
+            user.likes.includes(content._id),
+            true
+          );
         })
         .sort((a, b) => new Date(b.date) - new Date(a.date))
     );
@@ -187,7 +200,8 @@ const Contents = ({
 
       <section id='main2' className='chart-down m1 p2 flex-container'>
         <h4 className='title flex-container'>
-          <i className='fas fa-heart'></i>My Post
+          <i className='fas fa-heart'></i>
+          {switchType('My Post', 'My Bag', 'My Likes', 'Movies')}
         </h4>
         <div className='bottom-line'></div>
         <div id='main2-content' className='grid'>
