@@ -202,12 +202,8 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' });
     }
     const user = await User.findById(req.user.id);
-    user.myBag = user.myBag.filter(
-      (content) => content.post.toString() !== req.params.id
-    );
-    user.likes = user.likes.filter(
-      (content) => content.post.toString() !== req.params.id
-    );
+    user.myBag = user.myBag.filter((id) => id.toString() !== req.params.id);
+    user.likes = user.likes.filter((id) => id.toString() !== req.params.id);
 
     if (post.img) {
       const oldparams = {

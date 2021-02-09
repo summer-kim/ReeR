@@ -87,8 +87,10 @@ const ContentItem = ({
   };
 
   const onClickDelete = (postid) => {
-    deleteContent(postid);
-    history.goBack();
+    if (window.confirm('Are you sure to delete ?')) {
+      deleteContent(postid);
+      history.goBack();
+    }
   };
   return (
     <Fragment>

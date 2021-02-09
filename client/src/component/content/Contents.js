@@ -71,7 +71,7 @@ const Contents = ({
         })
         .sort((a, b) => new Date(b.date) - new Date(a.date))
     );
-  }, [match.params.type]);
+  }, [match.params.type, contents.length]);
 
   //if ContentsByUser is changed when moved to other pages and so on
   useEffect(() => {
