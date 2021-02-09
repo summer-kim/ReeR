@@ -33,6 +33,10 @@ const ContentQuickShow = ({
   //variable for changing button color depends on myBag already had content or not
   const [Bag, setBag] = useState(false);
 
+  //variables of how many people liked/unliked this
+  const [LikeNum, setLikeNum] = useState(likes.length);
+  const [UnlikeNum, setUnlikeNum] = useState(unlikes.length);
+
   useEffect(() => {
     if (authReducer.user && !loading) {
       likes.some((like) => like.user === authReducer.user._id) &&
@@ -49,10 +53,12 @@ const ContentQuickShow = ({
     switch (type) {
       case 'like':
         Liked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+        Liked ? setLikeNum(LikeNum - 1) : setLikeNum(LikeNum + 1);
         setLiked(!Liked);
         break;
       case 'unlike':
         Unliked ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+        Unliked ? setUnlikeNum(UnlikeNum - 1) : setUnlikeNum(UnlikeNum + 1);
         setUnliked(!Unliked);
         break;
       case 'bag':
@@ -143,10 +149,10 @@ const ContentQuickShow = ({
           </div>
           <span className='preview-interest'>
             <i className='fas fa-heart'></i>
-            {likes.length}
+            {LikeNum}
             <span>:</span>
             <i className='fas fa-heart-broken'></i>
-            {unlikes.length}
+            {UnlikeNum}
           </span>
         </div>
         <div className='tags'>{sortAndLimitTag(tags)}</div>
