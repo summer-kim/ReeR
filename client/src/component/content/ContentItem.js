@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,10 @@ import {
   likeUnlikeBagUndo,
 } from '../../redux/action/postAction';
 
+import { usePressLike } from '../hook/usePressLike'; //custom hook for interaction with like, unlike, bag button
+
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
-import TagSection from './TagSection';
+import TagSection from '../tag/TagSection';
 
 import logo from '../../img/logo.png';
 import '../../css/contentItem.css';
@@ -42,28 +44,18 @@ const ContentItem = ({
     tags = [],
   } = content;
 
-  //variables for changing button color depends on User already liked content or not
-  const [Liked, setLiked] = useState(false);
-  const [Unliked, setUnliked] = useState(false);
-
-  //variable for changing button color depends on myBag already had content or not
-  const [Bag, setBag] = useState(false);
-
-  useEffect(() => {
-    if (authReducer.user && !loading) {
-      likes.some((like) => like.user === authReducer.user._id) &&
-        setLiked(true);
-      unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
-        setUnliked(true);
-      authReducer.user.myBag.some((list) => list.toString() === _id) &&
-        setBag(true);
-    }
-  }, [content]);
+  const { Liked, Unliked, Bag, onClickSet } = usePressLike({
+    _id,
+    likes,
+    unlikes,
+    loading,
+    authUser: authReducer.user,
+  });
 
   //when User click like heart button
-  const onClick = (type, bool, funct) => {
+  const onClick = (type, bool) => {
     bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-    funct(!bool);
+    onClickSet(type);
   };
 
   const onClickDelete = (postid) => {
@@ -110,7 +102,7 @@ const ContentItem = ({
                   <span
                     onClick={(e) => {
                       e.preventDefault();
-                      onClick('like', Liked, setLiked);
+                      onClick('like', Liked);
                     }}
                     className={Liked ? 'whenliked' : 'heartbtn'}
                   >
@@ -120,7 +112,7 @@ const ContentItem = ({
                   <span
                     onClick={(e) => {
                       e.preventDefault();
-                      onClick('unlike', Unliked, setUnliked);
+                      onClick('unlike', Unliked);
                     }}
                     className={Unliked ? 'whenliked' : 'heartbtn'}
                   >
@@ -137,7 +129,7 @@ const ContentItem = ({
                   className={Bag ? 'plus iconSelected' : 'plus'}
                   onClick={(e) => {
                     e.preventDefault();
-                    onClick('bag', Bag, setBag);
+                    onClick('bag', Bag);
                   }}
                 >
                   <i className='fas fa-plus'></i>

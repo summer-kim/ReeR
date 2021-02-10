@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import {
   likeUnlikeBag,
   likeUnlikeBagUndo,
 } from '../../redux/action/postAction';
+
+import { usePressLike } from '../hook/usePressLike'; //custom hook for interaction with like, unlike, bag button
 
 import { sortAndLimitTag } from '../../util/sortAndLimitTag';
 import logo from '../../img/logo.png';
@@ -16,7 +19,6 @@ const ContentQuickShow = ({
     genre, //array
     movieName,
     img,
-    user, //objectID
     likes,
     unlikes,
     tags,
@@ -26,40 +28,17 @@ const ContentQuickShow = ({
   authReducer,
   postReducer: { loading },
 }) => {
-  //variables for changing button color depends on User already liked content or not
-  const [Liked, setLiked] = useState(false);
-  const [Unliked, setUnliked] = useState(false);
-
-  //variable for changing button color depends on myBag already had content or not
-  const [Bag, setBag] = useState(false);
-
-  //variables of how many people liked/unliked this
-  const [LikeNum, setLikeNum] = useState({
-    like: likes.length,
-    unlike: unlikes.length,
+  const { Liked, Unliked, Bag, LikeNum, onClickSet } = usePressLike({
+    _id,
+    likes,
+    unlikes,
+    loading,
+    authUser: authReducer.user,
   });
-  //const [UnlikeNum, setUnlikeNum] = useState(unlikes.length);
 
-  useEffect(() => {
-    if (authReducer.user && !loading) {
-      likes.some((like) => like.user === authReducer.user._id) &&
-        setLiked(true);
-      unlikes.some((unlike) => unlike.user === authReducer.user._id) &&
-        setUnliked(true);
-      authReducer.user.myBag.some((list) => list.toString() === _id) &&
-        setBag(true);
-    }
-  }, []);
-
-  //when User click like heart button
-  const onClick = (type, bool, funct) => {
+  const onClick = (type, bool) => {
+    onClickSet(type);
     bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
-    type !== 'bag' &&
-      setLikeNum({
-        ...LikeNum,
-        [type]: bool ? LikeNum[type] - 1 : LikeNum[type] + 1,
-      });
-    funct(!bool);
   };
 
   return (
@@ -80,7 +59,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('like', Liked, setLiked);
+                onClick('like', Liked);
               }}
               className={
                 Liked ? 'emoji emoji-heart' : 'emoji emoji-heart emoji-reverse'
@@ -91,7 +70,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('unlike', Unliked, setUnliked);
+                onClick('unlike', Unliked);
               }}
               className={
                 Unliked
@@ -104,7 +83,7 @@ const ContentQuickShow = ({
             <div
               onClick={(e) => {
                 e.preventDefault();
-                onClick('bag', Bag, setBag);
+                onClick('bag', Bag);
               }}
               className={
                 Bag ? 'emoji emoji-plus ' : 'emoji emoji-plus emoji-reverse'
@@ -146,8 +125,8 @@ ContentQuickShow.propTypes = {
   content: PropTypes.object.isRequired,
   authReducer: PropTypes.object.isRequired,
   postReducer: PropTypes.object.isRequired,
-  likeUnlikeBag: PropTypes.object.isRequired,
-  likeUnlikeBagUndo: PropTypes.object.isRequired,
+  likeUnlikeBag: PropTypes.func.isRequired,
+  likeUnlikeBagUndo: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
