@@ -43,33 +43,28 @@ const Contents = ({
     'Romance',
   ];
 
-  const switchType = (create, bag, liked, movies) => {
-    switch (match.params.type) {
-      case 'create':
-        return create;
-      case 'bag':
-        return bag;
-      case 'liked':
-        return liked;
-      default:
-        return movies;
-    }
+  const titleObj = {
+    //Object for choose proper title depends on match.params
+    create: 'My Post',
+    bag: 'My Bag',
+    liked: 'My Likes',
+    all: 'Movies',
+  };
+  const arrayObj = {
+    //Object for choose proper contents array depends on match.params
+    create: [...contents.filter((content) => content.user === user._id)],
+    bag: [...contents.filter((content) => user.myBag.includes(content._id))],
+    liked: [...contents.filter((content) => user.likes.includes(content._id))],
+    all: contents,
   };
 
   //get Post from server and filtering
   useEffect(() => {
     getContents();
     setContentsByUser(
-      contents
-        .filter((content) => {
-          return switchType(
-            content.user === user._id,
-            user.myBag.includes(content._id),
-            user.likes.includes(content._id),
-            true
-          );
-        })
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
+      arrayObj[match.params.type].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      )
     );
   }, [match.params.type, contents.length]);
 
@@ -109,6 +104,13 @@ const Contents = ({
       setUndoSelect(true);
     } else {
       setGenreSelected(e.target.innerHTML);
+    }
+  };
+
+  const onClickBtn = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      return setAlert('You need to Login first');
     }
   };
 
@@ -165,36 +167,22 @@ const Contents = ({
               </div>
             </div>
           </div>
-          {match.params.type === 'all' && (
-            <div className='flex-container'>
-              <Link
-                to='/makepost'
-                onClick={(e) => {
-                  if (!isAuthenticated) {
-                    e.preventDefault();
-                    return setAlert('You need to Login first');
-                  }
-                }}
-              >
-                <div className='icons btn-main'>
-                  <i className='fas fa-plus flex-container'></i>
-                </div>
-              </Link>
-              <Link
-                to='/contents/bag'
-                onClick={(e) => {
-                  if (!isAuthenticated) {
-                    e.preventDefault();
-                    return setAlert('You need to Login first');
-                  }
-                }}
-              >
-                <div className='icons btn-main'>
-                  <i className='fas fa-shopping-bag flex-container'></i>
-                </div>
-              </Link>
-            </div>
-          )}
+          <div className='flex-container'>
+            {match.params.type === 'all' &&
+              ['makepost', 'contents/bag'].map((type) => (
+                <Link to={'/' + type} onClick={onClickBtn}>
+                  <div className='icons btn-main'>
+                    <i
+                      className={
+                        type === 'makepost'
+                          ? 'fas fa-plus flex-container'
+                          : 'fas fa-shopping-bag flex-container'
+                      }
+                    ></i>
+                  </div>
+                </Link>
+              ))}
+          </div>
         </div>
       </section>
 
@@ -203,7 +191,7 @@ const Contents = ({
       <section id='main2' className='chart-down m1 p2 flex-container'>
         <h4 className='title flex-container'>
           <i className='fas fa-heart'></i>
-          {switchType('My Post', 'My Bag', 'My Likes', 'Movies')}
+          {titleObj[match.params.type]}
         </h4>
         <div className='bottom-line'></div>
         <div id='main2-content' className='grid'>
