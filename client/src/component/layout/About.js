@@ -3,6 +3,18 @@ import summer from '../../img/summer.jpg';
 import '../../css/about.css';
 
 const About = () => {
+  const skillSetObj = [
+    { title: 'HTML&CSS', progress: 80 },
+    { title: 'Self-taught', progress: 100 },
+    { title: 'JavaScript', progress: 80 },
+    { title: 'React', progress: 50 },
+    { title: 'Redux', progress: 70 },
+    { title: 'Passion', progress: 100 },
+    { title: 'NodeJS', progress: 80 },
+    { title: 'MongoDB Express', progress: 55 },
+    { title: 'Data-Analaysis', progress: 70 },
+  ];
+
   return (
     <Fragment>
       <div id='space80'></div>
@@ -42,60 +54,14 @@ const About = () => {
         </h2>
         <div className='bottom-line'></div>
         <div id='about2-skills' className='flex-container'>
-          <div id='about2-skill'>
-            <h4>HTML&CSS:</h4>
-            <div className='progress'>
-              <div style={{ width: '80%' }}></div>
+          {skillSetObj.map((skill) => (
+            <div id='about2-skill'>
+              <h4>{skill.title}</h4>
+              <div className='progress'>
+                <div style={{ width: skill.progress + '%' }}></div>
+              </div>
             </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>Self-taught:</h4>
-            <div className='progress'>
-              <div style={{ width: '100%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>JavaScript:</h4>
-            <div className='progress'>
-              <div style={{ width: '80%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>React:</h4>
-            <div className='progress'>
-              <div style={{ width: '50%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>Redux:</h4>
-            <div className='progress'>
-              <div style={{ width: '70%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>Passion:</h4>
-            <div className='progress'>
-              <div style={{ width: '100%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>NodeJS:</h4>
-            <div className='progress'>
-              <div style={{ width: '80%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>MongoDB,Express:</h4>
-            <div className='progress'>
-              <div style={{ width: '55%' }}></div>
-            </div>
-          </div>
-          <div id='about2-skill'>
-            <h4>Data Analaysis:</h4>
-            <div className='progress'>
-              <div style={{ width: '70%' }}></div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </Fragment>
