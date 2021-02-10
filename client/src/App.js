@@ -7,7 +7,7 @@ import store from './redux/store';
 import { loadUser } from './redux/action/authAction';
 import setAuthToken from './util/setAuthToken';
 
-import Home from './component/layout/Home';
+import Home from './component/home/Home';
 import Navbar from './component/layout/Navbar';
 import Footer from './component/layout/Footer';
 import RoutesBundle from './RoutesBundle';
