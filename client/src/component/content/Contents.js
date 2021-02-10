@@ -14,7 +14,7 @@ import '../../css/movie.css';
 const Contents = ({
   getContents,
   authReducer: { isAuthenticated, user },
-  postReducer: { contents = [], loading },
+  postReducer: { contents = [], loading, content },
   setAlert,
   match,
 }) => {
@@ -51,6 +51,7 @@ const Contents = ({
     liked: 'My Likes',
     all: 'Movies',
   };
+
   const arrayObj = {
     //Object for choose proper contents array depends on match.params
     create: [...contents.filter((content) => content.user === user._id)],
@@ -61,13 +62,15 @@ const Contents = ({
 
   //get Post from server and filtering depends on match.params
   useEffect(() => {
-    getContents();
-    setContentsByUser(
-      arrayObj[match.params.type].sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      )
-    );
-  }, [match.params.type, contents.length]);
+    if (!loading) {
+      getContents();
+      setContentsByUser(
+        arrayObj[match.params.type].sort(
+          (a, b) => new Date(b.date) - new Date(a.date)
+        )
+      );
+    }
+  }, [match.params.type, contents.length, content]);
 
   //if ContentsByUser is changed when moved to other pages and so on
   useEffect(() => {
@@ -170,12 +173,12 @@ const Contents = ({
           </div>
           <div className='flex-container'>
             {match.params.type === 'all' &&
-              ['makepost', 'contents/bag'].map((type) => (
+              ['makepost/post', 'contents/bag'].map((type) => (
                 <Link to={'/' + type} onClick={onClickBtn}>
                   <div className='icons btn-main'>
                     <i
                       className={
-                        type === 'makepost'
+                        type === 'makepost/post'
                           ? 'fas fa-plus flex-container'
                           : 'fas fa-shopping-bag flex-container'
                       }
