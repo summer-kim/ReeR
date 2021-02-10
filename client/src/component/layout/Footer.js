@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
   const urlLinked = 'https://www.linkedin.com/in/dasom-kim-0218';
   const urlInsta = 'https://www.instagram.com/summer_in__winter_/';
-  const urlGithub = 'https://github.com/summer-kim';
+  const urlGithub = 'https://github.com/summer-kim/ReeR';
   return (
     <footer id='footer' className='p2 flex-container'>
       <div id='footer-content'>
