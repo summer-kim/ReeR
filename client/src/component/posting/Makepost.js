@@ -1,26 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-import { createContent, createContentimg } from '../../redux/action/postAction';
+import {
+  createContent,
+  createContentimg,
+  getContent,
+} from '../../redux/action/postAction';
 import { setAlert } from '../../redux/action/alertAction';
 
 const Makepost = ({
   setAlert,
+  getContent,
+  match,
   createContent,
   createContentimg,
-  postReducer: { posting },
+  postReducer: { posting, loading, content },
 }) => {
+  const EditMode = match.params.postid === 'post' ? false : true;
+
   const [formData, setData] = useState({
     movieName: '',
     summary: '',
     img: '',
     genre: [],
   });
+
+  useEffect(() => {
+    if (EditMode) {
+      getContent(match.params.postid);
+      setData({
+        movieName: loading || !content.movieName ? '' : content.movieName,
+        summary: loading || !content.summary ? '' : content.summary,
+        genre: loading || !content.genre ? '' : content.genre,
+      });
+    }
+  }, [loading]);
+
   if (posting) {
-    return <Redirect to='/contents/all' />;
+    return (
+      <Redirect
+        to={EditMode ? `/post/${match.params.postid}` : '/contents/all'}
+      />
+    );
   }
+
+  const genreArr = [
+    'SF',
+    'Fantasy',
+    'Drama',
+    'Comedy',
+    'Horror',
+    'Thriller',
+    'Kids',
+    'Family',
+    'Animation',
+    'Action',
+    'Crime',
+    'Romance',
+  ];
+
   const { movieName, summary, genre, img } = formData;
   const onChange = (e) => {
     setData({
@@ -54,15 +94,15 @@ const Makepost = ({
       data.append('summary', summary);
       data.append('genre', genre);
       data.append('img', img);
-      return createContentimg(data);
+      return createContentimg({ data, postid: EditMode && content._id });
     }
-    createContent(formData);
+    createContent({ formData, postid: EditMode && content._id });
   };
   return (
     <section class='addPost' id='login'>
       <div id='login-box' class='flex-container'>
         <div class='intro'>
-          <h2>Upload Post</h2>
+          <h2>{EditMode ? 'Edit Post' : 'Upload Post'}</h2>
           <div class='bottom-line'></div>
           <p class='parag'>
             *You can put a image later
@@ -84,114 +124,18 @@ const Makepost = ({
             <div className='eachForm'>
               <label htmlFor='genre'>Genre </label>
               <div className='checkGenre'>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='SF'
-                    onChange={(e) => onChange(e)}
-                  />
-                  SF
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Fantasy'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Fantasy
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Drama'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Drama
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Comedy'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Comedy
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Horror'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Horror
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Thriller'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Thriller
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Kids'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Kids
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Family'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Family
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Animation'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Animation
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Action'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Action
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Crime'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Crime
-                </span>
-                <span className='eachCheck'>
-                  <input
-                    type='checkbox'
-                    name='genre'
-                    value='Romance'
-                    onChange={(e) => onChange(e)}
-                  />
-                  Romance
-                </span>
+                {genreArr.map((gen) => (
+                  <span className='eachCheck'>
+                    <input
+                      type='checkbox'
+                      name='genre'
+                      value={gen}
+                      checked={genre.includes(gen) ? true : false}
+                      onChange={(e) => onChange(e)}
+                    />
+                    {gen}
+                  </span>
+                ))}
               </div>
             </div>
             <div class='eachForm'>
@@ -209,6 +153,7 @@ const Makepost = ({
             <div class='eachForm'>
               <label htmlFor='img'>Image</label>
               <span class='guide'>less than 3.14MB</span>
+              {EditMode && content.img ? content.img : undefined}
               <input
                 type='file'
                 name='img'
@@ -218,7 +163,7 @@ const Makepost = ({
               />
             </div>
             <button class='btn-main' type='submit'>
-              Post
+              {EditMode ? 'Edit' : 'Post'}
             </button>
           </form>
         </div>
@@ -228,6 +173,7 @@ const Makepost = ({
 };
 
 Makepost.propTypes = {
+  getContent: PropTypes.func.isRequired,
   createContent: PropTypes.func.isRequired,
   createContentimg: PropTypes.func.isRequired,
   postReducer: PropTypes.object.isRequired,
@@ -240,4 +186,5 @@ export default connect(mapStateToProps, {
   createContent,
   createContentimg,
   setAlert,
-})(withRouter(Makepost));
+  getContent,
+})(Makepost);

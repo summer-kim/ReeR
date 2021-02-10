@@ -52,7 +52,7 @@ export const getContent = (postid) => async (dispatch) => {
 };
 
 //create content
-export const createContent = (formData, postid = '', edit = false) => async (
+export const createContent = ({ formData, postid = '' }) => async (
   dispatch
 ) => {
   const config = {
@@ -73,7 +73,7 @@ export const createContent = (formData, postid = '', edit = false) => async (
     });
     dispatch(
       setAlert(
-        !edit
+        !postid
           ? 'Post has successfully created'
           : 'Post has successfully updated',
         'success'
@@ -87,9 +87,7 @@ export const createContent = (formData, postid = '', edit = false) => async (
   }
 };
 
-export const createContentimg = (data, postid = '', edit = false) => async (
-  dispatch
-) => {
+export const createContentimg = ({ data, postid = '' }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'multipart/form-data ',
@@ -107,7 +105,7 @@ export const createContentimg = (data, postid = '', edit = false) => async (
     });
     dispatch(
       setAlert(
-        !edit
+        !postid
           ? 'Post has successfully created'
           : 'Post has successfully updated',
         'success'

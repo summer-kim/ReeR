@@ -138,7 +138,7 @@ const ContentItem = ({
                 authReducer.user &&
                 user === authReducer.user._id ? ( //Only user who created can see
                   <Fragment>
-                    <Link className='trash' to={`/editpost/${_id}`}>
+                    <Link className='trash' to={`/makepost/${_id}`}>
                       <i class='fas fa-edit'></i>
                     </Link>
                     <div className='trash'>
