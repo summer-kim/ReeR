@@ -10,8 +10,8 @@ import like from '../../img/like.jpg';
 import { getContents } from '../../redux/action/postAction';
 import ContentQuickShow from '../content/ContentQuickShow';
 
-import { TypeWriter } from './typewritter';
-import Spinner from '../layout/spinner';
+import { TypeWriter } from '../template/typewritter';
+import Spinner from '../template/spinner';
 
 const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   useEffect(() => {
@@ -42,7 +42,8 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           ReeR:
           <br />
           The Best Platform for Contents
-          <br />　
+          <br />
+          　
           <span
             className='txt-type'
             data-wait='1500'

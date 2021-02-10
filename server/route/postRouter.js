@@ -315,37 +315,22 @@ router.put(
 // @route    PUT /post/tags/:id
 // @desc     attach tag on the post
 // @access   Private
-router.put(
-  '/tags/:id',
-  [
-    auth,
-    checkObjectId('id'),
-    check('tagName', 'please fill out the name of tag').not().isEmpty(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    if (req.body.tagName.length > 60) {
-      return res.status(400).json({ errors: '50 letters limit' });
-    }
-    try {
-      const post = await Post.findById(req.params.id);
-      const newTag = {
-        tagName: req.body.tagName,
-        user: req.user.id,
-      };
-      post.tags.unshift(newTag);
+router.put('/tags/:id', [auth, checkObjectId('id')], async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    const newTag = {
+      tagName: req.body.tagName,
+      user: req.user.id,
+    };
+    post.tags.unshift(newTag);
 
-      await post.save();
-      res.json(post.tags);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
+    await post.save();
+    res.json(post.tags);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
-);
+});
 // @route    PUT /post/tags/likes/:postid/:tagid
 // @desc     liking tag
 // @access   Private

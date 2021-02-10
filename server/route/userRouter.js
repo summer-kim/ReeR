@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../model/userModel');
-const Post = require('../model/postModel');
 
 const checkObjectId = require('../middleware/checkObjectId');
 const auth = require('../middleware/auth');
@@ -42,6 +41,7 @@ router.post(
         email,
         password,
         myBag: [],
+        likes: [],
       });
 
       const salt = await bcrypt.genSalt(10);

@@ -5,8 +5,9 @@ import { Redirect, Link } from 'react-router-dom';
 
 import ContentQuickShow from './ContentQuickShow';
 import { getContents } from '../../redux/action/postAction';
-import Spinner from '../layout/spinner';
 import { setAlert } from '../../redux/action/alertAction';
+
+import Spinner from '../template/spinner';
 
 import '../../css/movie.css';
 
@@ -17,7 +18,7 @@ const Contents = ({
   setAlert,
   match,
 }) => {
-  //Array for get default Contents created by User
+  //Array for get default Contents created by User (for back-up)
   const [ContentsByUser, setContentsByUser] = useState([]);
 
   //Array for filtered Contents to be showed. This will be initiated by ContentsByUser
@@ -58,7 +59,7 @@ const Contents = ({
     all: contents,
   };
 
-  //get Post from server and filtering
+  //get Post from server and filtering depends on match.params
   useEffect(() => {
     getContents();
     setContentsByUser(

@@ -19,7 +19,7 @@ const Makepost = ({
     genre: [],
   });
   if (posting) {
-    return <Redirect to='/tags' />;
+    return <Redirect to='/contents/all' />;
   }
   const { movieName, summary, genre, img } = formData;
   const onChange = (e) => {

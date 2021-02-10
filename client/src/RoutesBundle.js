@@ -1,7 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 
-import Alert from './component/layout/Alert';
-
+import Alert from './component/template/Alert';
 import Login from './component/auth/Login';
 import Mypage from './component/auth/Mypage';
 import About from './component/layout/About';
