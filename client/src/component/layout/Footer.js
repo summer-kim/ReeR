@@ -15,13 +15,13 @@ const Footer = () => {
         </p>
       </div>
       <div id='footer-social'>
-        <a href={urlGithub}>
+        <a href={urlGithub} target='_blank'>
           <i class='fab fa-github'></i>
         </a>
-        <a href={urlInsta}>
+        <a href={urlInsta} target='_blank'>
           <i className='fab fa-instagram'></i>
         </a>
-        <a href={urlLinked}>
+        <a href={urlLinked} target='_blank'>
           <i className='fab fa-linkedin'></i>
         </a>
       </div>
