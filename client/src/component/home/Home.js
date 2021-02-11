@@ -1,20 +1,22 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+//Components
 import ContentQuickShow from '../content/ContentQuickShow';
 import HomeBottom from './HomeBottom';
-
+//Functions
 import { getContents } from '../../redux/action/postAction';
-
+//Template
 import { TypeWriter } from '../template/typewritter';
 import Spinner from '../template/spinner';
 
 const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
+  const [ContentArr, setContentArr] = useState([]);
   useEffect(() => {
     getContents();
-  }, [getContents]);
+    setContentArr(contents);
+  }, [loading]);
 
   useEffect(() => {
     init();
@@ -28,11 +30,9 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
     new TypeWriter(txtElement, words, wait);
   };
 
-  const sortContents = (array) => {
-    array.sort((a, b) => b.likes.length - a.likes.length);
+  const sortByLikes = (array) => {
+    return array.sort((a, b) => b.likes.length - a.likes.length);
   };
-  sortContents(contents);
-
   return (
     <Fragment>
       <section id='main1' className='p2 flex-container'>
@@ -40,8 +40,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           ReeR:
           <br />
           The Best Platform for Contents
-          <br />
-          　
+          <br />　
           <span
             className='txt-type'
             data-wait='1500'
@@ -67,13 +66,10 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
-          ) : contents.length > 0 ? (
-            contents.map(
-              (content, index) =>
-                index <= 2 && (
-                  <ContentQuickShow key={content._id} content={content} />
-                )
-            )
+          ) : sortByLikes(ContentArr).length > 0 ? (
+            ContentArr.slice(0, 3).map((content) => (
+              <ContentQuickShow key={content._id} content={content} />
+            ))
           ) : (
             <h4 className='parag'>No Content found...</h4>
           )}
