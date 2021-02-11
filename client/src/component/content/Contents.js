@@ -52,18 +52,27 @@ const Contents = ({
     all: 'Movies',
   };
 
-  const arrayObj = {
-    //Object for choose proper contents array depends on match.params
-    create: [...contents.filter((content) => content.user === user._id)],
-    bag: [...contents.filter((content) => user.myBag.includes(content._id))],
-    liked: [...contents.filter((content) => user.likes.includes(content._id))],
-    all: contents,
+  const getObj = (contents) => {
+    if (match.params.type === 'all') {
+      return {
+        all: contents,
+      };
+    }
+    return {
+      //Object for choose proper contents array depends on match.params
+      create: [...contents.filter((content) => content.user === user._id)],
+      bag: [...contents.filter((content) => user.myBag.includes(content._id))],
+      liked: [
+        ...contents.filter((content) => user.likes.includes(content._id)),
+      ],
+    };
   };
 
   //get Post from server and filtering depends on match.params
   useEffect(() => {
     if (!loading) {
       getContents();
+      const arrayObj = getObj(contents);
       setContentsByUser(
         arrayObj[match.params.type].sort(
           (a, b) => new Date(b.date) - new Date(a.date)
@@ -135,7 +144,7 @@ const Contents = ({
     }
   };
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && match.params.type !== 'all') {
     return <Redirect to='/' />;
   }
   return (
