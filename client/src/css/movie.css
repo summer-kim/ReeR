@@ -119,3 +119,21 @@
 #main-filter .hidden div i:hover {
   color: #cf7177;
 }
+@media (max-width: 768px) {
+  #main-filter .filter {
+    top: 100px;
+  }
+  #main-filter .hidden {
+    top: 130px;
+  }
+  #main-filter .hidden div {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-row-gap: 1rem;
+  }
+  #main-filter .hidden div span {
+    display: block;
+    text-align: center;
+  }
+}

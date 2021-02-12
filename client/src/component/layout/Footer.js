@@ -10,13 +10,13 @@ const Footer = () => {
         <span className='logo'>ReeR:</span>
         <p>Copyright &copy; 2019. All Rights Reserved</p>
         <p>
-          Contacts of Developer :<span className='develop-name'>Dasom Kim</span>{' '}
-          dasomi6835@gmail.com
+          Contacts of Developer :<strong>Dasom Kim</strong>
         </p>
+        <p>dasomi6835@gmail.com</p>
       </div>
       <div id='footer-social'>
         <a href={urlGithub} target='_blank'>
-          <i class='fab fa-github'></i>
+          <i className='fab fa-github'></i>
         </a>
         <a href={urlInsta} target='_blank'>
           <i className='fab fa-instagram'></i>

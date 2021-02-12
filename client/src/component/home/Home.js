@@ -40,7 +40,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           ReeR:
           <br />
           The Best Platform for Contents
-          <br />　
+          <br />
           <span
             className='txt-type'
             data-wait='1500'

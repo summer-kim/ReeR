@@ -12,7 +12,8 @@
   align-items: center;
 }
 
-.flex-container {
+.flex-container,
+#nav-menu div a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -246,6 +247,9 @@
 #space90 {
   height: 90px;
 }
+#space130 {
+  height: 130px;
+}
 
 #space80 {
   height: 80px;
@@ -313,6 +317,10 @@ i {
   cursor: pointer;
   transition: all 0.3s;
 }
+#nav-menu div a {
+  width: 100%;
+  height: 100%;
+}
 #nav-menu div:hover {
   color: #fff;
   background: #cf7177;
@@ -328,6 +336,15 @@ i {
 #nav-a i {
   padding: 1px 1.5px;
   font-size: 1rem;
+}
+#nav-c a i {
+  padding: 0.3rem;
+  border: 1.8px solid #818181;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+#nav-c a:hover i {
+  border-color: #fff;
 }
 
 @media (min-width: 768px) {
@@ -386,7 +403,17 @@ i {
 #main1 a {
   padding: 1rem 1.5rem;
 }
-
+@media (max-width: 768px) {
+  #main1 .parag {
+    width: 60vw;
+    margin-bottom: 2rem;
+  }
+  #main1 h1 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    height: 20vh;
+  }
+}
 #main2 {
   flex-direction: column;
   padding: 2rem 3rem;
@@ -450,6 +477,14 @@ i {
   border-radius: 8px;
   font-size: 12px;
 }
+@media (max-width: 768px) {
+  #main2 .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  #main3 .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 
 #main3 {
   flex-direction: column;
@@ -496,9 +531,7 @@ i {
   font-weight: 300;
   font-size: 13px;
 }
-#footer-content .develop-name {
-  font-weight: 500;
-}
+
 #footer-social {
   margin-right: 2rem;
 }
@@ -513,6 +546,22 @@ i {
 #footer-social i:hover {
   color: #cf7177;
   background: #ebebeb;
+}
+@media (max-width: 768px) {
+  #footer {
+    height: auto;
+    flex-direction: column;
+  }
+  #footer-content {
+    text-align: center;
+  }
+  #footer-social {
+    margin-right: 0;
+    margin-top: 1rem;
+  }
+  #footer-social a {
+    margin-right: 1.5rem;
+  }
 }
 .alert {
   position: fixed;

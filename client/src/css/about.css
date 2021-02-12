@@ -20,7 +20,7 @@
 }
 #about1-bio-side {
   padding: 0 1rem;
-  padding-top: 2rem;
+  margin-top: 2rem;
   height: 100%;
   text-align: center;
   flex: 3;
@@ -73,4 +73,26 @@
   border-radius: 5px;
   background: #cf7177;
   height: 100%;
+}
+@media (max-width: 768px) {
+  #about1-bio {
+    margin-top: 1rem;
+    flex-direction: column;
+    height: auto;
+  }
+  #about1-bio-img {
+    height: 50vh;
+  }
+  #about1-bio-img img {
+    object-fit: cover;
+  }
+  #about1-bio-side {
+    margin-top: 1rem;
+  }
+  #about1-bio-side .bottom-line {
+    margin-bottom: 1.5rem;
+  }
+  #about1-bio-side h4 {
+    margin-bottom: 0;
+  }
 }

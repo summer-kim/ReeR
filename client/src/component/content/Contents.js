@@ -6,6 +6,7 @@ import { Redirect, Link } from 'react-router-dom';
 import ContentQuickShow from './ContentQuickShow';
 import { getContents } from '../../redux/action/postAction';
 import { setAlert } from '../../redux/action/alertAction';
+import { useDetectWidth } from '../hook/useDetectWidth';
 
 import Spinner from '../template/spinner';
 
@@ -144,9 +145,12 @@ const Contents = ({
     }
   };
 
+  const InnerWidth = useDetectWidth();
+
   if (!isAuthenticated && match.params.type !== 'all') {
     return <Redirect to='/' />;
   }
+
   return (
     <Fragment>
       <section id='main-filter'>
@@ -199,7 +203,7 @@ const Contents = ({
         </div>
       </section>
 
-      <div id='space90'></div>
+      <div id={InnerWidth > 768 ? 'space90' : 'space130'}></div>
 
       <section id='main2' className='chart-down m1 p2 flex-container'>
         <h4 className='title flex-container'>
