@@ -1,37 +1,38 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const Navbar = ({ authReducer: { isAuthenticated, loading } }) => {
-  const authLink = (
-    <NavLink to='/mypage' activeClassName='current'>
-      <i className='far fa-user'></i>
-    </NavLink>
-  );
-  const guestLink = (
-    <NavLink to='/login' activeClassName='current'>
-      Login
-    </NavLink>
-  );
-
+const Navbar = ({ authReducer: { isAuthenticated } }) => {
   return (
-    <nav id='nav' className='flex-container'>
-      <NavLink activeClassName='current' id='nav-a' to='/contents/all'>
-        <i className='fas fa-film'></i>Movies
-      </NavLink>
-      <div id='nav-b'>
+    <Fragment>
+      <nav id='nav' className='flex-container'>
         <Link to='/'>
           <span className='logo'>ReeR:</span>
         </Link>
-      </div>
-      <div id='nav-c' className='flex-container'>
-        <NavLink to='/about' activeClassName='current'>
-          About
-        </NavLink>
-        {!loading && isAuthenticated ? authLink : guestLink}
-      </div>
-    </nav>
+      </nav>
+      <nav id='nav-menu' className='flex-container'>
+        <div id='nav-a' className='flex-container'>
+          <NavLink activeClassName='current' to='/contents/all'>
+            <i className='fas fa-film'></i>Movies
+          </NavLink>
+        </div>
+
+        <div id='nav-b' className='flex-container'>
+          <NavLink to='/about' activeClassName='current'>
+            About
+          </NavLink>
+        </div>
+        <div id='nav-c' className='flex-container'>
+          <NavLink
+            to={isAuthenticated ? '/mypage' : '/login'}
+            activeClassName='current'
+          >
+            {isAuthenticated ? <i className='far fa-user'></i> : 'Login'}
+          </NavLink>
+        </div>
+      </nav>
+    </Fragment>
   );
 };
 Navbar.propTypes = {

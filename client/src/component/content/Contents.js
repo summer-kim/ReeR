@@ -199,7 +199,7 @@ const Contents = ({
         </div>
       </section>
 
-      <div id='space110'></div>
+      <div id='space90'></div>
 
       <section id='main2' className='chart-down m1 p2 flex-container'>
         <h4 className='title flex-container'>
