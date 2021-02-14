@@ -205,7 +205,12 @@ const Contents = ({
 
       <div id={InnerWidth > 768 ? 'space90' : 'space130'}></div>
 
-      <section id='main2' className='chart-down m1 p2 flex-container'>
+      <section
+        id='main2'
+        className={
+          'chart-down m1 flex-container' + InnerWidth > 768 ? ' p2' : undefined
+        }
+      >
         <h4 className='title flex-container'>
           <i className='fas fa-heart'></i>
           {titleObj[match.params.type]}

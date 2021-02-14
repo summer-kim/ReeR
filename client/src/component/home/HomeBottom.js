@@ -6,9 +6,16 @@ import decision from '../../img/decision.jpg';
 import dislike from '../../img/dislike.jpg';
 import like from '../../img/like.jpg';
 
+import { useDetectWidth } from '../hook/useDetectWidth';
+
 const HomeBottom = () => {
+  const InnerWidth = useDetectWidth();
+
   return (
-    <section id='main3' className='m1 p2 flex-container'>
+    <section
+      id='main3'
+      className={'p2 flex-container ' + InnerWidth > 768 ? 'm1' : undefined}
+    >
       <h4 className='title'>The person who should use ReeR:</h4>
       <div className='bottom-line'></div>
       <div id='main3-content' className='grid'>

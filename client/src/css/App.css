@@ -402,6 +402,7 @@ i {
   text-align: center;
   font-family: 'Prata', serif;
   font-weight: lighter;
+  height: 25vh;
 }
 #main1 a {
   padding: 1rem 1.5rem;
@@ -481,11 +482,17 @@ i {
   font-size: 12px;
 }
 @media (max-width: 768px) {
+  #main2 {
+    padding: 2rem 1.5rem;
+  }
   #main2 .grid {
     grid-template-columns: repeat(1, 1fr);
   }
   #main3 .grid {
     grid-template-columns: repeat(1, 1fr);
+  }
+  #main3 {
+    padding: 2rem 1.5rem !important;
   }
 }
 

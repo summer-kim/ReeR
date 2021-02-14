@@ -7,6 +7,7 @@ import ContentQuickShow from '../content/ContentQuickShow';
 import HomeBottom from './HomeBottom';
 //Functions
 import { getContents } from '../../redux/action/postAction';
+import { useDetectWidth } from '../hook/useDetectWidth';
 //Template
 import { TypeWriter } from '../template/typewritter';
 import Spinner from '../template/spinner';
@@ -33,6 +34,9 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   const sortByLikes = (array) => {
     return array.sort((a, b) => b.likes.length - a.likes.length);
   };
+
+  const InnerWidth = useDetectWidth();
+
   return (
     <Fragment>
       <section id='main1' className='p2 flex-container'>
@@ -58,7 +62,10 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
           <i className='fas fa-angle-double-right'></i>Register
         </Link>
       </section>
-      <section id='main2' className='m1 p2 flex-container'>
+      <section
+        id='main2'
+        className={'p2 flex-container ' + InnerWidth > 768 ? 'm1' : undefined}
+      >
         <h4 className='title flex-container'>
           <i className='fas fa-heart'></i>Today's Ranking
         </h4>
