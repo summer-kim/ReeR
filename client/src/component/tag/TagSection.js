@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { addTag } from '../../redux/action/tagAction';
 import { setAlert } from '../../redux/action/alertAction';
 
+import { useDetectWidth } from '../hook/useDetectWidth';
 import Tagbox from './Tagbox';
 
 const TagSection = ({ tags, _id, setAlert, addTag }) => {
   const [tagName, setTag] = useState('');
+  const InnerWidth = useDetectWidth();
 
   const onChange = (e) => setTag(e.target.value);
 
@@ -30,7 +32,7 @@ const TagSection = ({ tags, _id, setAlert, addTag }) => {
         <i className='fas fa-heart'></i>Tag List
       </h4>
       <div className='tagBox p1'>
-        <div className='tagList grid'>
+        <div className={InnerWidth > 768 ? ' grid' : 'tagList'}>
           {tags.length > 0 ? (
             tags.map((tag) => <Tagbox tag={tag} postid={_id} key={tag._id} />)
           ) : (

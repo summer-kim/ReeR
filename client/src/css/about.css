@@ -10,7 +10,6 @@
 #about1-bio-img {
   overflow: hidden;
   height: 100%;
-  padding-right: 1rem;
   flex: 2;
 }
 #about1-bio-img img {
@@ -76,6 +75,7 @@
 }
 @media (max-width: 768px) {
   #about1-bio {
+    width: auto;
     margin-top: 1rem;
     flex-direction: column;
     height: auto;

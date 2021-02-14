@@ -325,7 +325,7 @@ i {
   color: #fff;
   background: #cf7177;
 }
-#nav-menu div.current {
+#nav-menu a.current {
   color: #fff;
   background: #cf7177;
 }
@@ -336,6 +336,9 @@ i {
 #nav-a i {
   padding: 1px 1.5px;
   font-size: 1rem;
+}
+#nav-c a.current i {
+  border-color: #fff;
 }
 #nav-c a i {
   padding: 0.3rem;

@@ -64,10 +64,10 @@
   flex: 12;
 }
 .tagBox .tagInput form .btn-main {
-  flex: 1;
   border: none;
   padding: 6px 12px;
   margin-left: 5px;
+  text-align: center;
 }
 .tagBox .tagInput .hashTag {
   background: #cf7177;
@@ -75,4 +75,23 @@
   padding: 5px;
   margin-left: 5px;
   margin-right: 0;
+}
+
+.tagList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+}
+@media (max-width: 768px) {
+  .tagBox {
+    width: auto;
+    padding: 1rem 0;
+  }
+  .tagBox .tag .tagName {
+    margin-bottom: 5px;
+    min-height: 100px;
+  }
+  .tagBox .tagInput {
+    margin-top: 1rem;
+  }
 }

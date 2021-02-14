@@ -38,14 +38,6 @@ const Tagbox = ({
         {tag.tagName}
       </div>
       <div className='people-like'>
-        {tag.user === authReducer.user._id ? (
-          <span
-            className='trash'
-            onClick={() => removeTag({ postid, tagid: tag._id })}
-          >
-            <i class='fas fa-trash-alt'></i>
-          </span>
-        ) : undefined}
         <span className='flex-container'>
           <span className='interest'>
             <i
@@ -64,6 +56,14 @@ const Tagbox = ({
             {tag.unlikes.length}
           </span>
         </span>
+        {authReducer.user && tag.user === authReducer.user._id ? (
+          <span
+            className='trash'
+            onClick={() => removeTag({ postid, tagid: tag._id })}
+          >
+            <i class='fas fa-trash-alt'></i>
+          </span>
+        ) : undefined}
       </div>
     </div>
   );

@@ -67,7 +67,7 @@ const ContentItem = ({
   return (
     <Fragment>
       <div id='space80'></div>
-      <section id='about1' className='m1 p2 flex-container'>
+      <section id='about1' className='m1 p1 flex-container'>
         <div id='about1-bio' className='p1 flex-container'>
           <div id='about1-bio-img'>
             <img
