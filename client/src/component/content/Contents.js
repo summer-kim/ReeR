@@ -20,9 +20,9 @@ const Contents = ({
   match,
 }) => {
   //Array for get default Contents created by User (for back-up)
-  const [ContentsByUser, setContentsByUser] = useState([]);
+  const [ContentsInit, setContentsInit] = useState([]);
 
-  //Array for filtered Contents to be showed. This will be initiated by ContentsByUser
+  //Array for filtered Contents to be showed. This will be initiated by ContentsInit
   const [FilteredContents, setFilteredContents] = useState([]);
 
   //String for specific Genre which is selected
@@ -53,44 +53,53 @@ const Contents = ({
     all: 'Movies',
   };
 
-  const getObj = (contents) => {
+  const getArray = (contents) => {
     if (match.params.type === 'all') {
-      return {
-        all: contents,
-      };
+      return contents;
     }
-    return {
-      //Object for choose proper contents array depends on match.params
-      create: [...contents.filter((content) => content.user === user._id)],
-      bag: [...contents.filter((content) => user.myBag.includes(content._id))],
-      liked: [
-        ...contents.filter((content) => user.likes.includes(content._id)),
-      ],
-    };
+
+    switch (match.params.type) {
+      case 'create':
+        return [...contents.filter((content) => content.user === user._id)];
+      case 'bag':
+        return [
+          ...contents.filter((content) => user.myBag.includes(content._id)),
+        ];
+      case 'liked':
+        return [
+          ...contents.filter((content) => user.likes.includes(content._id)),
+        ];
+      default:
+        break;
+    }
   };
 
   //get Post from server and filtering depends on match.params
   useEffect(() => {
     if (!loading) {
       getContents();
-      const arrayObj = getObj(contents);
-      setContentsByUser(
-        arrayObj[match.params.type].sort(
-          (a, b) => new Date(b.date) - new Date(a.date)
-        )
-      );
     }
-  }, [match.params.type, contents.length, content]);
+  }, [match.params.type, contents.length]);
 
-  //if ContentsByUser is changed when moved to other pages and so on
+  //put contents from Server Data to ContentsInit
   useEffect(() => {
-    setFilteredContents(ContentsByUser);
-  }, [ContentsByUser]);
+    if (!loading) {
+      const arrayObj = getArray(contents).sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      setContentsInit(arrayObj);
+    }
+  }, [content]);
 
-  //Undo selecting genre OR get contents from ContentsByUser
+  //if ContentsInit is changed when moved to other pages and so on
+  useEffect(() => {
+    setFilteredContents(ContentsInit);
+  }, [ContentsInit]);
+
+  //Undo selecting genre OR get contents from ContentsInit
   useEffect(() => {
     if (UndoSelect) {
-      setFilteredContents(ContentsByUser);
+      setFilteredContents(ContentsInit);
       setUndoSelect(false);
     }
   }, [UndoSelect]);
@@ -98,7 +107,7 @@ const Contents = ({
   //updating Contents depends on genre selected
   useEffect(() => {
     if (GenreSelected) {
-      const justSelected = ContentsByUser.filter((content) =>
+      const justSelected = ContentsInit.filter((content) =>
         content.genre.includes(GenreSelected)
       );
       if (justSelected.length === 0) {
