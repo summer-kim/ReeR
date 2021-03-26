@@ -12,6 +12,7 @@ app.use('/auth', require('./server/route/authRouter'));
 app.use('/user', require('./server/route/userRouter'));
 app.use('/profile', require('./server/route/profileRouter'));
 app.use('/post', require('./server/route/postRouter'));
+app.use('/post', require('./server/route/tagRouter'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
