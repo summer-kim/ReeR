@@ -14,19 +14,19 @@ ReeR란, Recommandation, Review 를 조합하여 만든 약자입니다.
 
 # Tech/framework used
 
-- FRONT  
-  ![ReactJS](https://img.shields.io/badge/-React-61dbfb?style=for-the-badge&logo=React&logoColor=white)
-  ![Redux](http://img.shields.io/badge/-Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white)
-  ![Sass](http://img.shields.io/badge/-Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white)
+💗 FRONT  
+ ![ReactJS](https://img.shields.io/badge/-React-61dbfb?style=for-the-badge&logo=React&logoColor=white)
+![Redux](http://img.shields.io/badge/-Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white)
+![Sass](http://img.shields.io/badge/-Sass-CC6699?style=for-the-badge&logo=Sass&logoColor=white)
 
-- BACK  
-  ![Node.js](http://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)
-  ![Express](https://img.shields.io/badge/-Express-191919?style=for-the-badge&logo=Node.js&logoColor=white)
-  ![AWS](https://img.shields.io/badge/-Amazon_S3-569A31?style=for-the-badge&logo=Amazon-S3&logoColor=white)
-  ![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white)
+💗 BACK  
+ ![Node.js](http://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white)
+![Express](https://img.shields.io/badge/-Express-191919?style=for-the-badge&logo=Node.js&logoColor=white)
+![AWS](https://img.shields.io/badge/-Amazon_S3-569A31?style=for-the-badge&logo=Amazon-S3&logoColor=white)
+![MongoDB](https://img.shields.io/badge/-MongoDB-47A248?style=for-the-badge&logo=MongoDB&logoColor=white)
 
-- DEPLOY  
-  ![Heroku](https://img.shields.io/badge/-Heroku-430098?style=for-the-badge&logo=Heroku&logoColor=white)
+💗 DEPLOY  
+ ![Heroku](https://img.shields.io/badge/-Heroku-430098?style=for-the-badge&logo=Heroku&logoColor=white)
 
 # Structure
 
@@ -49,8 +49,8 @@ ReeR
 └── server.js
 ```
 
-> **Frontend** Feature (Structure of React child)  
->  in <span style='color:#cf7177'>[Movie Tab]</span>
+&nbsp;&nbsp;&nbsp;&nbsp; **Frontend** Feature (Structure of React child)  
+&nbsp;&nbsp;&nbsp;&nbsp; in <span style='color:#cf7177'>[Movie Tab]</span>
 
 ```
 [ 영화(post) 목록 페이지]    Contents.js (parent)
@@ -126,8 +126,8 @@ ReeR
 
 # Screenshots
 
-<img src="https://github.com/summer-kim/ReeR/blob/master/client/src/img/ReeR1.png" width="550" height="250">
-<img src="https://github.com/summer-kim/ReeR/blob/master/client/src/img/ReeR2.png" width="550" height="250">
+<img src="https://github.com/summer-kim/ReeR/blob/master/client/src/img/ReeR1.png" width="825" height="375">
+<img src="https://github.com/summer-kim/ReeR/blob/master/client/src/img/ReeR2.png" width="825" height="375">
 
 # Features
 
@@ -163,11 +163,11 @@ const [ContentsInit, setContentsInit] = useState([]);
 const [FilteredContents, setFilteredContents] = useState([]);
 ```
 
-> <span style="color:orange">ContentsInit</span> = 초기data  
->  User가 특정 장르를 선택하면  
->  그 장르만 filtering해서 <span style="color:red">FilteredContents</span>에 집어넣은 뒤,  
->  해제되면 다시 <span style="color:orange">ContentsInit</span>의 초기 데이터를 <span  style="color:red">FilteredContents</span>에 넣는다.  
->  화면에는 항상 <span style="color:red">FilteredContents</span>s만 표기
+&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:orange">ContentsInit</span> = 초기data  
+&nbsp;&nbsp;&nbsp;&nbsp; User가 특정 장르를 선택하면  
+&nbsp;&nbsp;&nbsp;&nbsp; 그 장르만 filtering해서 <span style="color:red">FilteredContents</span>에 집어넣은 뒤,  
+&nbsp;&nbsp;&nbsp;&nbsp; 해제되면 다시 <span style="color:orange">ContentsInit</span>의 초기 데이터를 <span  style="color:red">FilteredContents</span>에 넣는다.  
+&nbsp;&nbsp;&nbsp;&nbsp; 화면에는 항상 <span style="color:red">FilteredContents</span>s만 표기
 
 ```javascript
 useEffect(() => {
