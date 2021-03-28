@@ -140,14 +140,14 @@ get Movie data and put to  🡲  ContentsInit 🡲🡲 FilteredContents (=final 
 ReeR
 ├── server
 │   ├── middleware
-│   │   ├── auth.js
+│   │   ├── auth.js ⭐️
 │   │   └── checkObjectId.js(use other's source)
 │   ├── model
 │   │   ├── postModel.js
 │   │   └── userModel.js
 │   └── route
 │   │   ├── authRouter.js
-│   │   ├── postRouter.js
+│   │   ├── postRouter.js ⭐️
 │   │   ├── tagRouter.js
 │   │   └── userRouter.js
 └── server.js
@@ -189,15 +189,15 @@ ReeR
         │   │   ├── Login.js
         │   │   └── Mypage.js
         │   ├── content
-        │   │   ├── Contents.js
+        │   │   ├── Contents.js ⭐️⭐️
         │   │   ├── ContentQuickShow.js
         │   │   └── ContentItem.js
         │   ├── home
         │   │   ├── Home.js
         │   │   └── HomeBottom.js
         │   ├── hook
-        │   │   ├── useDetectWidth.js
-        │   │   └── usePressLike.js
+        │   │   ├── useDetectWidth.js ⭐️
+        │   │   └── usePressLike.js ⭐️⭐️
         │   ├── layout
         │   │   ├── About.js
         │   │   ├── Footer.js
@@ -216,13 +216,13 @@ ReeR
             ├── action
             │   ├── alertAction.js
             │   ├── authAction.js
-            │   ├── postAction.js
+            │   ├── postAction.js ⭐️
             │   ├── tagAction.js
             │   └── types.js
             └── reducer
                 ├── alertReducer.js
                 ├── authReducer.js
-                ├── postReducer.js
+                ├── postReducer.js ⭐️
                 └── index.js
 
 ```
