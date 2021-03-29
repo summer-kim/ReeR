@@ -56,6 +56,10 @@ const Login = ({ loginUser, isAuthenticated, registerUser, setAlert }) => {
           <div className='loginLink'>
             <span>
               {isLoginPage ? 'Not a member yet?' : 'Already our member?'}
+              <br />
+              {isLoginPage ? 'Demo ID : summer@gmail.com : ' : undefined}
+              <br />
+              {isLoginPage ? 'Password : asdfas : ' : undefined}
             </span>
             <div
               className='btn-main'
