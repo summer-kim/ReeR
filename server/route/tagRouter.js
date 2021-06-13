@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const auth = require('../middleware/auth');
-const checkObjectId = require('../middleware/checkObjectId');
+import express from 'express';
+import auth from '../middleware/auth.js';
+import checkObjectId from '../middleware/checkObjectId.js';
+import Post from '../model/postModel.js';
 
-const Post = require('../model/postModel');
+const router = express.Router();
 
 // @route    PUT /post/tags/:id
 // @desc     attach tag on the post
@@ -167,4 +167,4 @@ router.put(
   }
 );
 
-module.exports = router;
+export default router;

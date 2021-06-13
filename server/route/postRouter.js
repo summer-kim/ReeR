@@ -1,13 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const auth = require('../middleware/auth');
-const checkObjectId = require('../middleware/checkObjectId');
-const multer = require('multer');
-const fs = require('fs');
+import express from 'express';
+import expressValidator from 'express-validator';
+import auth from '../middleware/auth.js';
+import checkObjectId from '../middleware/checkObjectId.js';
+import multer from 'multer';
+import AWS from 'aws-sdk';
+import config from 'config';
 
-const AWS = require('aws-sdk');
-const config = require('config');
+const { check, validationResult } = expressValidator;
+const router = express.Router();
 
 const s3 = new AWS.S3({
   accessKeyId: config.get('AWS_ID'),
@@ -15,8 +15,8 @@ const s3 = new AWS.S3({
   region: 'ap-northeast-2',
 });
 
-const Post = require('../model/postModel');
-const User = require('../model/userModel');
+import Post from '../model/postModel.js';
+import User from '../model/userModel.js';
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -108,6 +108,9 @@ router.post(
       s3.upload(params, (err, data) => {
         if (err) {
           return res.status(400).json({ msg: 'upload fail' });
+        }
+        if (data) {
+          console.log('Upload Success', data.Location);
         }
       });
       res.json(post);
@@ -310,4 +313,4 @@ router.put(
   }
 );
 
-module.exports = router;
+export default router;

@@ -12,13 +12,9 @@ import {
   // CLEAR_PROFILE,
 } from './types';
 import axios from 'axios';
-import setAuthToken from '../../util/setAuthToken';
 import { setAlert } from './alertAction';
 
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
-  }
   try {
     const res = await axios.get('/auth');
 

@@ -12,11 +12,11 @@ import Navbar from './component/layout/Navbar';
 import Footer from './component/layout/Footer';
 import RoutesBundle from './RoutesBundle';
 
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
 const App = () => {
   useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
     store.dispatch(loadUser());
   }, []);
   return (

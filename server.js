@@ -1,17 +1,25 @@
-const express = require('express');
+import express from 'express';
+import connectDB from './config/db.js';
+import path from 'path';
+import cors from 'cors';
+import morgan from 'morgan';
+
 const app = express();
-const connectDB = require('./config/db');
-const path = require('path');
 
 connectDB();
-
-// Init Middleware
+app.use(cors());
+app.use(morgan('combined'));
 app.use(express.json());
 
-app.use('/auth', require('./server/route/authRouter'));
-app.use('/user', require('./server/route/userRouter'));
-app.use('/post', require('./server/route/postRouter'));
-app.use('/post', require('./server/route/tagRouter'));
+import authRouter from './server/route/authRouter.js';
+import userRouter from './server/route/userRouter.js';
+import tagRouter from './server/route/tagRouter.js';
+import postRouter from './server/route/postRouter.js';
+
+app.use('/auth', authRouter);
+app.use('/user', userRouter);
+app.use('/post', postRouter);
+app.use('/post', tagRouter);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

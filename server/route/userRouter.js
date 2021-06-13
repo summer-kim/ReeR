@@ -1,15 +1,14 @@
-const express = require('express');
+import express from 'express';
+import expressValidator from 'express-validator';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import bcrypt from 'bcryptjs';
+import User from '../model/userModel.js';
+import checkObjectId from '../middleware/checkObjectId.js';
+import auth from '../middleware/auth.js';
+
+const { check, validationResult } = expressValidator;
 const router = express.Router();
-
-const { check, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-
-const User = require('../model/userModel');
-
-const checkObjectId = require('../middleware/checkObjectId');
-const auth = require('../middleware/auth');
 
 // POST '/user/register'
 // register
@@ -71,4 +70,4 @@ router.post(
   }
 );
 
-module.exports = router;
+export default router;

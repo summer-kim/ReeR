@@ -1,13 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
-
-const User = require('../model/userModel');
+import express from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import config from 'config';
+import expressValidator from 'express-validator';
+const { check, validationResult } = expressValidator;
+//model
+import User from '../model/userModel.js';
 //middleware
-const auth = require('../middleware/auth');
+import auth from '../middleware/auth.js';
+
+const router = express.Router();
 
 // @route    GET /auth
 // @desc     Get user by token
@@ -152,4 +154,4 @@ router.put('/likesUndo/:postid', auth, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-module.exports = router;
+export default router;
