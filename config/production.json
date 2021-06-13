@@ -1,7 +1,0 @@
-{
-  "mongoDBUrl": "mongodb+srv://summersummer:asdf12@netflixrr.fodxd.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "mysecrettoken",
-  "AWS_ID": "AKIAIBGB4BDHOV3WYKEA",
-  "AWS_SECRET": "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",
-  "AWS_BUCKET_NAME": "summerzzang"
-}

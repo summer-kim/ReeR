@@ -4,16 +4,17 @@ import auth from '../middleware/auth.js';
 import checkObjectId from '../middleware/checkObjectId.js';
 import multer from 'multer';
 import AWS from 'aws-sdk';
-import config from 'config';
+import { config } from '../../config.js';
 
 const { check, validationResult } = expressValidator;
 const router = express.Router();
 
 const s3 = new AWS.S3({
-  accessKeyId: config.get('AWS_ID'),
-  secretAccessKey: config.get('AWS_SECRET'),
+  accessKeyId: config.AWSS3.id,
+  secretAccessKey: config.AWSS3.secret,
   region: 'ap-northeast-2',
 });
+const BucketName = config.AWSS3.bucketName;
 
 import Post from '../model/postModel.js';
 import User from '../model/userModel.js';
@@ -58,7 +59,7 @@ router.post(
         if (old_post.img) {
           //Delete image of old post
           const oldparams = {
-            Bucket: config.get('AWS_BUCKET_NAME'),
+            BucketName,
             Key: `uploads/${old_post.img}`,
           };
 
@@ -81,7 +82,7 @@ router.post(
           { new: true }
         );
         const params = {
-          Bucket: config.get('AWS_BUCKET_NAME'),
+          BucketName,
           Key: `uploads/${req.file.originalname}`,
           Body: req.file.buffer,
         };
@@ -101,7 +102,7 @@ router.post(
       });
       await post.save();
       const params = {
-        Bucket: config.get('AWS_BUCKET_NAME'),
+        BucketName,
         Key: `uploads/${req.file.originalname}`,
         Body: req.file.buffer,
       };
@@ -210,7 +211,7 @@ router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
 
     if (post.img) {
       const oldparams = {
-        Bucket: config.get('AWS_BUCKET_NAME'),
+        BucketName,
         Key: `uploads/${post.img}`,
       };
 

@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
-import config from 'config';
+import { config } from '../../config.js';
+
+const jwtSecret = config.jwt.secret;
 
 function auth(req, res, next) {
   const token = req.header('x-auth-token');
@@ -8,7 +10,7 @@ function auth(req, res, next) {
     return res.status(401).json({ msg: 'No Token : authorized denied' });
   }
   try {
-    const decoded = jwt.verify(token, config.get('jwtSecret'));
+    const decoded = jwt.verify(token, jwtSecret);
     req.user = decoded.user;
     next();
   } catch (err) {

@@ -1,9 +1,9 @@
 node_modules/
-config/default.json
 dist/
 client/node_modules/
 client/.pnp
 client/.pnp.js
+.env
 
 # testing
 client/coverage

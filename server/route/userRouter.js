@@ -1,7 +1,7 @@
 import express from 'express';
 import expressValidator from 'express-validator';
 import jwt from 'jsonwebtoken';
-import config from 'config';
+import { config } from '../../config.js';
 import bcrypt from 'bcryptjs';
 import User from '../model/userModel.js';
 import checkObjectId from '../middleware/checkObjectId.js';
@@ -56,7 +56,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        config.jwt.secret,
         { expiresIn: '5days' },
         (err, token) => {
           if (err) throw err;
