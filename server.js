@@ -20,6 +20,16 @@ app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/post', tagRouter);
 
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.sendStatus(404);
+});
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.sendStatus(500);
+});
+
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Set static folder

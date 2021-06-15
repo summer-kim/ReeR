@@ -16,9 +16,9 @@ const App = () => {
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
+      store.dispatch(loadUser());
     }
-    store.dispatch(loadUser());
-  }, []);
+  }, [localStorage.token]);
   return (
     <Provider store={store}>
       <Router>

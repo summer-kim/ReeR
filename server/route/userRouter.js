@@ -1,18 +1,16 @@
 import express from 'express';
-import expressValidator from 'express-validator';
 import User from '../model/userModel.js';
 import auth from '../middleware/auth.js';
 import * as validate from '../middleware/validation.js';
 import * as authController from '../controller/userController.js';
 
-const { check, validationResult } = expressValidator;
 const router = express.Router();
 
 router.post('/register', validate.validateSignup, authController.signUp);
 
 router.post('/login', validate.validateSignIn, authController.signIn);
 
-router.get('/', auth, authController.getMe);
+router.get('/me', auth, authController.getMe);
 
 // @route    PUT /auth/myBag/:postid
 // @desc     add content to myBag

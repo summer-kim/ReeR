@@ -29,13 +29,14 @@ export async function signUp(req, res) {
 export async function signIn(req, res) {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (user) {
+  if (!user) {
     return res.status(401).json({ errors: 'Invalid user or password' });
   }
   const passwordIsMatched = await bcrypt.compare(password, user.password);
   if (!passwordIsMatched) {
     return res.statis(401).json({ errors: 'Invalid user or password' });
   }
+
   const token = await createJWTToken(user.id);
   res.status(200).json({ token });
 }

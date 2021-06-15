@@ -13,11 +13,16 @@ import {
 } from './types';
 import axios from 'axios';
 import { setAlert } from './alertAction';
+import setAuthToken from '../../util/setAuthToken';
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
 
 export const loadUser = () => async (dispatch) => {
   try {
-    const res = await axios.get('/auth');
-
+    const res = await axios.get('/user/me');
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -29,15 +34,11 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 export const registerUser = ({ name, email, password }) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   const body = JSON.stringify({ name, email, password });
   try {
     const res = await axios.post('/user/register', body, config);
-
+    localStorage.setItem('token', res.data.token);
+    setAuthToken(res.data.token);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: res.data,
@@ -56,15 +57,11 @@ export const registerUser = ({ name, email, password }) => async (dispatch) => {
   }
 };
 export const loginUser = ({ email, password }) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   const body = JSON.stringify({ email, password });
   try {
-    const res = await axios.post('/auth/login', body, config);
-
+    const res = await axios.post('/user/login', body, config);
+    localStorage.setItem('token', res.data.token);
+    setAuthToken(res.data.token);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
@@ -81,6 +78,7 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
 };
+
 export const addToMyBag = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/auth/myBag/${postid}`);
@@ -97,6 +95,7 @@ export const addToMyBag = (postid) => async (dispatch) => {
     });
   }
 };
+
 export const addToMyBagUndo = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/auth/myBagUndo/${postid}`);
@@ -113,6 +112,7 @@ export const addToMyBagUndo = (postid) => async (dispatch) => {
     });
   }
 };
+
 export const addToMylikes = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/auth/likes/${postid}`);
@@ -128,6 +128,7 @@ export const addToMylikes = (postid) => async (dispatch) => {
     });
   }
 };
+
 export const addToMylikesUndo = (postid) => async (dispatch) => {
   try {
     const res = await axios.put(`/auth/likesUndo/${postid}`);
