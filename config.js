@@ -17,7 +17,7 @@ export const config = {
     secret: getConfig('JWT_SECRET'),
   },
   bcrypt: {
-    salt: getConfig('BCRYPT_SALT'),
+    salt: Number(getConfig('BCRYPT_SALT')),
   },
   AWSS3: {
     id: getConfig('AWS_ID'),
