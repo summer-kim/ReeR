@@ -81,7 +81,7 @@ export const logout = () => (dispatch) => {
 
 export const addToMyBag = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/auth/myBag/${postid}`);
+    const res = await axios.put(`/user/myBag/${postid}`);
 
     dispatch({
       type: UPDATE_MYBAG,
@@ -98,7 +98,7 @@ export const addToMyBag = (postid) => async (dispatch) => {
 
 export const addToMyBagUndo = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/auth/myBagUndo/${postid}`);
+    const res = await axios.put(`/user/myBagUndo/${postid}`);
 
     dispatch({
       type: UPDATE_MYBAG,
@@ -115,7 +115,7 @@ export const addToMyBagUndo = (postid) => async (dispatch) => {
 
 export const addToMylikes = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/auth/likes/${postid}`);
+    const res = await axios.put(`/user/likes/${postid}`);
 
     dispatch({
       type: UPDATE_MYLIKES,
@@ -131,7 +131,7 @@ export const addToMylikes = (postid) => async (dispatch) => {
 
 export const addToMylikesUndo = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/auth/likesUndo/${postid}`);
+    const res = await axios.put(`/user/likesUndo/${postid}`);
 
     dispatch({
       type: UPDATE_MYLIKES,
