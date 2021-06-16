@@ -1,5 +1,4 @@
 import express from 'express';
-import User from '../model/userModel.js';
 import checkAuth from '../middleware/auth.js';
 import * as validate from '../middleware/validation.js';
 import * as authController from '../controller/userController.js';

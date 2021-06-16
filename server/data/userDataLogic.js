@@ -23,18 +23,18 @@ export async function findById(userId) {
 }
 
 export function alreadyAdded(array, id) {
-  return array.myBag.some((element) => element.toString() === id);
+  return array.some((element) => element.toString() === id);
 }
 
-export async function addToData(user, id) {
-  user.myBag.unshift(id);
+export async function addToData(user, object, id) {
+  user[object].unshift(id);
   await user.save();
-  return user.myBag;
+  return user[object];
 }
 
-export async function removeData(user, id) {
-  const idx = user.myBag.indexOf(id);
-  user.myBag.splice(idx, 1);
+export async function removeData(user, object, id) {
+  const idx = user[object].indexOf(id);
+  user[object].splice(idx, 1);
   await user.save();
-  return user.myBag;
+  return user[object];
 }
