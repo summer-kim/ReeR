@@ -1,12 +1,11 @@
 import express from 'express';
-import expressValidator from 'express-validator';
 import auth from '../middleware/auth.js';
 import checkObjectId from '../middleware/checkObjectId.js';
 import multer from 'multer';
 import AWS from 'aws-sdk';
-import { config } from '../../config.js';
+import { config } from '../../config.ts';
+import { check, validationResult } from 'express-validator';
 
-const { check, validationResult } = expressValidator;
 const router = express.Router();
 
 const s3 = new AWS.S3({

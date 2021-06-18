@@ -1,6 +1,4 @@
-import expressValidator from 'express-validator';
-const { validationResult, check } = expressValidator;
-
+import { validationResult, check } from 'express-validator';
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

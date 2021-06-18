@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export function getConfig(key, defaultValue = undefined) {
+export function getConfig(key: string, defaultValue = undefined) {
   const value = process.env[key] || defaultValue;
   if (value == null) {
     throw new Error(`value of ${key} has not defined`);
@@ -10,6 +10,9 @@ export function getConfig(key, defaultValue = undefined) {
 }
 
 export const config = {
+  host: {
+    port: getConfig('PORT'),
+  },
   mongoDB: {
     url: getConfig('MONGO_URL'),
   },
@@ -26,7 +29,7 @@ export const config = {
   },
   mySQL: {
     host: getConfig('MYSQL_HOST'),
-    user: getConfig('MYSQL_USER'),
+    username: getConfig('MYSQL_USER'),
     database: getConfig('MYSQL_DB'),
     password: getConfig('MYSQL_PASSWORD'),
   },

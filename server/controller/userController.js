@@ -1,4 +1,4 @@
-import { config } from '../../config.js';
+import { config } from '../../config.ts';
 import * as userData from '../data/userDataLogic.js';
 import bcrypt from 'bcryptjs';
 

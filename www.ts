@@ -1,0 +1,48 @@
+import express, { Request, Response, NextFunction } from 'express';
+import Server from './server';
+import connectDB from './config/db.js';
+import * as path from 'path';
+import cors from 'cors';
+import morgan from 'morgan';
+import { sequelize } from './server/db/database.js';
+import { config } from './config';
+
+const server = new Server();
+const app = server.getInstance();
+
+connectDB();
+app.use(cors());
+app.use(morgan('combined'));
+app.use(express.json());
+
+import * as userRouter from './server/route/userRouter.js';
+import * as tagRouter from './server/route/tagRouter.js';
+import * as postRouter from './server/route/postRouter.js';
+
+app.use('/user', userRouter.default);
+app.use('/post', postRouter.default);
+app.use('/post', tagRouter.default);
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+  res.sendStatus(404);
+});
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(error);
+  res.sendStatus(500);
+});
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('./client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
+
+sequelize.sync().then(() => {
+  const server = app.listen(config.host.port);
+});
