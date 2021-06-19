@@ -1,11 +1,9 @@
-import User from '../model/userModel.js';
+import User from '../model/userMySQL';
 import jwt from 'jsonwebtoken';
 import { config } from '../../config.ts';
 
 export async function createUser(userInfo) {
-  const user = new User(userInfo);
-  await user.save();
-  return user.id;
+  return User.create(userInfo).then((data) => data.dataValues);
 }
 
 export async function createJWTToken(userId) {
@@ -13,13 +11,11 @@ export async function createJWTToken(userId) {
 }
 
 export async function findByEmail(email) {
-  const user = await User.findOne({ email });
-  return user;
+  return User.findOne({ where: { email } });
 }
 
 export async function findById(userId) {
-  const user = await User.findById(userId).select('-password');
-  return user;
+  return User.findByPk(userId);
 }
 
 export function alreadyAdded(array, id) {
