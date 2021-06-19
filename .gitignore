@@ -10,3 +10,7 @@ client/coverage
 
 dist/
 .eslintcache
+
+# mongoDB model
+server/model/postModel.ts
+server/model/userModel.ts
