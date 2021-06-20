@@ -23,3 +23,10 @@ export const validateSignIn = [
   check('password', 'Password is required').exists(),
   validate,
 ];
+
+export const validateCreatePost = [
+  check('movieName', 'please fill out the movie title').not().isEmpty(),
+  check('summary', 'please fill out the summary').not().isEmpty(),
+  check('genre', 'please fill out genre of the movie').not().isEmpty(),
+  validate,
+];

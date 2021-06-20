@@ -27,16 +27,19 @@ const Post = sequelize.define<PostInstance>(
     },
     img: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     genre: {
       type: DataTypes.STRING, //array
+      allowNull: false,
     },
     likes: {
       type: DataTypes.STRING, //array
+      allowNull: true,
     },
     unlikes: {
       type: DataTypes.STRING, //array
+      allowNull: true,
     },
   },
   { timestamps: true }
