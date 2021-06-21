@@ -1,6 +1,8 @@
+import { Optional } from 'sequelize';
+
 export interface PostType {
-  id?: number;
-  userId: UserType['id'];
+  id: number;
+  userId?: UserType['id'];
   movieName: string;
   summary: string;
   img?: string;
@@ -8,15 +10,17 @@ export interface PostType {
   likes?: UserType['id'][];
   unlikes?: UserType['id'][];
 }
+export interface PostCreationAttributes extends Optional<PostType, 'id'> {}
 
 export interface UserType {
-  id?: number;
+  id: number;
   userName: string;
   password: string;
   email: string;
-  myBag: PostType['id'][];
-  likes: PostType['id'][];
+  myBag?: PostType['id'][];
+  likes?: PostType['id'][];
 }
+export interface UserCreationAttributes extends Optional<UserType, 'id'> {}
 
 const GenreObject = {
   SF: 'SF',

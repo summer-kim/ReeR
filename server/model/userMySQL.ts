@@ -1,8 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 import { sequelize } from '../db/database.js';
-import { UserType } from '../types/modelType';
+import { UserCreationAttributes, UserType } from '../types/modelType';
+import Post from './postMySQL';
 
-interface UserInstance extends Model<UserType>, UserType {}
+interface UserInstance
+  extends Model<UserType, UserCreationAttributes>,
+    UserType {}
 
 const User = sequelize.define<UserInstance>(
   'user',

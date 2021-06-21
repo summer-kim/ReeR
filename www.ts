@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
 import Server from './server';
-import connectDB from './config/db.js';
 import * as path from 'path';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -10,18 +9,17 @@ import { config } from './config';
 const server = new Server();
 const app = server.getInstance();
 
-connectDB();
 app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
 
-import * as userRouter from './server/route/userRouter.js';
-import * as tagRouter from './server/route/tagRouter.js';
-import * as postRouter from './server/route/postRouter.js';
+import * as userRouter from './server/route/userRouter';
+import * as tagRouter from './server/route/tagRouter';
+import * as postRouter from './server/route/postRouter';
 
 app.use('/user', userRouter.default);
 app.use('/post', postRouter.default);
-app.use('/post', tagRouter.default);
+//app.use('/post', tagRouter.default);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.error(error);
@@ -44,5 +42,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 sequelize.sync().then(() => {
+  console.log('mySQL DB has successfully connected');
   const server = app.listen(config.host.port);
 });
