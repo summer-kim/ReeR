@@ -1,8 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/database.js';
-import { PostType } from '../types/modelType';
+import { PostType, PostCreationAttributes } from '../types/modelType';
+import User from './userMySQL';
 
-interface PostInstance extends Model<PostType>, PostType {}
+interface PostInstance
+  extends Model<PostType, PostCreationAttributes>,
+    PostType {}
 
 const Post = sequelize.define<PostInstance>(
   'post',
@@ -12,10 +15,6 @@ const Post = sequelize.define<PostInstance>(
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-    },
-    userId: {
-      type: DataTypes.NUMBER,
-      allowNull: false,
     },
     movieName: {
       type: DataTypes.STRING(128),
@@ -44,5 +43,6 @@ const Post = sequelize.define<PostInstance>(
   },
   { timestamps: true }
 );
+Post.belongsTo(User);
 
 export default Post;

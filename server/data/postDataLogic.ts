@@ -39,6 +39,8 @@ export async function createPostData({
   genre,
   userId,
 }: PostType) {
+  console.log(userId);
+  console.log(typeof userId);
   return Post.create({ movieName, summary, genre, userId }).then((post) => {
     console.log(post);
     return post;

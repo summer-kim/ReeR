@@ -23,8 +23,8 @@ export async function getAllPosts(req: RequestTypeCustomed, res: Response) {
 }
 
 export async function getPost(req: RequestTypeCustomed, res: Response) {
-  const id = req.params.id;
-  const post = await getPostById(Number(id));
+  const id = Number(req.params.id);
+  const post = await getPostById(id);
   if (post) {
     res.json(post);
   } else {
