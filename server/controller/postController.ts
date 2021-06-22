@@ -12,7 +12,11 @@ export async function createPost(req: RequestTypeCustomed, res: Response) {
 
 export async function updatePost(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
-  await postData.updatePostData({ ...req.body, id });
+  const userId = req.userId;
+  const [num] = await postData.updatePostData({ ...req.body, id, userId });
+  if (num === 0) {
+    return res.sendStatus(403);
+  }
   const post = await postData.getPostById(id);
   res.status(201).json(post);
 }

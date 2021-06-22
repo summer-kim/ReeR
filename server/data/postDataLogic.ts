@@ -7,6 +7,7 @@ interface updatePostType {
   summary?: string;
   genre?: GenreType[];
   id: number;
+  userId: number;
 }
 
 const INCLUDE_POST = {
@@ -17,9 +18,13 @@ const ORDER_DESC = {
 };
 
 //Post Data Functions
-export async function updatePostData({ id, ...updateInfo }: updatePostType) {
+export async function updatePostData({
+  id,
+  userId,
+  ...updateInfo
+}: updatePostType) {
   const keys = Object.keys(updateInfo) as (keyof PostType)[];
-  return Post.update(updateInfo, { where: { id }, fields: keys });
+  return Post.update(updateInfo, { where: { id, userId }, fields: keys });
 }
 
 export async function createPostData(postInfo: PostType) {
