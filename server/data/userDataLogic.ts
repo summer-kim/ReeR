@@ -5,7 +5,6 @@ import { createUserType } from '../types/variableType';
 
 export async function createUser(userInfo: createUserType) {
   return User.create(userInfo).then((data) => {
-    console.log('data', data);
     return data.id;
   });
 }
@@ -15,10 +14,7 @@ export async function createJWTToken(userId: number) {
 }
 
 export async function findByEmail(email: string) {
-  return User.findOne({ where: { email } }).then((data) => {
-    console.log('data', data);
-    return data;
-  });
+  return User.findOne({ where: { email } });
 }
 
 export async function findById(userId: number) {

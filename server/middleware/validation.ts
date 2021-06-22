@@ -6,23 +6,23 @@ export const validate = (req: Request, res: Response, next: NextFunction) => {
   if (errors.isEmpty()) {
     return next();
   }
-  return res.status(400).json({ message: errors.array()[0].msg });
+  return res.status(400).json({ msg: errors.array()[0].msg });
 };
 
-export const validateSignup = [
-  check('name', 'Name is required').not().isEmpty(),
+const validateCredential = [
   check('email', 'Please provide valid Email').isEmail(),
   check('password', 'Password has to be at least 6 letters').isLength({
     min: 6,
   }),
+];
+
+export const validateSignup = [
+  ...validateCredential,
+  check('name', 'Name is required').not().isEmpty(),
   validate,
 ];
 
-export const validateSignIn = [
-  check('email', 'Please include a valid email').isEmail(),
-  check('password', 'Password is required').exists(),
-  validate,
-];
+export const validateSignIn = [...validateCredential, validate];
 
 export const validateCreatePost = [
   check('movieName', 'please fill out the movie title').not().isEmpty(),
