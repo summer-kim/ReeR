@@ -2,16 +2,18 @@ import express, { Response } from 'express';
 import checkAuth from '../middleware/auth';
 import multer from 'multer';
 import AWS from 'aws-sdk';
-import { createPost, getAllPosts, getPost } from '../controller/postController';
+import * as postContr from '../controller/postController';
 import { validateCreatePost } from '../middleware/validation';
 
 const router = express.Router();
 
-router.post('/', checkAuth, validateCreatePost, createPost);
+router.post('/create', checkAuth, validateCreatePost, postContr.createPost);
 
-router.get('/', getAllPosts);
+router.put('/update/:id', checkAuth, postContr.updatePost);
 
-router.get('/:id', checkAuth, getPost);
+router.get('/', postContr.getAllPosts);
+
+router.get('/:id', checkAuth, postContr.getPost);
 
 // router.delete('/:id', checkAuth, async (req: RequestTypeCustomed, res) => {
 //     const post = await Post.findById(req.params.id);
