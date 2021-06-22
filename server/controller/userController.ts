@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { config } from '../../config';
-import * as userData from '../data/userDataLogic.js';
+import * as userData from '../data/userDataLogic';
 import bcrypt from 'bcrypt';
 import { RequestTypeCustomed } from '../types/requestType';
 

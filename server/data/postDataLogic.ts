@@ -10,41 +10,20 @@ interface updatePostType {
 }
 
 const INCLUDE_POST = {
-  attributes: ['id', 'genre', 'summary', 'createdAt', 'genre'],
+  attributes: ['id', 'genre', 'summary', 'createdAt'],
 };
 const ORDER_DESC = {
   order: [['createdAt', 'DESC']] as OrderItem[],
 };
 
 //Post Data Functions
-export async function updatePostData({
-  movieName,
-  summary,
-  genre,
-  id,
-}: updatePostType) {
-  return Post.findByPk(id, INCLUDE_POST).then((post) => {
-    if (post) {
-      if (movieName) post.movieName = movieName;
-      if (summary) post.summary = summary;
-      if (genre) post.genre = genre;
-      return post.save();
-    }
-  });
+export async function updatePostData({ id, ...updateInfo }: updatePostType) {
+  const keys = Object.keys(updateInfo) as (keyof PostType)[];
+  return Post.update(updateInfo, { where: { id }, fields: keys });
 }
 
-export async function createPostData({
-  movieName,
-  summary,
-  genre,
-  userId,
-}: PostType) {
-  console.log(userId);
-  console.log(typeof userId);
-  return Post.create({ movieName, summary, genre, userId }).then((post) => {
-    console.log(post);
-    return post;
-  });
+export async function createPostData(postInfo: PostType) {
+  return Post.create(postInfo);
 }
 
 //@todo - blueBird?
@@ -53,8 +32,5 @@ export async function getAll() {
 }
 
 export async function getPostById(id: number) {
-  return Post.findOne({
-    where: { id },
-    ...INCLUDE_POST,
-  });
+  return Post.findByPk(id);
 }
