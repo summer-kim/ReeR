@@ -27,10 +27,10 @@ export const config = {
     secret: getConfig('AWS_SECRET'),
     bucketName: getConfig('AWS_BUCKET_NAME'),
   },
-  mySQL: {
-    host: getConfig('MYSQL_HOST'),
-    username: getConfig('MYSQL_USER'),
-    database: getConfig('MYSQL_DB'),
-    password: getConfig('MYSQL_PASSWORD'),
+  SQL: {
+    host: getConfig('SQL_HOST'),
+    username: getConfig('SQL_USER'),
+    database: getConfig('SQL_DB'),
+    password: getConfig('SQL_PASSWORD'),
   },
 };

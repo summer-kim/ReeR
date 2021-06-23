@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
-import { sequelize } from '../db/database.js';
+import { sequelize } from '../db/database';
 import { UserCreationAttributes, UserType } from '../types/modelType';
-import Post from './postMySQL';
+import Post from './postDB';
 
 interface UserInstance
   extends Model<UserType, UserCreationAttributes>,
@@ -30,10 +30,10 @@ const User = sequelize.define<UserInstance>(
       unique: true,
     },
     myBag: {
-      type: DataTypes.STRING, //array
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
     likes: {
-      type: DataTypes.STRING, //array
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
     },
   },
   { timestamps: true }

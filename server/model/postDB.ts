@@ -1,7 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
-import { sequelize } from '../db/database.js';
+import { sequelize } from '../db/database';
 import { PostType, PostCreationAttributes } from '../types/modelType';
-import User from './userMySQL';
+import User from './userDB';
 
 interface PostInstance
   extends Model<PostType, PostCreationAttributes>,
@@ -29,15 +29,15 @@ const Post = sequelize.define<PostInstance>(
       allowNull: true,
     },
     genre: {
-      type: DataTypes.STRING, //array
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     likes: {
-      type: DataTypes.STRING, //array
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
     unlikes: {
-      type: DataTypes.STRING, //array
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       allowNull: true,
     },
   },

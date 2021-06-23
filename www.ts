@@ -3,7 +3,7 @@ import Server from './server';
 import * as path from 'path';
 import cors from 'cors';
 import morgan from 'morgan';
-import { sequelize } from './server/db/database.js';
+import { sequelize } from './server/db/database';
 import { config } from './config';
 
 const server = new Server();

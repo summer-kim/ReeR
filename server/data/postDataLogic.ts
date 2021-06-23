@@ -1,5 +1,5 @@
 import { OrderItem } from 'sequelize/types';
-import Post from '../model/postMySQL';
+import Post from '../model/postDB';
 import { GenreType, PostType } from '../types/modelType';
 
 interface updatePostType {
@@ -31,7 +31,6 @@ export async function createPostData(postInfo: PostType) {
   return Post.create(postInfo);
 }
 
-//@todo - blueBird?
 export async function getAll() {
   return Post.findAll({ ...INCLUDE_POST, ...ORDER_DESC });
 }

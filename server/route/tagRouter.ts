@@ -1,5 +1,5 @@
 import express from 'express';
-import auth from '../middleware/auth.js';
+import auth from '../middleware/auth';
 import Post from '../model/postModel.js';
 import * as tagController from '../controller/tagController.js';
 

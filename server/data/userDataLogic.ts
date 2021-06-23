@@ -1,4 +1,4 @@
-import User from '../model/userMySQL';
+import User from '../model/userDB';
 import jwt from 'jsonwebtoken';
 import { config } from '../../config';
 import { createUserType } from '../types/variableType';
@@ -27,7 +27,14 @@ export function alreadyAdded(array: number[], id: string) {
 }
 
 export async function addToData(user: any, key: string, id: number) {
-  user[key].unshift(id);
+  if (user[key]) {
+    user[key] = '';
+  }
+  console.log('user', typeof user[key]);
+  const parsed: number[] = JSON.parse(user[key]);
+  parsed.unshift(id);
+  console.log(parsed);
+  user[key] = JSON.stringify(parsed);
   await user.save();
   return user[key];
 }

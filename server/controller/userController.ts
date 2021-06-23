@@ -10,7 +10,6 @@ export async function signUp(req: Request, res: Response) {
   if (userExisted) {
     return res.status(400).json({ errors: 'User already exists' });
   }
-  console.log(userExisted);
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.salt);
   const userId = (await userData.createUser({
     userName: name,
