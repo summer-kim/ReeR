@@ -3,7 +3,6 @@ import { Response } from 'express';
 import * as postData from '../data/postDataLogic';
 
 export async function createPost(req: RequestTypeCustomed, res: Response) {
-  console.log(typeof req.userId);
   const post = await postData.createPostData({
     ...req.body,
     userId: req.userId!,

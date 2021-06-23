@@ -18,7 +18,7 @@ const validateCredential = [
 
 export const validateSignup = [
   ...validateCredential,
-  check('name', 'Name is required').not().isEmpty(),
+  check('userName', 'Name is required').not().isEmpty(),
   validate,
 ];
 

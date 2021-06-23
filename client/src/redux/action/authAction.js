@@ -81,13 +81,13 @@ export const logout = () => (dispatch) => {
 
 export const addToMyBag = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/user/myBag/${postid}`);
+    const res = await axios.put(`/user/mybag/${postid}`);
 
     dispatch({
       type: UPDATE_MYBAG,
       payload: res.data,
     });
-    dispatch(setAlert('Successfully add to myBag', 'success'));
+    dispatch(setAlert('Successfully add to mybag', 'success'));
   } catch (err) {
     dispatch({
       type: PUT_ERROR,
@@ -98,13 +98,13 @@ export const addToMyBag = (postid) => async (dispatch) => {
 
 export const addToMyBagUndo = (postid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/user/myBagUndo/${postid}`);
+    const res = await axios.put(`/user/mybagUndo/${postid}`);
 
     dispatch({
       type: UPDATE_MYBAG,
       payload: res.data,
     });
-    dispatch(setAlert('Successfully remove from myBag', 'success'));
+    dispatch(setAlert('Successfully remove from mybag', 'success'));
   } catch (err) {
     dispatch({
       type: PUT_ERROR,

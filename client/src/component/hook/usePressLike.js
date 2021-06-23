@@ -11,7 +11,7 @@ export const usePressLike = ({
   const [Liked, setLiked] = useState(false);
   const [Unliked, setUnliked] = useState(false);
 
-  //variable for changing button color depends on myBag already had content or not
+  //variable for changing button color depends on mybag already had content or not
   const [Bag, setBag] = useState(false);
 
   //variables of how many people liked/unliked this
@@ -27,7 +27,7 @@ export const usePressLike = ({
       unlikes.some((unlike) => unlike.user === authUser._id) &&
         setUnliked(true);
 
-      authUser.myBag.some((list) => list.toString() === _id) && setBag(true);
+      authUser.mybag.some((list) => list.toString() === _id) && setBag(true);
     }
   }, [_id]);
 

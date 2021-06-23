@@ -63,7 +63,7 @@ const Contents = ({
         return [...contents.filter((content) => content.user === user._id)];
       case 'bag':
         return [
-          ...contents.filter((content) => user.myBag.includes(content._id)),
+          ...contents.filter((content) => user.mybag.includes(content._id)),
         ];
       case 'liked':
         return [

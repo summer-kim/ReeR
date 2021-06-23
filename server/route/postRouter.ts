@@ -25,7 +25,7 @@ router.get('/:id', checkAuth, postContr.getPost);
 //       return res.status(401).json({ msg: 'User not Authorized' });
 //     }
 //     const user = await User.findById(req.userId);
-//     user.myBag = user.myBag.filter((id) => id.toString() !== req.params.id);
+//     user.mybag = user.mybag.filter((id) => id.toString() !== req.params.id);
 //     user.likes = user.likes.filter((id) => id.toString() !== req.params.id);
 
 //     if (post.img) {

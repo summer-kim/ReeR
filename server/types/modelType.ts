@@ -17,8 +17,8 @@ export interface UserType {
   userName: string;
   password: string;
   email: string;
-  myBag?: PostType['id'][];
-  likes?: PostType['id'][];
+  mybag: PostType['id'][];
+  likes: PostType['id'][];
 }
 export interface UserCreationAttributes extends Optional<UserType, 'id'> {}
 

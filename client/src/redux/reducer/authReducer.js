@@ -57,7 +57,7 @@ function authReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        user: { ...state.user, myBag: payload },
+        user: { ...state.user, mybag: payload },
         error: {},
       };
     case UPDATE_MYLIKES:

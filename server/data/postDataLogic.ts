@@ -36,7 +36,7 @@ export async function createPostData(postInfo: PostType) {
 }
 
 export async function getAll() {
-  return Post.findAll({ ...INCLUDE_POST, ...ORDER_DESC });
+  return Post.findAll(ORDER_DESC);
 }
 
 export async function getPostById(id: number) {

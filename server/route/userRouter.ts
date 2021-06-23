@@ -11,9 +11,9 @@ router.post('/login', validate.validateSignIn, authController.signIn);
 
 router.get('/me', checkAuth, authController.getMe);
 
-router.put('/myBag/:postid', checkAuth, authController.addToMyBag);
+router.put('/mybag/:postid', checkAuth, authController.addToMyBag);
 
-router.put('/myBagUndo/:postid', checkAuth, authController.removeFromMyBag);
+router.put('/mybagUndo/:postid', checkAuth, authController.removeFromMyBag);
 
 router.put('/likes/:postid', checkAuth, authController.likePost);
 
