@@ -1,9 +1,11 @@
 import User from '../model/userDB';
 import jwt from 'jsonwebtoken';
 import { config } from '../../config';
-import { createUserType } from '../types/variableType';
+import { UserType } from '../types/modelType';
+import { QueryTypes } from 'sequelize';
+import { sequelize } from '../db/database';
 
-export async function createUser(userInfo: createUserType) {
+export async function createUser(userInfo: UserType) {
   return User.create(userInfo).then((data) => {
     return data.email;
   });
@@ -21,27 +23,22 @@ export async function findById(userId: number) {
   return User.findByPk(userId);
 }
 
-export function alreadyAdded(array: number[], id: string) {
-  const idNumber = Number(id);
-  return array.some((element) => element === idNumber);
+export function alreadyAdded(array: number[], id: number) {
+  return array.some((element) => element === id);
 }
 
-export async function addToData(user: any, key: string, id: number) {
-  if (user[key]) {
-    user[key] = '';
-  }
-  console.log('user', typeof user[key]);
-  const parsed: number[] = JSON.parse(user[key]);
-  parsed.unshift(id);
-  console.log(parsed);
-  user[key] = JSON.stringify(parsed);
-  await user.save();
-  return user[key];
-}
-
-export async function removeData(user: any, key: string, id: number) {
-  const idx = user[key].indexOf(id);
-  user[key].splice(idx, 1);
-  await user.save();
-  return user[key];
+export async function updateArrayData(
+  userId: number,
+  postId: number,
+  column: string,
+  update: string
+) {
+  return sequelize.query(
+    `
+  UPDATE users
+  SET ${column} = array_${update}(${column}, ${postId})
+  WHERE id = ${userId}
+  `,
+    { type: QueryTypes.UPDATE }
+  );
 }

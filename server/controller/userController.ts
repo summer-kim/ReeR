@@ -5,16 +5,17 @@ import bcrypt from 'bcrypt';
 import { RequestTypeCustomed } from '../types/requestType';
 
 export async function signUp(req: Request, res: Response) {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
   const userExisted = await userData.findByEmail(email);
   if (userExisted) {
     return res.status(400).json({ errors: 'User already exists' });
   }
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.salt);
   const userEmail = (await userData.createUser({
-    userName: name,
-    email,
     password: hashedPassword,
+    mybag: [],
+    likes: [],
+    ...req.body,
   })) as string;
 
   const token = await userData.createJWTToken(userEmail);
@@ -45,62 +46,61 @@ export async function getMe(req: RequestTypeCustomed, res: Response) {
 }
 
 export async function addToMyBag(req: RequestTypeCustomed, res: Response) {
+  const postId = Number(req.params.postid);
   const user = await userData.findById(req.userId!);
-  const existed =
-    user?.myBag && userData.alreadyAdded(user?.myBag, req.params.postid);
+  if (!user) {
+    return res.status(401).json({ msg: 'Invalid user or password' });
+  }
+  const existed = userData.alreadyAdded(user.mybag, postId);
   if (existed) {
     return res.status(404).json({ msg: 'Already add this content' });
   }
-  const myBag = await userData.addToData(
-    user,
-    'myBag',
-    Number(req.params.postid)
-  );
-  res.status(201).json(myBag);
+  await userData.updateArrayData(req.userId!, postId, 'mybag', 'append');
+  await user.reload();
+  res.status(201).json(user.mybag);
 }
 
 export async function removeFromMyBag(req: RequestTypeCustomed, res: Response) {
+  const postId = Number(req.params.postid);
   const user = await userData.findById(req.userId!);
-  const notExisted =
-    user?.myBag && userData.alreadyAdded(user?.myBag, req.params.postid);
-  if (notExisted) {
-    return res.status(404).json({ msg: "this content hasn't been added" });
+  if (!user) {
+    return res.status(401).json({ msg: 'Invalid user or password' });
   }
-  const myBag = await userData.removeData(
-    user,
-    'myBag',
-    Number(req.params.postid)
-  );
-  console.log(myBag);
-  res.status(201).json(myBag);
+  const existed = userData.alreadyAdded(user.mybag, postId);
+  if (!existed) {
+    return res.status(404).json({ msg: 'This content never been added' });
+  }
+  await userData.updateArrayData(req.userId!, postId, 'mybag', 'remove');
+  await user.reload();
+  res.status(201).json(user.mybag);
 }
 
 export async function likePost(req: RequestTypeCustomed, res: Response) {
+  const postId = Number(req.params.postid);
   const user = await userData.findById(req.userId!);
-  const existed =
-    user?.likes && userData.alreadyAdded(user?.likes, req.params.postid);
+  if (!user) {
+    return res.status(401).json({ msg: 'Invalid user or password' });
+  }
+  const existed = userData.alreadyAdded(user.likes, postId);
   if (existed) {
     return res.status(404).json({ msg: 'Already add this content' });
   }
-  const myLikes = await userData.addToData(
-    user,
-    'likes',
-    Number(req.params.postid)
-  );
-  res.status(201).json(myLikes);
+  await userData.updateArrayData(req.userId!, postId, 'likes', 'append');
+  await user.reload();
+  res.status(201).json(user.likes);
 }
 
 export async function likePostUndo(req: RequestTypeCustomed, res: Response) {
+  const postId = Number(req.params.postid);
   const user = await userData.findById(req.userId!);
-  const notExisted =
-    user?.likes && userData.alreadyAdded(user?.likes, req.params.postid);
-  if (notExisted) {
-    return res.status(404).json({ msg: 'this content never been added' });
+  if (!user) {
+    return res.status(401).json({ msg: 'Invalid user or password' });
   }
-  const myLikes = await userData.removeData(
-    user,
-    'likes',
-    Number(req.params.postid)
-  );
-  res.status(201).json(myLikes);
+  const existed = userData.alreadyAdded(user.likes, postId);
+  if (!existed) {
+    return res.status(404).json({ msg: 'This content never been added' });
+  }
+  await userData.updateArrayData(req.userId!, postId, 'likes', 'remove');
+  await user.reload();
+  res.status(201).json(user.likes);
 }
