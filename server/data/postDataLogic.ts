@@ -24,7 +24,11 @@ export async function updatePostData({
   ...updateInfo
 }: updatePostType) {
   const keys = Object.keys(updateInfo) as (keyof PostType)[];
-  return Post.update(updateInfo, { where: { id, userId }, fields: keys });
+  return Post.update(updateInfo, {
+    where: { id },
+    fields: keys,
+    returning: true,
+  });
 }
 
 export async function createPostData(postInfo: PostType) {
