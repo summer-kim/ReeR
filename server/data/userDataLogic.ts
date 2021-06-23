@@ -5,12 +5,12 @@ import { createUserType } from '../types/variableType';
 
 export async function createUser(userInfo: createUserType) {
   return User.create(userInfo).then((data) => {
-    return data.id;
+    return data.email;
   });
 }
 
-export async function createJWTToken(userId: number) {
-  return jwt.sign({ userId }, config.jwt.secret, { expiresIn: '5days' });
+export async function createJWTToken(email: string) {
+  return jwt.sign({ email }, config.jwt.secret, { expiresIn: '5days' });
 }
 
 export async function findByEmail(email: string) {

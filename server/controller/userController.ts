@@ -11,13 +11,13 @@ export async function signUp(req: Request, res: Response) {
     return res.status(400).json({ errors: 'User already exists' });
   }
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.salt);
-  const userId = (await userData.createUser({
+  const userEmail = (await userData.createUser({
     userName: name,
     email,
     password: hashedPassword,
-  })) as number;
+  })) as string;
 
-  const token = await userData.createJWTToken(userId);
+  const token = await userData.createJWTToken(userEmail);
   res.status(201).json({ token });
 }
 
@@ -32,7 +32,7 @@ export async function signIn(req: Request, res: Response) {
     return res.status(401).json({ msg: 'Invalid user or password' });
   }
 
-  const token = await userData.createJWTToken(user.id!);
+  const token = await userData.createJWTToken(user.email!);
   res.status(200).json({ token });
 }
 
