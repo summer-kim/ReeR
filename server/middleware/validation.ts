@@ -24,7 +24,7 @@ export const validateSignup = [
 
 export const validateSignIn = [...validateCredential, validate];
 
-export const validateCreatePost = [
+export const validatePost = [
   check('movieName', 'please fill out the movie title').not().isEmpty(),
   check('summary', 'please fill out the summary').not().isEmpty(),
   check('genre', 'please fill out genre of the movie').not().isEmpty(),
