@@ -12,6 +12,7 @@ const app = server.getInstance();
 app.use(cors());
 app.use(morgan('combined'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 import * as userRouter from './server/route/userRouter';
 import * as tagRouter from './server/route/tagRouter';
