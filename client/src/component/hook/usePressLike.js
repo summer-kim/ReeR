@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 export const usePressLike = ({
   loading = false,
   authUser,
-  _id = true,
+  id = true,
   likes,
   unlikes,
 }) => {
@@ -22,14 +22,13 @@ export const usePressLike = ({
 
   useEffect(() => {
     if (authUser && !loading) {
-      likes.some((like) => like.user === authUser._id) && setLiked(true);
+      likes.some((like) => like.user === authUser.id) && setLiked(true);
 
-      unlikes.some((unlike) => unlike.user === authUser._id) &&
-        setUnliked(true);
+      unlikes.some((unlike) => unlike.user === authUser.id) && setUnliked(true);
 
-      authUser.mybag.some((list) => list.toString() === _id) && setBag(true);
+      authUser.mybag.some((list) => list.toString() === id) && setBag(true);
     }
-  }, [_id]);
+  }, [id]);
 
   //when User click like heart button
   const onClickSet = (type) => {

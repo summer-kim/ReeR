@@ -3,14 +3,14 @@ import { TAG_UPDATE, TAG_ERROR } from './types';
 import { setAlert } from './alertAction';
 
 //get all contents
-export const addTag = ({ tagName, _id }) => async (dispatch) => {
+export const addTag = ({ tagName, id }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
   try {
-    const res = await axios.put(`/post/tags/${_id}`, { tagName }, config);
+    const res = await axios.put(`/post/tags/${id}`, { tagName }, config);
     dispatch({
       type: TAG_UPDATE,
       payload: res.data,

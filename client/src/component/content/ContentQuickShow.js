@@ -15,7 +15,7 @@ import logo from '../../img/logo.png';
 
 const ContentQuickShow = ({
   content: {
-    _id,
+    id,
     genre, //array
     movieName,
     img,
@@ -29,7 +29,7 @@ const ContentQuickShow = ({
   postReducer: { loading },
 }) => {
   const { Liked, Unliked, Bag, LikeNum, onClickSet } = usePressLike({
-    _id,
+    id,
     likes,
     unlikes,
     loading,
@@ -38,11 +38,11 @@ const ContentQuickShow = ({
 
   const onClick = (type, bool) => {
     onClickSet(type);
-    bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+    bool ? likeUnlikeBagUndo(type, id) : likeUnlikeBag(type, id);
   };
 
   return (
-    <Link to={`/post/${_id}`}>
+    <Link to={`/post/${id}`}>
       <div className='item'>
         <div className='item-img'>
           <img
@@ -102,7 +102,7 @@ const ContentQuickShow = ({
             </span>
             <span>
               {genre.map((gen, index) => (
-                <span key={index} className='genre'>
+                <span key={index + gen} className='genre'>
                   {index === genre.length - 1 ? gen : gen + '/'}
                 </span>
               ))}

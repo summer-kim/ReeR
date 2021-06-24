@@ -33,19 +33,19 @@ const ContentItem = ({
   }, []);
 
   const {
-    _id = '',
+    id = '',
     movieName = '',
     genre = [],
     summary = '',
     img = '',
-    user = '',
+    userId = '',
     likes = [],
     unlikes = [],
     tags = [],
   } = content;
 
   const { Liked, Unliked, Bag, onClickSet } = usePressLike({
-    _id,
+    id,
     likes,
     unlikes,
     loading,
@@ -54,7 +54,7 @@ const ContentItem = ({
 
   //when User click like heart button
   const onClick = (type, bool) => {
-    bool ? likeUnlikeBagUndo(type, _id) : likeUnlikeBag(type, _id);
+    bool ? likeUnlikeBagUndo(type, id) : likeUnlikeBag(type, id);
     onClickSet(type);
   };
 
@@ -135,26 +135,26 @@ const ContentItem = ({
                   <i className='fas fa-plus'></i>
                 </div>
                 {!authReducer.loading &&
-                authReducer.user &&
-                user === authReducer.user._id ? ( //Only user who created can see
-                  <Fragment>
-                    <Link className='trash' to={`/makepost/${_id}`}>
-                      <i class='fas fa-edit'></i>
-                    </Link>
-                    <div className='trash'>
-                      <i
-                        class='fas fa-trash-alt'
-                        onClick={() => onClickDelete(_id)}
-                      ></i>
-                    </div>
-                  </Fragment>
-                ) : undefined}
+                  authReducer.user &&
+                  userId === authReducer.user.id && ( //Only user who created can see
+                    <Fragment>
+                      <Link className='trash' to={`/makepost/${id}`}>
+                        <i className='fas fa-edit'></i>
+                      </Link>
+                      <div className='trash'>
+                        <i
+                          className='fas fa-trash-alt'
+                          onClick={() => onClickDelete(id)}
+                        ></i>
+                      </div>
+                    </Fragment>
+                  )}
               </div>
             </div>
           </div>
         </div>
       </section>
-      <TagSection tags={tags} _id={_id} />
+      <TagSection tags={tags} id={id} />
       <div id='space80'></div>
     </Fragment>
   );

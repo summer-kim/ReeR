@@ -33,8 +33,10 @@ export const loadUser = () => async (dispatch) => {
     });
   }
 };
-export const registerUser = ({ name, email, password }) => async (dispatch) => {
-  const body = JSON.stringify({ name, email, password });
+export const registerUser = ({ userName, email, password }) => async (
+  dispatch
+) => {
+  const body = JSON.stringify({ userName, email, password });
   try {
     const res = await axios.post('/user/register', body, config);
     localStorage.setItem('token', res.data.token);
@@ -45,11 +47,9 @@ export const registerUser = ({ name, email, password }) => async (dispatch) => {
     });
     dispatch(loadUser());
   } catch (err) {
-    const errors = err.response.data.errors;
-    if (Array.isArray(errors)) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'fail')));
-    } else if (errors) {
-      dispatch(setAlert(errors, 'fail'));
+    const error = err.response.data;
+    if (error.msg) {
+      dispatch(setAlert(error.msg, 'fail'));
     }
     dispatch({
       type: REGISTER_FAIL,

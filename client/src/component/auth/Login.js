@@ -15,7 +15,7 @@ const Login = ({ loginUser, isAuthenticated, registerUser, setAlert }) => {
     password: '',
   });
   const [registerData, setRegisterData] = useState({
-    name: '',
+    userName: '',
     email: '',
     password: '',
     password2: '',

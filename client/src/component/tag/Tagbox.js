@@ -26,8 +26,8 @@ const Tagbox = ({
 
   const onClickLike = (type, bool) => {
     bool
-      ? likeUnlikeTagUndo({ type, postid, tagid: tag._id })
-      : likeUnlikeTag({ type, postid, tagid: tag._id });
+      ? likeUnlikeTagUndo({ type, postid, tagid: tag.id })
+      : likeUnlikeTag({ type, postid, tagid: tag.id });
     onClickSet(type);
   };
 
@@ -56,12 +56,12 @@ const Tagbox = ({
             {tag.unlikes.length}
           </span>
         </span>
-        {authReducer.user && tag.user === authReducer.user._id ? (
+        {authReducer.user && tag.user === authReducer.user.id ? (
           <span
             className='trash'
-            onClick={() => removeTag({ postid, tagid: tag._id })}
+            onClick={() => removeTag({ postid, tagid: tag.id })}
           >
-            <i class='fas fa-trash-alt'></i>
+            <i className='fas fa-trash-alt'></i>
           </span>
         ) : undefined}
       </div>

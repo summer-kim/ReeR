@@ -92,27 +92,27 @@ const Makepost = ({
       const data = new FormData();
       data.append('movieName', movieName);
       data.append('summary', summary);
-      data.append('genre', genre);
+      data.append('genre', JSON.stringify(genre));
       data.append('img', img);
-      return createContentimg({ data, postid: EditMode && content._id });
+      return createContentimg({ data, postid: EditMode && content.id });
     }
-    createContent({ formData, postid: EditMode && content._id });
+    createContent({ formData, postid: EditMode && content.id });
   };
   return (
-    <section class='addPost' id='login'>
-      <div id='login-box' class='flex-container'>
-        <div class='intro'>
+    <section className='addPost' id='login'>
+      <div id='login-box' className='flex-container'>
+        <div className='intro'>
           <h2>{EditMode ? 'Edit Post' : 'Upload Post'}</h2>
-          <div class='bottom-line'></div>
-          <p class='parag'>
+          <div className='bottom-line'></div>
+          <p className='parag'>
             *You can put a image later
             <br />
             *You can attach a tag later
           </p>
         </div>
-        <div class='form'>
+        <div className='form'>
           <form onSubmit={(e) => onSubmit(e)}>
-            <div class='eachForm'>
+            <div className='eachForm'>
               <label htmlFor='movieName'>Movie/Series Title</label>
               <input
                 type='text'
@@ -138,7 +138,7 @@ const Makepost = ({
                 ))}
               </div>
             </div>
-            <div class='eachForm'>
+            <div className='eachForm'>
               <label htmlFor='summary'>Summary</label>
               <textarea
                 cols='30'
@@ -150,9 +150,9 @@ const Makepost = ({
                 onChange={(e) => onChange(e)}
               ></textarea>
             </div>
-            <div class='eachForm'>
+            <div className='eachForm'>
               <label htmlFor='img'>Image</label>
-              <span class='guide'>less than 3.14MB</span>
+              <span className='guide'>less than 3.14MB</span>
               {EditMode && content.img ? content.img : undefined}
               <input
                 type='file'
@@ -162,7 +162,7 @@ const Makepost = ({
                 }
               />
             </div>
-            <button class='btn-main' type='submit'>
+            <button className='btn-main' type='submit'>
               {EditMode ? 'Edit' : 'Post'}
             </button>
           </form>

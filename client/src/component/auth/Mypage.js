@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { logout } from '../../redux/action/authAction';
 import '../../css/mypage.css';
 
-const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
+const Mypage = ({ logout, user: { userName = '' }, isAuthenticated }) => {
   if (!isAuthenticated) {
     return <Redirect to='/' />;
   }
@@ -13,7 +13,7 @@ const Mypage = ({ logout, user: { name = null }, isAuthenticated }) => {
     <section id='mypage' className='m1 p1'>
       <h1 className='title welcome flex-container'>
         <i className='far fa-sun'></i>Welcome,{' '}
-        {name ? name.toUpperCase() : undefined}
+        {userName ? userName.toUpperCase() : undefined}
       </h1>
       <div className='bottom-line'></div>
       <div className='menus flex-container'>

@@ -65,7 +65,7 @@ export const createContent = ({ formData, postid = '' }) => async (
     if (postid) {
       body.postid = postid;
     }
-    const res = await axios.post('/post', body, config);
+    const res = await axios.post('/post/create', body, config);
 
     dispatch({
       type: CREATE_CONTENT,
@@ -112,6 +112,7 @@ export const createContentimg = ({ data, postid = '' }) => async (dispatch) => {
       )
     );
   } catch (err) {
+    console.log(err.response.data);
     dispatch({
       type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },

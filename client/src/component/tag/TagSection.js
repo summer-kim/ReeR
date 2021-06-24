@@ -8,7 +8,7 @@ import { setAlert } from '../../redux/action/alertAction';
 import { useDetectWidth } from '../hook/useDetectWidth';
 import Tagbox from './Tagbox';
 
-const TagSection = ({ tags, _id, setAlert, addTag }) => {
+const TagSection = ({ tags, id, setAlert, addTag }) => {
   const [tagName, setTag] = useState('');
   const InnerWidth = useDetectWidth();
 
@@ -19,7 +19,7 @@ const TagSection = ({ tags, _id, setAlert, addTag }) => {
     if (tagName.length > 60) {
       return setAlert('tagName should less than 60 letters', 'fail');
     }
-    addTag({ tagName, _id });
+    addTag({ tagName, id });
     setTag('');
 
     const inputBox = document.getElementById('inputBox');
@@ -34,7 +34,7 @@ const TagSection = ({ tags, _id, setAlert, addTag }) => {
       <div className='tagBox p1'>
         <div className={InnerWidth > 768 ? ' grid' : 'tagList'}>
           {tags.length > 0 ? (
-            tags.map((tag) => <Tagbox tag={tag} postid={_id} key={tag._id} />)
+            tags.map((tag) => <Tagbox tag={tag} postid={id} key={tag.id} />)
           ) : (
             <h4 className='parag'> No Tag founded </h4>
           )}

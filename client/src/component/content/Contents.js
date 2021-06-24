@@ -60,14 +60,14 @@ const Contents = ({
 
     switch (match.params.type) {
       case 'create':
-        return [...contents.filter((content) => content.user === user._id)];
+        return [...contents.filter((content) => content.user === user.id)];
       case 'bag':
         return [
-          ...contents.filter((content) => user.mybag.includes(content._id)),
+          ...contents.filter((content) => user.mybag.includes(content.id)),
         ];
       case 'liked':
         return [
-          ...contents.filter((content) => user.likes.includes(content._id)),
+          ...contents.filter((content) => user.likes.includes(content.id)),
         ];
       default:
         break;
@@ -230,7 +230,7 @@ const Contents = ({
             <Spinner />
           ) : FilteredContents.length > 0 ? (
             FilteredContents.map((content) => (
-              <ContentQuickShow key={content._id} content={content} />
+              <ContentQuickShow key={content.id} content={content} />
             ))
           ) : (
             <h4 className='parag'>No Content Created...</h4>

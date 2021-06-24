@@ -75,7 +75,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
             <Spinner />
           ) : sortByLikes(ContentArr).length > 0 ? (
             ContentArr.slice(0, 3).map((content) => (
-              <ContentQuickShow key={content._id} content={content} />
+              <ContentQuickShow key={content.id} content={content} />
             ))
           ) : (
             <h4 className='parag'>No Content found...</h4>

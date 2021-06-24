@@ -60,7 +60,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: state.contents.map((content) =>
-          content._id === payload.postid
+          content.id === payload.postid
             ? {
                 ...content,
                 likes: payload.likes,
@@ -76,7 +76,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: state.contents.map((content) =>
-          content._id === payload.postid
+          content.id === payload.postid
             ? {
                 ...content,
                 unlikes: payload.unlikes,
@@ -108,7 +108,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: state.contents.filter(
-          (content) => content._id.toString() !== payload
+          (content) => content.id.toString() !== payload
         ),
         content: [],
         posting: false,
