@@ -6,8 +6,8 @@ interface updatePostType {
   movieName?: string;
   summary?: string;
   genre?: GenreType[];
+  likes?: number[];
   id: number;
-  userId: number;
 }
 
 const INCLUDE_POST = {
@@ -18,11 +18,7 @@ const ORDER_DESC = {
 };
 
 //Post Data Functions
-export async function updatePostData({
-  id,
-  userId,
-  ...updateInfo
-}: updatePostType) {
+export async function updatePostData({ id, ...updateInfo }: updatePostType) {
   const keys = Object.keys(updateInfo) as (keyof PostType)[];
   return Post.update(updateInfo, {
     where: { id },

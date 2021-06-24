@@ -7,8 +7,8 @@ export interface PostType {
   summary: string;
   img?: string;
   genre: GenreType[];
-  likes?: UserType['id'][];
-  unlikes?: UserType['id'][];
+  likes: UserType['id'][];
+  unlikes: UserType['id'][];
 }
 export interface PostCreationAttributes extends Optional<PostType, 'id'> {}
 

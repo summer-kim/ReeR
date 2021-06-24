@@ -11,7 +11,7 @@ router.put('/tags/:id', auth, tagController.addTag);
 // @access   Private
 router.put('/tags/likes/:postid/:tagid', auth, async (req, res) => {
   const post = await Post.findById(req.params.postid);
-  const tag = post.tags.find((tag) => tag._id.toString() === req.params.tagid);
+  const tag = post.tags.find((tag) => tag.id.toString() === req.params.tagid);
   if (tag.likes.some((like) => like.user.toString() === req.user.id)) {
     return res.status(400).json({ msg: 'has already been Liked' });
   }
@@ -28,7 +28,7 @@ router.put('/tags/likes/:postid/:tagid', auth, async (req, res) => {
 // @access   Private
 router.put('/tags/unlikes/:postid/:tagid', auth, async (req, res) => {
   const post = await Post.findById(req.params.postid);
-  const tag = post.tags.find((tag) => tag._id.toString() === req.params.tagid);
+  const tag = post.tags.find((tag) => tag.id.toString() === req.params.tagid);
   if (tag.unlikes.some((unlike) => unlike.user.toString() === req.user.id)) {
     return res.status(400).json({ msg: 'has already been Unliked' });
   }
@@ -45,7 +45,7 @@ router.put('/tags/unlikes/:postid/:tagid', auth, async (req, res) => {
 // @access   Private
 router.put('/tags/likesBack/:postid/:tagid', auth, async (req, res) => {
   const post = await Post.findById(req.params.postid);
-  const tag = post.tags.find((tag) => tag._id.toString() === req.params.tagid);
+  const tag = post.tags.find((tag) => tag.id.toString() === req.params.tagid);
   if (!tag.likes.some((like) => like.user.toString() === req.user.id)) {
     return res.status(400).json({ msg: 'has not been Liked' });
   }
@@ -58,7 +58,7 @@ router.put('/tags/likesBack/:postid/:tagid', auth, async (req, res) => {
 // @access   Private
 router.put('/tags/unlikesBack/:postid/:tagid', auth, async (req, res) => {
   const post = await Post.findById(req.params.postid);
-  const tag = post.tags.find((tag) => tag._id.toString() === req.params.tagid);
+  const tag = post.tags.find((tag) => tag.id.toString() === req.params.tagid);
   if (!tag.unlikes.some((unlike) => unlike.user.toString() === req.user.id)) {
     return res.status(400).json({ msg: 'has not been Unliked' });
   }
@@ -74,7 +74,7 @@ router.put('/tags/unlikesBack/:postid/:tagid', auth, async (req, res) => {
 // @access   Private
 router.put('/tags/delete/:postid/:tagid', auth, async (req, res) => {
   const post = await Post.findById(req.params.postid);
-  const tag = post.tags.find((tag) => tag._id.toString() === req.params.tagid);
+  const tag = post.tags.find((tag) => tag.id.toString() === req.params.tagid);
   if (!tag) {
     return res.status(400).json({ msg: 'No tag matched' });
   }
@@ -82,7 +82,7 @@ router.put('/tags/delete/:postid/:tagid', auth, async (req, res) => {
     return res.status(400).json({ msg: 'only author can delete the tag' });
   }
   post.tags = post.tags.filter(
-    (eachTag) => eachTag._id.toString() !== req.params.tagid
+    (eachTag) => eachTag.id.toString() !== req.params.tagid
   );
   await post.save();
   res.json(post.tags);
