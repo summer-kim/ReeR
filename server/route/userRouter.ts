@@ -1,5 +1,5 @@
 import express from 'express';
-import checkAuth from '../middleware/auth';
+import isAuth from '../middleware/auth';
 import * as validate from '../middleware/validation';
 import * as authController from '../controller/userController';
 
@@ -9,14 +9,14 @@ router.post('/register', validate.validateSignup, authController.signUp);
 
 router.post('/login', validate.validateSignIn, authController.signIn);
 
-router.get('/me', checkAuth, authController.getMe);
+router.get('/me', isAuth, authController.getMe);
 
-router.put('/mybag/:postid', checkAuth, authController.addToMyBag);
+router.put('/mybag/:postid', isAuth, authController.addToMyBag);
 
-router.put('/mybagUndo/:postid', checkAuth, authController.removeFromMyBag);
+router.put('/mybagUndo/:postid', isAuth, authController.removeFromMyBag);
 
-router.put('/likes/:postid', checkAuth, authController.likePost);
+router.put('/likes/:postid', isAuth, authController.likePost);
 
-router.put('/likesUndo/:postid', checkAuth, authController.likePostUndo);
+router.put('/likesUndo/:postid', isAuth, authController.likePostUndo);
 
 export default router;

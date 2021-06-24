@@ -2,8 +2,11 @@ import { RequestTypeCustomed } from '../types/requestType';
 import { Response } from 'express';
 import * as postData from '../data/postDataLogic';
 import { s3, BucketName } from '../db/s3storage';
+import { alreadyAdded } from '../data/userDataLogic';
 
 const POST_NOT_FOUND = { msg: 'Post not found' };
+const ALREADY_ADDED = { msg: 'Post has been already added' };
+const NEVER_BEEN_ADDED = { msg: "Post hasn't been added yet" };
 
 export async function createPost(req: RequestTypeCustomed, res: Response) {
   const post = await postData.createPostData({
@@ -105,14 +108,62 @@ export async function likePost(req: RequestTypeCustomed, res: Response) {
   if (!post) {
     return res.status(404).json(POST_NOT_FOUND);
   }
-  if (post.likes.some((userId) => userId === req.userId)) {
-    return res.status(400).json({ msg: 'Post already liked' });
+  const existed = alreadyAdded(post.likes, req.userId!);
+  if (existed) {
+    return res.status(400).json(ALREADY_ADDED);
   }
   const [num, postUpdated] = await postData.updatePostData({
     id,
     likes: [req.userId!, ...post.likes],
   });
   return res.json(postUpdated[0].likes);
+}
+
+export async function likePostUndo(req: RequestTypeCustomed, res: Response) {
+  const id = Number(req.params.id);
+  const post = await postData.getPostById(id);
+  if (!post) {
+    return res.status(404).json(POST_NOT_FOUND);
+  }
+  const existed = alreadyAdded(post.likes, req.userId!);
+  if (!existed) {
+    return res.status(400).json(NEVER_BEEN_ADDED);
+  }
+  const likes = postData.removeFromArray([...post.likes], req.userId!);
+  const [num, postUpdated] = await postData.updatePostData({ id, likes });
+  return res.json(postUpdated[0].likes);
+}
+
+export async function unlikePost(req: RequestTypeCustomed, res: Response) {
+  const id = Number(req.params.id);
+  const post = await postData.getPostById(id);
+  if (!post) {
+    return res.status(404).json(POST_NOT_FOUND);
+  }
+  const existed = alreadyAdded(post.unlikes, req.userId!);
+  if (existed) {
+    return res.status(400).json(ALREADY_ADDED);
+  }
+  const [num, postUpdated] = await postData.updatePostData({
+    id,
+    unlikes: [req.userId!, ...post.unlikes],
+  });
+  return res.json(postUpdated[0].unlikes);
+}
+
+export async function unlikePostUndo(req: RequestTypeCustomed, res: Response) {
+  const id = Number(req.params.id);
+  const post = await postData.getPostById(id);
+  if (!post) {
+    return res.status(404).json(POST_NOT_FOUND);
+  }
+  const existed = alreadyAdded(post.unlikes, req.userId!);
+  if (!existed) {
+    return res.status(400).json(NEVER_BEEN_ADDED);
+  }
+  const unlikes = postData.removeFromArray([...post.unlikes], req.userId!);
+  const [num, postUpdated] = await postData.updatePostData({ id, unlikes });
+  return res.json(postUpdated[0].unlikes);
 }
 //update post with img
 // if (postid) {

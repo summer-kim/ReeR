@@ -8,16 +8,15 @@ export async function signUp(req: Request, res: Response) {
   const { email, password } = req.body;
   const userExisted = await userData.findByEmail(email);
   if (userExisted) {
-    return res.status(400).json({ errors: 'User already exists' });
+    return res.status(409).json({ msg: 'User already exists' });
   }
   const hashedPassword = await bcrypt.hash(password, config.bcrypt.salt);
   const userEmail = (await userData.createUser({
+    ...req.body,
     password: hashedPassword,
     mybag: [],
     likes: [],
-    ...req.body,
   })) as string;
-
   const token = await userData.createJWTToken(userEmail);
   res.status(201).json({ token });
 }
@@ -32,8 +31,7 @@ export async function signIn(req: Request, res: Response) {
   if (!passwordIsMatched) {
     return res.status(401).json({ msg: 'Invalid user or password' });
   }
-
-  const token = await userData.createJWTToken(user.email!);
+  const token = await userData.createJWTToken(user.email);
   res.status(200).json({ token });
 }
 
@@ -77,15 +75,20 @@ export async function removeFromMyBag(req: RequestTypeCustomed, res: Response) {
 
 export async function likePost(req: RequestTypeCustomed, res: Response) {
   const postId = Number(req.params.postid);
+  console.log(postId);
   const user = await userData.findById(req.userId!);
+  console.log(1, user);
   if (!user) {
     return res.status(401).json({ msg: 'Invalid user or password' });
   }
   const existed = userData.alreadyAdded(user.likes, postId);
+  console.log(2, existed);
   if (existed) {
     return res.status(404).json({ msg: 'Already add this content' });
   }
   await userData.updateArrayData(req.userId!, postId, 'likes', 'append');
+  console.log(3, 's');
+
   await user.reload();
   res.status(201).json(user.likes);
 }

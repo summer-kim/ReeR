@@ -7,6 +7,7 @@ interface updatePostType {
   summary?: string;
   genre?: GenreType[];
   likes?: number[];
+  unlikes?: number[];
   id: number;
 }
 
@@ -37,4 +38,10 @@ export async function getAll() {
 
 export async function getPostById(id: number) {
   return Post.findByPk(id);
+}
+
+export function removeFromArray(array: number[], userId: number): number[] {
+  const index = array.indexOf(userId);
+  array.splice(index, 1);
+  return array;
 }
