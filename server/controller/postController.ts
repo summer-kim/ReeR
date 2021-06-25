@@ -7,10 +7,13 @@ import { alreadyAdded } from '../data/userDataLogic';
 const POST_NOT_FOUND = { msg: 'Post not found' };
 const ALREADY_ADDED = { msg: 'Post has been already added' };
 const NEVER_BEEN_ADDED = { msg: "Post hasn't been added yet" };
+const S3_UPLOAD_FAIL = { msg: 'upload fail' };
 
 export async function createPost(req: RequestTypeCustomed, res: Response) {
+  const genre = JSON.parse(req.body.genre);
   const post = await postData.createPostData({
     ...req.body,
+    genre,
     likes: [],
     unlikes: [],
     userId: req.userId!,
@@ -19,18 +22,14 @@ export async function createPost(req: RequestTypeCustomed, res: Response) {
 }
 
 export async function createPostImg(req: RequestTypeCustomed, res: Response) {
-  const params = {
-    Bucket: BucketName,
-    Key: `uploads/${req.file?.originalname}`,
-    Body: req.file?.buffer,
-  };
+  const key = `uploads/${req.file?.originalname}`;
+  const params = createParams(key, req.file?.buffer);
   s3.upload(params, async (err: any, data: any) => {
     if (err) {
       console.log(err);
-      return res.status(404).json({ msg: 'upload fail' });
+      return res.status(404).json(S3_UPLOAD_FAIL);
     }
     if (data) {
-      console.log('Upload Success', data.Location);
       const genre = JSON.parse(req.body.genre);
       const post = await postData.createPostData({
         ...req.body,
@@ -54,11 +53,51 @@ export async function updatePost(req: RequestTypeCustomed, res: Response) {
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
   }
+  const genre = JSON.parse(req.body.genre);
   const [num, data] = await postData.updatePostData({
     ...req.body,
+    genre,
     id,
   });
   res.status(201).json(data[0]);
+}
+
+export async function updatePostImg(req: RequestTypeCustomed, res: Response) {
+  const id = Number(req.params.id);
+  const post = await postData.getPostById(id);
+  if (!post) {
+    return res.status(404).json(POST_NOT_FOUND);
+  }
+  if (post.userId !== req.userId) {
+    return res.sendStatus(403);
+  }
+  if (post.img) {
+    //delete previous img
+    s3.deleteObject({ Bucket: BucketName, Key: post.img }, (err, data) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+  const key = `uploads/${req.file?.originalname}`;
+  const params = createParams(key, req.file?.buffer);
+  console.log(params);
+  s3.upload(params, async (err: any, data: any) => {
+    if (err) {
+      console.log(err);
+      return res.status(404).json(S3_UPLOAD_FAIL);
+    }
+    if (data) {
+      const genre = JSON.parse(req.body.genre);
+      const [num, data] = await postData.updatePostData({
+        ...req.body,
+        genre,
+        img: req.file?.originalname,
+        id,
+      });
+      res.status(201).json(data[0]);
+    }
+  });
 }
 
 export async function getAllPosts(req: RequestTypeCustomed, res: Response) {
@@ -165,43 +204,11 @@ export async function unlikePostUndo(req: RequestTypeCustomed, res: Response) {
   const [num, postUpdated] = await postData.updatePostData({ id, unlikes });
   return res.json(postUpdated[0].unlikes);
 }
-//update post with img
-// if (postid) {
-//   const old_post = await Post.findById(postid);
-//   if (old_post.img) {
-//     //Delete image of old post
-//     const oldparams = {
-//       BucketName,
-//       Key: `uploads/${old_post.img}`,
-//     };
 
-//     s3.deleteObject(oldparams, (error, data) => {
-//       if (error) {
-//         return res.status(400).json({ msg: 'delete img fail' });
-//       }
-//     });
-//   }
-//   const post = await Post.findOneAndUpdate(
-//     { id: postid },
-//     {
-//       $set: {
-//         movieName,
-//         summary,
-//         genre: genre.split(','),
-//         img: req.file.originalname,
-//       },
-//     },
-//     { new: true }
-//   );
-//   const params = {
-//     BucketName,
-//     Key: `uploads/${req.file.originalname}`,
-//     Body: req.file.buffer,
-//   };
-//   s3.upload(params, (err, data) => {
-//     if (err) {
-//       return res.status(400).json({ msg: 'upload fail' });
-//     }
-//   });
-//   return res.json(post);
-// }
+function createParams(Key: string, Body: Buffer | undefined) {
+  return {
+    Bucket: BucketName,
+    Key,
+    Body,
+  };
+}

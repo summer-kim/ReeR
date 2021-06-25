@@ -18,8 +18,7 @@ const Makepost = ({
   createContentimg,
   postReducer: { posting, loading, content },
 }) => {
-  const EditMode = match.params.postid === 'post' ? false : true;
-
+  const [EditMode, setEditMode] = useState(false);
   const [formData, setData] = useState({
     movieName: '',
     summary: '',
@@ -27,6 +26,11 @@ const Makepost = ({
     genre: [],
   });
 
+  useEffect(() => {
+    if (match.params.postid !== 'post') {
+      setEditMode(true);
+    }
+  }, []);
   useEffect(() => {
     if (EditMode) {
       getContent(match.params.postid);
@@ -36,7 +40,7 @@ const Makepost = ({
         genre: loading || !content.genre ? '' : content.genre,
       });
     }
-  }, [loading]);
+  }, [loading, EditMode]);
 
   if (posting) {
     return (

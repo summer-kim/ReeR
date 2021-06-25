@@ -16,6 +16,7 @@ import {
   addToMyBag,
   addToMyBagUndo,
 } from './authAction';
+import { AxiosResponse } from 'axios';
 
 //get all contents
 export const getContents = () => async (dispatch) => {
@@ -61,11 +62,12 @@ export const createContent = ({ formData, postid = '' }) => async (
     },
   };
   try {
-    const body = formData;
+    let res;
     if (postid) {
-      body.postid = postid;
+      res = await axios.put(`/post/update/${postid}`, formData, config);
+    } else {
+      res = await axios.post('/post/create', formData, config);
     }
-    const res = await axios.post('/post/create', body, config);
 
     dispatch({
       type: CREATE_CONTENT,
@@ -94,10 +96,12 @@ export const createContentimg = ({ data, postid = '' }) => async (dispatch) => {
     },
   };
   try {
+    let res;
     if (postid) {
-      data.append('postid', postid);
+      res = await axios.put(`/post/updateImg/${postid}`, data, config);
+    } else {
+      res = await axios.post('/post/createImg', data, config);
     }
-    const res = await axios.post('/post/img', data, config);
 
     dispatch({
       type: CREATE_CONTENT,

@@ -8,9 +8,17 @@ const router = express.Router();
 
 router.post('/create', isAuth, validatePost, postContr.createPost);
 
-router.post('/img', isAuth, uploadImg, validatePost, postContr.createPostImg);
+router.post(
+  '/createImg',
+  isAuth,
+  uploadImg,
+  validatePost,
+  postContr.createPostImg
+);
 
 router.put('/update/:id', isAuth, postContr.updatePost);
+
+router.put('/updateImg/:id', isAuth, uploadImg, postContr.updatePostImg);
 
 router.get('/', postContr.getAllPosts);
 
