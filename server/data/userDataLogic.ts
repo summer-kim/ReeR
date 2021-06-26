@@ -27,7 +27,7 @@ export function alreadyAdded(array: number[], id: number) {
   return array.some((element) => element === id);
 }
 
-export async function updateArrayData(
+export async function updateUserArray(
   userId: number,
   postId: number,
   column: string,

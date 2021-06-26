@@ -3,11 +3,7 @@ import { Response } from 'express';
 import * as postData from '../data/postDataLogic';
 import { s3, BucketName } from '../db/s3storage';
 import { alreadyAdded } from '../data/userDataLogic';
-
-const POST_NOT_FOUND = { msg: 'Post not found' };
-const ALREADY_ADDED = { msg: 'Post has been already added' };
-const NEVER_BEEN_ADDED = { msg: "Post hasn't been added yet" };
-const S3_UPLOAD_FAIL = { msg: 'upload fail' };
+import * as errMsg from '../types/errorMessage';
 
 export async function createPost(req: RequestTypeCustomed, res: Response) {
   const post = await postData.createPostData({
@@ -25,7 +21,7 @@ export async function createPostImg(req: RequestTypeCustomed, res: Response) {
   s3.upload(params, async (err: any, data: any) => {
     if (err) {
       console.log(err);
-      return res.status(404).json(S3_UPLOAD_FAIL);
+      return res.status(404).json(errMsg.S3_UPLOAD_FAIL);
     }
     if (data) {
       const genre = JSON.parse(req.body.genre);
@@ -46,7 +42,7 @@ export async function updatePost(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
@@ -64,7 +60,7 @@ export async function updatePostImg(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
@@ -83,7 +79,7 @@ export async function updatePostImg(req: RequestTypeCustomed, res: Response) {
   s3.upload(params, async (err: any, data: any) => {
     if (err) {
       console.log(err);
-      return res.status(404).json(S3_UPLOAD_FAIL);
+      return res.status(404).json(errMsg.S3_UPLOAD_FAIL);
     }
     if (data) {
       const genre = JSON.parse(req.body.genre);
@@ -109,7 +105,7 @@ export async function getPost(req: RequestTypeCustomed, res: Response) {
   if (post) {
     return res.status(200).json(post);
   } else {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
 }
 
@@ -117,7 +113,7 @@ export async function deletePost(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
@@ -143,11 +139,11 @@ export async function likePost(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   const existed = alreadyAdded(post.likes, req.userId!);
   if (existed) {
-    return res.status(400).json(ALREADY_ADDED);
+    return res.status(404).json(errMsg.ALREADY_ADDED('Post'));
   }
   const [num, postUpdated] = await postData.updatePostData({
     id,
@@ -160,11 +156,11 @@ export async function likePostUndo(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   const existed = alreadyAdded(post.likes, req.userId!);
   if (!existed) {
-    return res.status(400).json(NEVER_BEEN_ADDED);
+    return res.status(404).json(errMsg.NEVER_BEEN_ADDED('Post'));
   }
   const likes = postData.removeFromArray([...post.likes], req.userId!);
   const [num, postUpdated] = await postData.updatePostData({ id, likes });
@@ -175,11 +171,11 @@ export async function unlikePost(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   const existed = alreadyAdded(post.unlikes, req.userId!);
   if (existed) {
-    return res.status(400).json(ALREADY_ADDED);
+    return res.status(404).json(errMsg.ALREADY_ADDED('Post'));
   }
   const [num, postUpdated] = await postData.updatePostData({
     id,
@@ -192,11 +188,11 @@ export async function unlikePostUndo(req: RequestTypeCustomed, res: Response) {
   const id = Number(req.params.id);
   const post = await postData.getPostById(id);
   if (!post) {
-    return res.status(404).json(POST_NOT_FOUND);
+    return res.status(404).json(errMsg.NOT_FOUND('Post'));
   }
   const existed = alreadyAdded(post.unlikes, req.userId!);
   if (!existed) {
-    return res.status(400).json(NEVER_BEEN_ADDED);
+    return res.status(404).json(errMsg.NEVER_BEEN_ADDED('Post'));
   }
   const unlikes = postData.removeFromArray([...post.unlikes], req.userId!);
   const [num, postUpdated] = await postData.updatePostData({ id, unlikes });

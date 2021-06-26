@@ -1,9 +1,7 @@
 import { OrderItem } from 'sequelize/types';
-import SQ from 'sequelize';
 import Post from '../model/postDB';
 import Tag from '../model/tagDB';
 import { GenreType, PostType } from '../types/modelType';
-const Sequelize = SQ.Sequelize;
 
 interface updatePostType {
   movieName?: string;
