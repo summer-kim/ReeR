@@ -1,6 +1,7 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../db/database';
 import { PostType, PostCreationAttributes } from '../types/modelType';
+import Tag from './tagDB';
 import User from './userDB';
 
 interface PostInstance
@@ -44,5 +45,5 @@ const Post = sequelize.define<PostInstance>(
   { timestamps: true }
 );
 Post.belongsTo(User);
-
+Post.hasMany(Tag, { foreignKey: 'postId' });
 export default Post;

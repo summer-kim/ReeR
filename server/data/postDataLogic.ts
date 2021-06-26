@@ -1,6 +1,9 @@
 import { OrderItem } from 'sequelize/types';
+import SQ from 'sequelize';
 import Post from '../model/postDB';
+import Tag from '../model/tagDB';
 import { GenreType, PostType } from '../types/modelType';
+const Sequelize = SQ.Sequelize;
 
 interface updatePostType {
   movieName?: string;
@@ -11,8 +14,12 @@ interface updatePostType {
   id: number;
 }
 
-const INCLUDE_POST = {
-  attributes: ['id', 'genre', 'summary', 'createdAt'],
+const INCLUDE_TAG = {
+  attributes: ['id', 'movieName', 'genre', 'summary', 'createdAt', 'userId'],
+  include: {
+    model: Tag,
+    attributes: ['tagName', 'userId', 'likes', 'unlikes'],
+  },
 };
 const ORDER_DESC = {
   order: [['createdAt', 'DESC']] as OrderItem[],
@@ -33,11 +40,11 @@ export async function createPostData(postInfo: PostType) {
 }
 
 export async function getAll() {
-  return Post.findAll(ORDER_DESC);
+  return Post.findAll({ ...INCLUDE_TAG, ...ORDER_DESC });
 }
 
 export async function getPostById(id: number) {
-  return Post.findByPk(id);
+  return Post.findByPk(id, { ...INCLUDE_TAG });
 }
 
 export function removeFromArray(array: number[], userId: number): number[] {

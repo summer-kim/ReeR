@@ -20,7 +20,7 @@ import * as postRouter from './server/route/postRouter';
 
 app.use('/user', userRouter.default);
 app.use('/post', postRouter.default);
-//app.use('/post', tagRouter.default);
+app.use('/tag', tagRouter.default);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   console.error(error);

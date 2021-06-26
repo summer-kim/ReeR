@@ -10,10 +10,8 @@ const NEVER_BEEN_ADDED = { msg: "Post hasn't been added yet" };
 const S3_UPLOAD_FAIL = { msg: 'upload fail' };
 
 export async function createPost(req: RequestTypeCustomed, res: Response) {
-  const genre = JSON.parse(req.body.genre);
   const post = await postData.createPostData({
     ...req.body,
-    genre,
     likes: [],
     unlikes: [],
     userId: req.userId!,
@@ -53,10 +51,10 @@ export async function updatePost(req: RequestTypeCustomed, res: Response) {
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
   }
-  const genre = JSON.parse(req.body.genre);
+  console.log(req.body.genre);
+  console.log(typeof req.body.genre);
   const [num, data] = await postData.updatePostData({
     ...req.body,
-    genre,
     id,
   });
   res.status(201).json(data[0]);

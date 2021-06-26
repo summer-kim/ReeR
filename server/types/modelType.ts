@@ -22,6 +22,16 @@ export interface UserType {
 }
 export interface UserCreationAttributes extends Optional<UserType, 'id'> {}
 
+export interface TagType {
+  id: number;
+  tagName: string;
+  likes: UserType['id'][];
+  unlikes: UserType['id'][];
+  userId: UserType['id'];
+  postId: PostType['id'];
+}
+export interface TagCreationAttributes extends Optional<TagType, 'id'> {}
+
 const GenreObject = {
   SF: 'SF',
   Fantasy: 'Fantasy',
