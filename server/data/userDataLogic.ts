@@ -20,7 +20,7 @@ export async function findByEmail(email: string) {
 }
 
 export async function findById(userId: number) {
-  return User.findByPk(userId);
+  return User.findByPk(userId, { attributes: { exclude: ['password'] } });
 }
 
 export function alreadyAdded(array: number[], id: number) {
