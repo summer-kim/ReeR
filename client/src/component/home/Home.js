@@ -14,14 +14,23 @@ import Spinner from '../template/spinner';
 
 const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   const [ContentArr, setContentArr] = useState([]);
+  const [TriggeredOnce, setTriggeredOnce] = useState(false);
   useEffect(() => {
     getContents();
-    setContentArr(contents);
-  }, [loading]);
+  }, []);
 
   useEffect(() => {
-    init();
-  }, []);
+    if (!loading && contents.length > 0) {
+      setContentArr(sortByLikes(contents));
+    }
+  }, [loading, contents.length]);
+
+  useEffect(() => {
+    if (!TriggeredOnce) {
+      init();
+      setTriggeredOnce(true);
+    }
+  }, [TriggeredOnce]);
 
   const init = () => {
     const txtElement = document.querySelector('.txt-type');
@@ -32,7 +41,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
   };
 
   const sortByLikes = (array) => {
-    return array.sort((a, b) => b.likes.length - a.likes.length);
+    return array && array.sort((a, b) => b.likes.length - a.likes.length);
   };
 
   const InnerWidth = useDetectWidth();
@@ -73,7 +82,7 @@ const Home = ({ getContents, postReducer: { contents = [], loading } }) => {
         <div id='main2-content' className='grid'>
           {loading ? (
             <Spinner />
-          ) : sortByLikes(ContentArr).length > 0 ? (
+          ) : ContentArr.length > 0 ? (
             ContentArr.slice(0, 3).map((content) => (
               <ContentQuickShow key={content.id} content={content} />
             ))

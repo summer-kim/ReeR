@@ -17,6 +17,7 @@ import TagSection from '../tag/TagSection';
 
 import logo from '../../img/logo.png';
 import '../../css/contentItem.css';
+import { setAlert } from '../../redux/action/alertAction';
 
 const ContentItem = ({
   getContent,
@@ -27,10 +28,18 @@ const ContentItem = ({
   history,
   likeUnlikeBag,
   likeUnlikeBagUndo,
+  setAlert,
 }) => {
   useEffect(() => {
-    getContent(match.params.postid);
-  }, []);
+    const { isAuthenticated } = authReducer;
+    console.log(isAuthenticated);
+    if (isAuthenticated) {
+      getContent(match.params.postid);
+    } else {
+      console.log(1);
+      setAlert('You need to Login first', 'fail', 3500);
+    }
+  }, [authReducer.isAuthenticated]);
 
   const {
     id = '',
@@ -166,6 +175,7 @@ ContentItem.propTypes = {
   authReducer: PropTypes.object.isRequired,
   likeUnlikeBag: PropTypes.func.isRequired,
   likeUnlikeBagUndo: PropTypes.func.isRequired,
+  setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   postReducer: state.postReducer,
@@ -176,4 +186,5 @@ export default connect(mapStateToProps, {
   deleteContent,
   likeUnlikeBag,
   likeUnlikeBagUndo,
+  setAlert,
 })(ContentItem);

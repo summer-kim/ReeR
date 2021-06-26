@@ -19,17 +19,30 @@ export const usePressLike = ({
     like: likes.length,
     unlike: unlikes.length,
   });
-
   useEffect(() => {
     if (authUser && !loading) {
-      likes.some((like) => like.user === authUser.id) && setLiked(true);
-
-      unlikes.some((unlike) => unlike.user === authUser.id) && setUnliked(true);
-
-      authUser.mybag.some((list) => list.toString() === id) && setBag(true);
+      const existed = someInArray(authUser.mybag, id);
+      if (existed) setBag(true);
     }
-  }, [id]);
+  }, [authUser && authUser.mybag && authUser.mybag.length, loading]);
 
+  useEffect(() => {
+    if (!loading && authUser) {
+      const existed = someInArray(likes, authUser.id);
+      if (existed) setLiked(true);
+    }
+  }, [likes.length, loading, authUser]);
+
+  useEffect(() => {
+    if (!loading && authUser) {
+      const existed = someInArray(unlikes, authUser.id);
+      if (existed) setUnliked(true);
+    }
+  }, [unlikes.length, loading, authUser]);
+
+  function someInArray(array, target) {
+    return array.some((element) => element === target);
+  }
   //when User click like heart button
   const onClickSet = (type) => {
     switch (type) {

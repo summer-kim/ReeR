@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { TAG_UPDATE, TAG_ERROR } from './types';
+import {
+  TAG_ERROR,
+  TAG_ADDED,
+  TAG_REMOVED,
+  TAG_LIKES,
+  TAG_UNLIKES,
+} from './types';
 import { setAlert } from './alertAction';
 
 //get all contents
@@ -10,9 +16,9 @@ export const addTag = ({ tagName, id }) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.put(`/post/tags/${id}`, { tagName }, config);
+    const res = await axios.put(`/tag/create/${id}`, { tagName }, config);
     dispatch({
-      type: TAG_UPDATE,
+      type: TAG_ADDED,
       payload: res.data,
     });
     dispatch(setAlert('Tag has successfully added', 'success'));
@@ -23,12 +29,12 @@ export const addTag = ({ tagName, id }) => async (dispatch) => {
     });
   }
 };
-export const removeTag = ({ postid, tagid }) => async (dispatch) => {
+export const removeTag = (tagid) => async (dispatch) => {
   try {
-    const res = await axios.put(`/post/tags/delete/${postid}/${tagid}`);
+    await axios.put(`/tag/delete/${tagid}`);
     dispatch({
-      type: TAG_UPDATE,
-      payload: res.data,
+      type: TAG_REMOVED,
+      payload: { tagid },
     });
     dispatch(setAlert('Tag has successfully removed', 'success'));
   } catch (err) {
@@ -38,12 +44,15 @@ export const removeTag = ({ postid, tagid }) => async (dispatch) => {
     });
   }
 };
-export const likeUnlikeTag = ({ type, postid, tagid }) => async (dispatch) => {
+export const likeTag = ({ undo, tagid }) => async (dispatch) => {
   try {
-    const res = await axios.put(`/post/tags/${type}s/${postid}/${tagid}`);
+    console.log('tagid', tagid);
+    const res = await axios.put(
+      `/tag/${undo ? 'likesBack' : 'likes'}/${tagid}`
+    );
     dispatch({
-      type: TAG_UPDATE,
-      payload: res.data,
+      type: TAG_LIKES,
+      payload: { likes: res.data, tagid },
     });
   } catch (err) {
     dispatch({
@@ -53,14 +62,14 @@ export const likeUnlikeTag = ({ type, postid, tagid }) => async (dispatch) => {
   }
 };
 
-export const likeUnlikeTagUndo = ({ type, postid, tagid }) => async (
-  dispatch
-) => {
+export const unlikeTag = ({ undo, tagid }) => async (dispatch) => {
   try {
-    const res = await axios.put(`/post/tags/${type}sBack/${postid}/${tagid}`);
+    const res = await axios.put(
+      `/tag/${undo ? 'unlikesBack' : 'unlikes'}/${tagid}`
+    );
     dispatch({
-      type: TAG_UPDATE,
-      payload: res.data,
+      type: TAG_UNLIKES,
+      payload: { unlikes: res.data, tagid },
     });
   } catch (err) {
     dispatch({

@@ -2,9 +2,9 @@ import { Fragment } from 'react';
 
 export const sortAndLimitTag = (tags) => {
   //sort tags by number of likes
-  const tagsSorted = [];
+  let tagsSorted = [];
   if (tags) {
-    tags.sort((a, b) => {
+    tagsSorted = tags.sort((a, b) => {
       if (a.likes.length < b.likes.length) {
         return 1;
       }
@@ -21,11 +21,15 @@ export const sortAndLimitTag = (tags) => {
   const restNumberedArr = Array(3 - tagsSorted.length).fill(0);
   return (
     <Fragment>
-      {tagsSorted.map((tag) => (
-        <span className='tag'>#{tag.tagName}</span>
+      {tagsSorted.map((tag, i) => (
+        <span key={tag + i} className='tag'>
+          #{tag.tagName}
+        </span>
       ))}
-      {restNumberedArr.map((i) => (
-        <span className='tag'>#No Tag! Make your own tag</span>
+      {restNumberedArr.map((a, index) => (
+        <span key={index} className='tag'>
+          #No Tag! Make your own tag
+        </span>
       ))}
     </Fragment>
   );

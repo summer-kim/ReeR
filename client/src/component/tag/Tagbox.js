@@ -1,34 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {
-  removeTag,
-  likeUnlikeTag,
-  likeUnlikeTagUndo,
-} from '../../redux/action/tagAction';
+import { removeTag, likeTag, unlikeTag } from '../../redux/action/tagAction';
 import '../../css/tagbox.css';
 
 import { usePressLike } from '../hook/usePressLike'; //custom hook for interaction with like, unlike, bag button
 
-const Tagbox = ({
-  tag,
-  postid,
-  authReducer,
-  removeTag,
-  likeUnlikeTag,
-  likeUnlikeTagUndo,
-}) => {
-  const { Liked, Unliked, onClickSet } = usePressLike({
+const Tagbox = ({ tag, authReducer, removeTag, likeTag, unlikeTag }) => {
+  // const [TagLikesNum, setTagLikesNum] = useState(0);
+  // const [TagUnlikesNum, setTagUnlikesNum] = useState(0);
+  const { Liked, Unliked, onClickSet, LikeNum } = usePressLike({
     likes: tag.likes,
     unlikes: tag.unlikes,
     authUser: authReducer.user,
   });
 
-  const onClickLike = (type, bool) => {
-    bool
-      ? likeUnlikeTagUndo({ type, postid, tagid: tag.id })
-      : likeUnlikeTag({ type, postid, tagid: tag.id });
-    onClickSet(type);
+  const onClickLike = ({ undo, unlike }) => {
+    unlike
+      ? unlikeTag({ undo, tagid: tag.id })
+      : likeTag({ undo, tagid: tag.id });
+    onClickSet(unlike ? 'unlike' : 'like');
   };
 
   return (
@@ -42,25 +33,22 @@ const Tagbox = ({
           <span className='interest'>
             <i
               className={Liked ? 'fas fa-heart clicked' : 'fas fa-heart'}
-              onClick={() => onClickLike('like', Liked)}
+              onClick={() => onClickLike({ undo: Liked, unlike: false })}
             ></i>
-            {tag.likes.length}
+            {LikeNum.like}
           </span>
           <span className='interest'>
             <i
               className={
                 Unliked ? 'fas fa-heart-broken clicked' : 'fas fa-heart-broken'
               }
-              onClick={() => onClickLike('unlike', Unliked)}
+              onClick={() => onClickLike({ undo: Unliked, unlike: true })}
             ></i>
-            {tag.unlikes.length}
+            {LikeNum.unlike}
           </span>
         </span>
-        {authReducer.user && tag.user === authReducer.user.id ? (
-          <span
-            className='trash'
-            onClick={() => removeTag({ postid, tagid: tag.id })}
-          >
+        {authReducer.user && tag.userId === authReducer.user.id ? (
+          <span className='trash' onClick={() => removeTag(tag.id)}>
             <i className='fas fa-trash-alt'></i>
           </span>
         ) : undefined}
@@ -71,16 +59,16 @@ const Tagbox = ({
 Tagbox.propTypes = {
   authReducer: PropTypes.object.isRequired,
   tag: PropTypes.object.isRequired,
-  postid: PropTypes.string.isRequired,
+  postid: PropTypes.number.isRequired,
   removeTag: PropTypes.func.isRequired,
-  likeUnlikeTag: PropTypes.func.isRequired,
-  likeUnlikeTagUndo: PropTypes.func.isRequired,
+  likeTag: PropTypes.func.isRequired,
+  unlikeTag: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
   authReducer: state.authReducer,
 });
 export default connect(mapStateToProps, {
   removeTag,
-  likeUnlikeTag,
-  likeUnlikeTagUndo,
+  likeTag,
+  unlikeTag,
 })(Tagbox);

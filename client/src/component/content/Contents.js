@@ -57,7 +57,6 @@ const Contents = ({
     if (match.params.type === 'all') {
       return contents;
     }
-
     switch (match.params.type) {
       case 'create':
         return [...contents.filter((content) => content.user === user.id)];
@@ -83,13 +82,15 @@ const Contents = ({
 
   //put contents from Server Data to ContentsInit
   useEffect(() => {
-    if (!loading) {
-      const arrayObj = getArray(contents).sort(
-        (a, b) => new Date(b.date) - new Date(a.date)
-      );
-      setContentsInit(arrayObj);
+    if (contents.length > 0) {
+      setContentsInit(getArray(contents));
     }
-  }, [content]);
+  }, [
+    contents.length,
+    content,
+    match.params.type === 'bag' && user.mybag.length,
+    match.params.type === 'liked' && user.likes.length,
+  ]);
 
   //if ContentsInit is changed when moved to other pages and so on
   useEffect(() => {

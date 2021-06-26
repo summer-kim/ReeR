@@ -7,7 +7,10 @@ import {
   LIKE_UPDATE,
   UNLIKE_UPDATE,
   LIKE_ERROR,
-  TAG_UPDATE,
+  TAG_ADDED,
+  TAG_REMOVED,
+  TAG_LIKES,
+  TAG_UNLIKES,
   TAG_ERROR,
   DELETE_CONTENT,
 } from '../action/types';
@@ -97,10 +100,48 @@ function postReducer(state = initialState, action) {
         posting: false,
         loading: false,
       };
-    case TAG_UPDATE:
+    case TAG_ADDED:
       return {
         ...state,
-        content: { ...state.content, tags: payload },
+        content: { ...state.content, tags: [payload, ...state.content.tags] },
+        posting: false,
+        loading: false,
+      };
+    case TAG_REMOVED:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          tags: state.content.tags.filter((tag) => tag.id !== payload.tagid),
+        },
+        posting: false,
+        loading: false,
+      };
+    case TAG_LIKES:
+      const tagLIKE = state.content.tags;
+      const indexLIKE = tagLIKE.findIndex((tag) => tag.id === payload.tagid);
+      tagLIKE[indexLIKE].likes = payload.likes;
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          tags: tagLIKE,
+        },
+        posting: false,
+        loading: false,
+      };
+    case TAG_UNLIKES:
+      const tagUNLIKE = state.content.tags;
+      const indexUNLIKE = tagUNLIKE.findIndex(
+        (tag) => tag.id === payload.tagid
+      );
+      tagUNLIKE[indexUNLIKE].unlikes = payload.unlikes;
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          tags: tagUNLIKE,
+        },
         posting: false,
         loading: false,
       };
@@ -108,7 +149,7 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         contents: state.contents.filter(
-          (content) => content.id.toString() !== payload
+          (content) => content.id !== payload.postid
         ),
         content: [],
         posting: false,

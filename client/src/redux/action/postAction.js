@@ -16,7 +16,6 @@ import {
   addToMyBag,
   addToMyBagUndo,
 } from './authAction';
-import { AxiosResponse } from 'axios';
 
 //get all contents
 export const getContents = () => async (dispatch) => {
@@ -46,9 +45,6 @@ export const getContent = (postid) => async (dispatch) => {
       type: CONTENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
-    if (err.response.status === 401) {
-      dispatch(setAlert('You need to Login first', 'fail', 3500));
-    }
   }
 };
 
@@ -190,7 +186,7 @@ export const deleteContent = (postid) => async (dispatch) => {
     await axios.delete(`/post/${postid}`);
     dispatch({
       type: DELETE_CONTENT,
-      payload: postid,
+      payload: { postid },
     });
 
     dispatch(setAlert('Post has successfully removed', 'success'));
