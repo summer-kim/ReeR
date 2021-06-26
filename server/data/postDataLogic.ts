@@ -13,10 +13,9 @@ interface updatePostType {
 }
 
 const INCLUDE_TAG = {
-  attributes: ['id', 'movieName', 'genre', 'summary', 'createdAt', 'userId'],
   include: {
     model: Tag,
-    attributes: ['tagName', 'userId', 'likes', 'unlikes'],
+    attributes: ['tagName', 'userId', 'likes', 'unlikes', 'id'],
   },
 };
 const ORDER_DESC = {

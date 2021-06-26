@@ -77,7 +77,6 @@ export async function unlikeTagUndo(req: RequestTypeCustomed, res: Response) {
   return res.json(tag.unlikes);
 }
 
-// @todo change reducer to delete tag without any josn data
 export async function deleteTag(req: RequestTypeCustomed, res: Response) {
   const tagId = Number(req.params.tagid);
   const tag = await tagData.getTagById(tagId);

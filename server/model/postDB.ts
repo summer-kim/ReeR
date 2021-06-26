@@ -45,5 +45,5 @@ const Post = sequelize.define<PostInstance>(
   { timestamps: true }
 );
 Post.belongsTo(User);
-Post.hasMany(Tag, { foreignKey: 'postId' });
+Post.hasMany(Tag, { foreignKey: 'postId', onDelete: 'cascade' });
 export default Post;
