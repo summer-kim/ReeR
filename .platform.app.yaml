@@ -37,3 +37,4 @@ web:
   locations:
     '/':
       passthru: true
+disk: 256
