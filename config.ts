@@ -13,9 +13,6 @@ export const config = {
   host: {
     port: getConfig('PORT'),
   },
-  mongoDB: {
-    url: getConfig('MONGO_URL'),
-  },
   jwt: {
     secret: getConfig('JWT_SECRET'),
   },
