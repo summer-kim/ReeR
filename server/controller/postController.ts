@@ -47,8 +47,6 @@ export async function updatePost(req: RequestTypeCustomed, res: Response) {
   if (post.userId !== req.userId) {
     return res.sendStatus(403);
   }
-  console.log(req.body.genre);
-  console.log(typeof req.body.genre);
   const [num, data] = await postData.updatePostData({
     ...req.body,
     id,
@@ -75,7 +73,6 @@ export async function updatePostImg(req: RequestTypeCustomed, res: Response) {
   }
   const key = `uploads/${req.file?.originalname}`;
   const params = createParams(key, req.file?.buffer);
-  console.log(params);
   s3.upload(params, async (err: any, data: any) => {
     if (err) {
       console.log(err);

@@ -46,7 +46,6 @@ export const removeTag = (tagid) => async (dispatch) => {
 };
 export const likeTag = ({ undo, tagid }) => async (dispatch) => {
   try {
-    console.log('tagid', tagid);
     const res = await axios.put(
       `/tag/${undo ? 'likesBack' : 'likes'}/${tagid}`
     );

@@ -76,20 +76,15 @@ export async function removeFromMyBag(req: RequestTypeCustomed, res: Response) {
 
 export async function likePost(req: RequestTypeCustomed, res: Response) {
   const postId = Number(req.params.postid);
-  console.log(postId);
   const user = await userData.findById(req.userId!);
-  console.log(1, user);
   if (!user) {
     return res.status(401).json(errMsg.NOT_FOUND('User'));
   }
   const existed = userData.alreadyAdded(user.likes, postId);
-  console.log(2, existed);
   if (existed) {
     return res.status(401).json(errMsg.ALREADY_ADDED('Post'));
   }
   await userData.updateUserArray(req.userId!, postId, 'likes', 'append');
-  console.log(3, 's');
-
   await user.reload();
   res.status(201).json(user.likes);
 }

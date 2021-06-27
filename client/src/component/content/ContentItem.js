@@ -32,11 +32,9 @@ const ContentItem = ({
 }) => {
   useEffect(() => {
     const { isAuthenticated } = authReducer;
-    console.log(isAuthenticated);
     if (isAuthenticated) {
       getContent(match.params.postid);
     } else {
-      console.log(1);
       setAlert('You need to Login first', 'fail', 3500);
     }
   }, [authReducer.isAuthenticated]);
