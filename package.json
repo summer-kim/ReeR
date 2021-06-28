@@ -6,11 +6,10 @@
   "scripts": {
     "sass": "node-sass -w scss/ -o dist/css/ --recursive",
     "server": "nodemon --exec ts-node www.ts --watch",
-    "start": "node --loader ts-node/esm ./www.ts",
+    "start": "node build/www.js",
     "dev": "concurrently \"npm run server\" \"npm run start --prefix client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false",
-    "build": "tsc",
-    "start:prod": "node build/www.js"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
