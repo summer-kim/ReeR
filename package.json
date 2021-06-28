@@ -8,7 +8,7 @@
     "server": "nodemon --exec ts-node www.ts --watch",
     "start": "node build/www.js",
     "dev": "concurrently \"npm run server\" \"npm run start --prefix client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false",
     "build": "tsc"
   },
   "repository": {
