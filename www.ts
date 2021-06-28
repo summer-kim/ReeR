@@ -44,5 +44,5 @@ if (process.env.NODE_ENV === 'production') {
 
 sequelize.sync().then(() => {
   console.log('mySQL DB has successfully connected');
-  const server = app.listen(config.host.port);
+  const server = app.listen(process.env.PORT || 5000);
 });
