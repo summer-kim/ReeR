@@ -29,5 +29,6 @@ export const config = {
     username: getConfig('SQL_USER'),
     database: getConfig('SQL_DB'),
     password: getConfig('SQL_PASSWORD'),
+    port: getConfig('DB_PORT'),
   },
 };
