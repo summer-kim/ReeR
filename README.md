@@ -1,4 +1,4 @@
-<h1 align="center"> 📌<em>ReeR</em></h1>
+<h1 align="center"> 📌<em>ReeR 2.0</em></h1>
 
 <p align="center"><em>ReeR</em>란,        <em>Recommandation, Review</em>를 조합하여 만든 약자입니다.<br/>
 오늘은 무엇을 볼까 찾아보는 수고를 덜어주는,<br/>
@@ -7,7 +7,37 @@
 플랫폼이 있으면 좋겠다는 생각에 만들었습니다.
  </p>
 <br/>
+<h1 align="center">ReeR => ReeR2.0 변경사항 <Backend Refactoring></h1>
+<p align="center"><em>💗 understand and apply Middleware Chain</em></p>
 
+```
+    express는 middleware를 여러개를 끼울 수 있는 Chain이라는 개념을 이해하기 전에는
+    각 router마다 중복되는 코드를 반복해서 사용하였는데 이제는 middleware로 깔끔하게 통일하여 사용할 수 있습니다.
+```
+<p align="center"><em>🧡 API design</em></p>
+ 
+ ```
+     요청이 성공하면 전부 200 status, 에러가 발생하면 400 status를 전송했던 코드들을
+     작업의 수행 상태를 잘 알려주는 201, 204, 403등 적절한 HTTP 상태 코드로 대체하였습니다.
+ ```
+<p align="center"><em>💛 MVC pattern</em></p>
+  
+ ```
+     Model, View, Contorller로 나뉘게 하여 중복코드를 피하고 좀더 효율적으로 유지보수가 가능하게 리팩토링하였습니다.
+ ```
+<p align="center"><em>💚 change Database from mongoDB to PostgreSQL</em></p>
+  
+ ```
+     기존의 ReeR에는 noSQL인 mongoDB를 사용하였었지만 과거 SQL쿼리를 공부한 경험이 있고 관계형 데이터베이스에 대해 경험해보고 싶어
+     mySQL를 처음에 적용하였지만, dataType으로 array가 가능하고 update를 할때 등 여러모로 PostgreSQL이 더 편리하다 느껴 최종적으로 postgreSQL을 적용하게 되었습니다.
+ ```
+<br/>
+<h1 align="center">📌<em>Comparing Codes before and after </em></h1>
+<p align="center"><em>
+<br/>
+<a href="https://github.com/summer-kim/ReeR/tree/8ecbc90fc64ea4f9dbe2983355a59da66099430f/server">BEFORE</a>&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp<a href="https://github.com/summer-kim/ReeR/tree/master/server">AFTER</a>
+</em></p>
+<br/>
 <h1 align="center"> 🌎<em>URL</em></h1>
 <p align="center"><em>💗ReeR : <a href="https://reer-summer.herokuapp.com/">Link</a></em></p>
 <br/>
