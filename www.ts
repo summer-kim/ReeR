@@ -35,7 +35,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 
 sequelize.sync().then(() => {
   console.log('mySQL DB has successfully connected');
-  app.listen(port, '0.0.0.0', () => {
+  app.listen(port, () => {
     console.log(`server is listening on PORT ${port}`);
   });
 });
