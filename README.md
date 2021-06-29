@@ -28,8 +28,10 @@
 <p align="center"><em>💚 change Database from mongoDB to PostgreSQL</em></p>
   
  ```
-     기존의 ReeR에는 noSQL인 mongoDB를 사용하였었지만 과거 SQL쿼리를 공부한 경험이 있고 관계형 데이터베이스에 대해 경험해보고 싶어
-     mySQL를 처음에 적용하였지만, dataType으로 array가 가능하고 update를 할때 등 여러모로 PostgreSQL이 더 편리하다 느껴 최종적으로 postgreSQL을 적용하게 되었습니다.
+     기존의 ReeR에는 noSQL인 mongoDB를 사용하였었지만 
+     과거 SQL쿼리를 공부한 경험이 있고, 관계형 데이터베이스에 대해 경험해보고 싶어 mySQL를 처음에 적용하였습니다.
+     하지만 dataType으로 array가 가능하고 update할때 등 여러모로 PostgreSQL이 더 편리하다 느껴 
+     최종적으로 postgreSQL을 적용하게 되었습니다.
  ```
 <br/>
 <h1 align="center">📌<em>Comparing Codes before and after </em></h1>
