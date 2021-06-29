@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-export function getConfig(key: string, defaultValue = undefined) {
+export function getConfig(key: string, defaultValue = '') {
   const value = process.env[key] || defaultValue;
   if (value == null) {
     throw new Error(`value of ${key} has not defined`);
@@ -11,7 +11,7 @@ export function getConfig(key: string, defaultValue = undefined) {
 
 export const config = {
   host: {
-    port: getConfig('PORT'),
+    port: getConfig('PORT', '5000'),
   },
   jwt: {
     secret: getConfig('JWT_SECRET'),
@@ -29,6 +29,5 @@ export const config = {
     username: getConfig('SQL_USER'),
     database: getConfig('SQL_DB'),
     password: getConfig('SQL_PASSWORD'),
-    port: getConfig('DB_PORT'),
   },
 };
